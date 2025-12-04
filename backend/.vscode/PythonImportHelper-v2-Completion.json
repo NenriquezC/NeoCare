@@ -1,0 +1,55 @@
+[
+    {
+        "label": "FastAPI",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "requests",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "requests",
+        "description": "requests",
+        "detail": "requests",
+        "documentation": {}
+    },
+    {
+        "label": "read_root",
+        "kind": 2,
+        "importPath": "prueba",
+        "description": "prueba",
+        "peekOfCode": "def read_root():\n    return {\"message\": \"Hola Néstor, FastAPI ya está funcionando 🚀\"}\n@app.get(\"/items/{item_id}\")\ndef read_item(item_id: int, q: str | None = None):\n    return {\n        \"item_id\": item_id,\n        \"q\": q,\n        \"mensaje\": \"Este es tu primer endpoint con path + query params\",\n    }",
+        "detail": "prueba",
+        "documentation": {}
+    },
+    {
+        "label": "read_item",
+        "kind": 2,
+        "importPath": "prueba",
+        "description": "prueba",
+        "peekOfCode": "def read_item(item_id: int, q: str | None = None):\n    return {\n        \"item_id\": item_id,\n        \"q\": q,\n        \"mensaje\": \"Este es tu primer endpoint con path + query params\",\n    }",
+        "detail": "prueba",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "prueba",
+        "description": "prueba",
+        "peekOfCode": "app = FastAPI()\n@app.get(\"/\")\ndef read_root():\n    return {\"message\": \"Hola Néstor, FastAPI ya está funcionando 🚀\"}\n@app.get(\"/items/{item_id}\")\ndef read_item(item_id: int, q: str | None = None):\n    return {\n        \"item_id\": item_id,\n        \"q\": q,\n        \"mensaje\": \"Este es tu primer endpoint con path + query params\",",
+        "detail": "prueba",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "test",
+        "description": "test",
+        "peekOfCode": "def main():\n    r = requests.get(\"https://httpbin.org/get\")\n    print(r.status_code, r.headers.get(\"Content-Type\"))\nif __name__ == \"__main__\":\n    main()",
+        "detail": "test",
+        "documentation": {}
+    }
+]
