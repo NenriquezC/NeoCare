@@ -1,21 +1,5 @@
 [
     {
-        "label": "BaseSettings",
-        "importPath": "pydantic_settings",
-        "description": "pydantic_settings",
-        "isExtraImport": true,
-        "detail": "pydantic_settings",
-        "documentation": {}
-    },
-    {
-        "label": "lru_cache",
-        "importPath": "functools",
-        "description": "functools",
-        "isExtraImport": true,
-        "detail": "functools",
-        "documentation": {}
-    },
-    {
         "label": "create_engine",
         "importPath": "sqlalchemy",
         "description": "sqlalchemy",
@@ -63,15 +47,6 @@
         "importPath": "json",
         "description": "json",
         "detail": "json",
-        "documentation": {}
-    },
-    {
-        "label": "Settings",
-        "kind": 6,
-        "importPath": "backend.app.config",
-        "description": "backend.app.config",
-        "peekOfCode": "class Settings(BaseSettings):\n    #Nombre del proyecto (opcional ptero util para logs, titulos, etc)\n    PROJECT_NAME: str = \"NeoCareHeath\" \n    # --- JWT / Seguridad ---\n    # Clave secreta para firmar los tokens JWT.\n    # En serio: en producción esto debe venir de una variable de entorno.\n    SECRET_KEY: str = \"changeme-super-secret-key\"\n    # Algoritmo que usará python-jose para firmar/verificar JWT\n    ALGORITHM: str = \"HS256\"\n    # Tiempo de vida del token de acceso (en minutos)",
-        "detail": "backend.app.config",
         "documentation": {}
     },
     {
