@@ -1,36 +1,31 @@
-# backend/app/database.py
+from pydantic_settings import BaseSettings
+from functools import lru_cache
 
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, declarative_base
+class Settings(BaseSettings):
+    #Nombre del proyecto (opcional ptero util para logs, titulos, etc)
+    PROJECT_NAME: str = "NeoCareHeath" 
 
-#URL de conexión a PostgreSQL
-# 
-SQLALCHEMY_DATABASE_URL = (
-    "postgresql+psycopg2://postgres:postgres@localhost:5432/neocare_db"
-)
+    # --- JWT / Seguridad ---
+    # Clave secreta para firmar los tokens JWT.
+    # En serio: en producción esto debe venir de una variable de entorno.
+    SECRET_KEY: str = "changeme-super-secret-key"
 
-#Crea el engine (conexión física a la BD)
-engine = create_engine(
-    SQLALCHEMY_DATABASE_URL,
-    echo=True,      
-    future=True,    
-)
+    # Algoritmo que usará python-jose para firmar/verificar JWT
+    ALGORITHM: str = "HS256"
 
-#Crea la fábrica de sesiones (cada request usará una sesión)
-SessionLocal = sessionmaker(
-    autocommit=False,
-    autoflush=False,
-    bind=engine,
-)
+    # Tiempo de vida del token de acceso (en minutos)
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60  # 1 hora
 
-#Base para declarar  modelos (User, Board, etc.)
-Base = declarative_base()
+    # --- Base de datos ---
+    # URL de conexión para SQLAlchemy
+    # Formato típico:
+    # postgresql+psycopg2://usuario:password@host:puerto/nombre_bd
+    DATABASE_URL: str = (
+        "postgresql+psycopg2://user:password@localhost:5432/neocare_db"
+    )
 
-
-#Dependency para FastAPI: la usarás en las rutas con Depends(get_db)
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+    class Config:
+        # Esto le dice a Pydantic que, si existe un archivo .env,
+        # puede leer variables desde ahí.
+        env_file = ".env"
+        env_file_encoding = "utf-8"
