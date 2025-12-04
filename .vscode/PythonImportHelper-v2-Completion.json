@@ -1,5 +1,21 @@
 [
     {
+        "label": "BaseSettings",
+        "importPath": "pydantic_settings",
+        "description": "pydantic_settings",
+        "isExtraImport": true,
+        "detail": "pydantic_settings",
+        "documentation": {}
+    },
+    {
+        "label": "lru_cache",
+        "importPath": "functools",
+        "description": "functools",
+        "isExtraImport": true,
+        "detail": "functools",
+        "documentation": {}
+    },
+    {
         "label": "create_engine",
         "importPath": "sqlalchemy",
         "description": "sqlalchemy",
@@ -50,48 +66,57 @@
         "documentation": {}
     },
     {
-        "label": "get_db",
-        "kind": 2,
+        "label": "Settings",
+        "kind": 6,
         "importPath": "backend.app.config",
         "description": "backend.app.config",
-        "peekOfCode": "def get_db():\n    db = SessionLocal()\n    try:\n        yield db\n    finally:\n        db.close()",
+        "peekOfCode": "class Settings(BaseSettings):\n    #Nombre del proyecto (opcional ptero util para logs, titulos, etc)\n    PROJECT_NAME: str = \"NeoCareHeath\" \n    # --- JWT / Seguridad ---\n    # Clave secreta para firmar los tokens JWT.\n    # En serio: en producción esto debe venir de una variable de entorno.\n    SECRET_KEY: str = \"changeme-super-secret-key\"\n    # Algoritmo que usará python-jose para firmar/verificar JWT\n    ALGORITHM: str = \"HS256\"\n    # Tiempo de vida del token de acceso (en minutos)",
         "detail": "backend.app.config",
+        "documentation": {}
+    },
+    {
+        "label": "get_db",
+        "kind": 2,
+        "importPath": "backend.app.database",
+        "description": "backend.app.database",
+        "peekOfCode": "def get_db():\n    db = SessionLocal()\n    try:\n        yield db\n    finally:\n        db.close()",
+        "detail": "backend.app.database",
         "documentation": {}
     },
     {
         "label": "SQLALCHEMY_DATABASE_URL",
         "kind": 5,
-        "importPath": "backend.app.config",
-        "description": "backend.app.config",
+        "importPath": "backend.app.database",
+        "description": "backend.app.database",
         "peekOfCode": "SQLALCHEMY_DATABASE_URL = (\n    \"postgresql+psycopg2://postgres:postgres@localhost:5432/neocare_db\"\n)\n#Crea el engine (conexión física a la BD)\nengine = create_engine(\n    SQLALCHEMY_DATABASE_URL,\n    echo=True,      \n    future=True,    \n)\n#Crea la fábrica de sesiones (cada request usará una sesión)",
-        "detail": "backend.app.config",
+        "detail": "backend.app.database",
         "documentation": {}
     },
     {
         "label": "engine",
         "kind": 5,
-        "importPath": "backend.app.config",
-        "description": "backend.app.config",
+        "importPath": "backend.app.database",
+        "description": "backend.app.database",
         "peekOfCode": "engine = create_engine(\n    SQLALCHEMY_DATABASE_URL,\n    echo=True,      \n    future=True,    \n)\n#Crea la fábrica de sesiones (cada request usará una sesión)\nSessionLocal = sessionmaker(\n    autocommit=False,\n    autoflush=False,\n    bind=engine,",
-        "detail": "backend.app.config",
+        "detail": "backend.app.database",
         "documentation": {}
     },
     {
         "label": "SessionLocal",
         "kind": 5,
-        "importPath": "backend.app.config",
-        "description": "backend.app.config",
+        "importPath": "backend.app.database",
+        "description": "backend.app.database",
         "peekOfCode": "SessionLocal = sessionmaker(\n    autocommit=False,\n    autoflush=False,\n    bind=engine,\n)\n#Base para declarar  modelos (User, Board, etc.)\nBase = declarative_base()\n#Dependency para FastAPI: la usarás en las rutas con Depends(get_db)\ndef get_db():\n    db = SessionLocal()",
-        "detail": "backend.app.config",
+        "detail": "backend.app.database",
         "documentation": {}
     },
     {
         "label": "Base",
         "kind": 5,
-        "importPath": "backend.app.config",
-        "description": "backend.app.config",
+        "importPath": "backend.app.database",
+        "description": "backend.app.database",
         "peekOfCode": "Base = declarative_base()\n#Dependency para FastAPI: la usarás en las rutas con Depends(get_db)\ndef get_db():\n    db = SessionLocal()\n    try:\n        yield db\n    finally:\n        db.close()",
-        "detail": "backend.app.config",
+        "detail": "backend.app.database",
         "documentation": {}
     },
     {
