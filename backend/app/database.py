@@ -1,35 +1,35 @@
-
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
+import os
 
-#URL de conexión a PostgreSQL
-# 
-SQLALCHEMY_DATABASE_URL = (
-    "postgresql+psycopg2://postgres:postgres@localhost:5432/neocare_db"
+# =============================
+# 1) URL DE CONEXIÓN A POSTGRES
+# =============================
+# Cambia TU_PASSWORD y el nombre de la base
+DATABASE_URL = os.getenv(
+    "DATABASE_URL",
+    "postgresql://postgres:niki2025@localhost/neocare_db"
 )
 
-#Crea el engine (conexión física a la BD)
+# =============================
+# 2) CREAR ENGINE
+# =============================
 engine = create_engine(
-    SQLALCHEMY_DATABASE_URL,
-    echo=True,      
-    future=True,    
+    DATABASE_URL,
+    future=True,
+    echo=True  # muestra SQL en consola (útil en desarrollo)
 )
 
-#Crea la fábrica de sesiones (cada request usará una sesión)
+# =============================
+# 3) SESIONES
+# =============================
 SessionLocal = sessionmaker(
     autocommit=False,
     autoflush=False,
-    bind=engine,
+    bind=engine
 )
 
-#Base para declarar  modelos (User, Board, etc.)
+# =============================
+# 4) BASE PARA LOS MODELOS
+# =============================
 Base = declarative_base()
-
-
-#Dependency para FastAPI: la usarás en las rutas con Depends(get_db)
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()

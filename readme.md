@@ -1,122 +1,149 @@
-# 🏥 NeoCare Health — Documentación del Proyecto
+🏥 NeoCare Health — Documentación del Proyecto
+NeoCare Health — Documentación del Proyecto
 
-Este repositorio contiene el desarrollo del proyecto **NeoCare Health**, realizado por el equipo **Alpha**.  
-El objetivo es construir una plataforma enfocada en la gestión de pacientes, datos médicos y acceso seguro.
+Este repositorio contiene el desarrollo del proyecto NeoCare Health, realizado por el equipo Alpha. El objetivo es construir una plataforma enfocada en la gestión de pacientes, datos médicos y acceso seguro mediante un backend robusto con FastAPI y autenticación JWT.
+
+1. Información del Proyecto
+Equipo: Alpha
+
+Rol del documentador: Pendiente
+
+Tecnologías usadas:
+
+Frontend
+React + Vite
+
+Tailwind CSS
+
+Axios
+
+Backend
+Python 3.12
+
+FastAPI
+
+SQLAlchemy
+
+JWT (Python-Jose)
+
+Passlib (hashing)
+
+Base de datos
+PostgreSQL
+
+Testing
+Postman
+
+PyTest
+
+Playwright
+
+Visual Studio / pruebas unitarias
+
+2. Estructura del Proyecto
+/frontend /backend │ main.py │ database.py │ config.py │ models.py │ ├── auth/ │ routes.py │ schemas.py │ utils.py │ └── boards/ routes.py schemas.py /docs /tests README.md
+
+3. Ejecución del Frontend
+    Entrar a la carpeta:
+
+    cd frontend
 
 
-## 1. Información del Proyecto
+    Instalar dependencias:
 
-- **Equipo:** Alpha  
-- **Rol del documentador:** 
-- **Tecnologías usadas:**  
-  - Frontend: React / Vite  
-  - Backend: Node.js / Express  
-  - Base de datos: PostgreSQL  
-  - Testing: Postman, Cypress, Playwright, Visual Studio (unit tests)  
+    npm install
 
 
-## 2. Estructura del Proyecto
-/frontend
-/backend
-/docs
-/tests
-README.md
+    Iniciar entorno de desarrollo:
+
+    npm run dev
+El proyecto se abre en: http://localhost:3000
+
+4. Ejecución del Backend (FastAPI)
+      Entrar a la carpeta:
+
+      cd backend
 
 
-## 3. Ejecución del Frontend
+      Crear entorno virtual (recomendado):
 
-1. Entrar a la carpeta del frontend:
+      python -m venv venv
+      source venv/bin/activate   # Linux/Mac
+      venv\Scripts\activate      # Windows
 
-cd frontend
 
-2. Instalar dependencias:
+      Instalar dependencias:
 
-npm install
+      pip install -r requirements.txt
 
-3. Iniciar entorno de desarrollo:
 
-npm run dev
+      Crear archivo .env en la carpeta /backend:
 
-El proyecto se abre en:
- http://localhost:3000
+      DATABASE_URL=postgresql://usuario:password@localhost:5432/neocare
+      SECRET_KEY=clave_secreta_para_jwt
+      ACCESS_TOKEN_EXPIRE_MINUTES=60
 
-## 4. Ejecución del Backend
 
-1. Entrar a la carpeta del backend:
+      Iniciar el backend:
 
-cd backend
+      uvicorn app.main:app --reload
+Servidor disponible en: http://127.0.0.1:8000
 
-2. Instalar dependencias:
+Documentación interactiva automática: http://127.0.0.1:8000/docs
 
-npm install
+5. Configuración de PostgreSQL
+      Instalar PostgreSQL
 
-3. Configurar archivo.env:
+      Crear base de datos:
 
-DATABASE_URL=postgres://usuario:password@localhost:5432/neocare
-JWT_SECRET=clave_secreta
-PORT=3001
+      CREATE DATABASE neocare;
 
-4. Iniciar backend:
 
-npm run dev
+      Asegurar que usuario/contraseña coinciden con .env
 
-Backend disponible en:
- http://localhost:3001
+      DATABASE_URL=postgresql://usuario:password@localhost:5432/neocare
 
-## 5. Configuración de PostgreSQL
 
-1. Instalar PostgreSQL
+      FastAPI creará las tablas automáticamente al iniciar.
+6. Testing
+API testing con Postman
+Incluye pruebas de:
 
-2. Crear la base de datos:
+Registro
 
-CREATE DATABASE neocare;
+Login
 
-3. Verificar usuario y contraseña configurados
+Generación y validación de JWT
 
-C4. onfirmar que coinciden con la variable:
+Acceso protegido (/boards)
 
-DATABASE_URL=postgres://usuario:password@localhost:5432/neocare
+Los JSON y capturas estarán en: /docs/postman/
 
-## 6. Testing
-
-# API testing con Postman
-
-Las pruebas incluyen: Login, registro de usuarios y acceso protehido por Token
-Se adjuntarán capturas o Json del informe semanal
-
-# Testing unitario- Visual STudio
-
-Test: ShouldReturnUser_WhenIdIsValid
-Resultado: Pasó
-Notas: Se detectó lentitud en el método GetUser()
-
-# Testing End-To-End- Playwright
+Testing unitario – PyTest
+Ejemplo:
 
 pytest -v
 
+Testing End-To-End – Playwright
+pytest -v
 
-## 7. Documentación adicional
-Actas semanales: /docs/actas/
+7. Documentación adicional
+📁 Actas semanales → /docs/actas/ 📁 Postman collections → /docs/postman/ 📁 Guías técnicas → /docs/manuales/
 
-Postman collections: /docs/postman/
-
-Guías técnicas: /docs/manuales/
-
-## 8. Equipo Alpha
+8. Equipo Alpha
 Desarrolladores:
 
-Tester: 
+Tester:
 
 Scrum Master:
 
-Documentador: 
+Documentador:
 
-## 9. Objetivo de la Semana 1
+9. Objetivo Semana 1
 Configuración del entorno
 
-Primeras pruebas: API, UI y E2E
+Probar API, UI y pruebas E2E
 
-Creación de la base del README
+Crear base del README
 
-Preparación de acta y guion de mini demo
-
+Preparación del acta y demo

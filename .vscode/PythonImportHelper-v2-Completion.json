@@ -1,10 +1,122 @@
 [
     {
-        "label": "create_engine",
-        "importPath": "sqlalchemy",
-        "description": "sqlalchemy",
+        "label": "APIRouter",
+        "importPath": "fastapi",
+        "description": "fastapi",
         "isExtraImport": true,
-        "detail": "sqlalchemy",
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "Depends",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "HTTPException",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "status",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "Depends",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "HTTPException",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "status",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "APIRouter",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "Depends",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "FastAPI",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "FastAPI",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "Session",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "Session",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "relationship",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "Session",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
         "documentation": {}
     },
     {
@@ -24,11 +136,196 @@
         "documentation": {}
     },
     {
-        "label": "FastAPI",
-        "importPath": "fastapi",
-        "description": "fastapi",
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
         "isExtraImport": true,
-        "detail": "fastapi",
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "EmailStr",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timedelta",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "jwt",
+        "importPath": "jose",
+        "description": "jose",
+        "isExtraImport": true,
+        "detail": "jose",
+        "documentation": {}
+    },
+    {
+        "label": "JWTError",
+        "importPath": "jose",
+        "description": "jose",
+        "isExtraImport": true,
+        "detail": "jose",
+        "documentation": {}
+    },
+    {
+        "label": "CryptContext",
+        "importPath": "passlib.context",
+        "description": "passlib.context",
+        "isExtraImport": true,
+        "detail": "passlib.context",
+        "documentation": {}
+    },
+    {
+        "label": "OAuth2PasswordBearer",
+        "importPath": "fastapi.security",
+        "description": "fastapi.security",
+        "isExtraImport": true,
+        "detail": "fastapi.security",
+        "documentation": {}
+    },
+    {
+        "label": "Column",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "Integer",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "String",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "Text",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "Date",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "DateTime",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "Boolean",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "Numeric",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "ForeignKey",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "UniqueConstraint",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "create_engine",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "BaseSettings",
+        "importPath": "pydantic_settings",
+        "description": "pydantic_settings",
+        "isExtraImport": true,
+        "detail": "pydantic_settings",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "CORSMiddleware",
+        "importPath": "fastapi.middleware.cors",
+        "description": "fastapi.middleware.cors",
+        "isExtraImport": true,
+        "detail": "fastapi.middleware.cors",
         "documentation": {}
     },
     {
@@ -50,20 +347,245 @@
         "documentation": {}
     },
     {
-        "label": "get_db",
+        "label": "register",
         "kind": 2,
-        "importPath": "backend.app.database",
-        "description": "backend.app.database",
-        "peekOfCode": "def get_db():\n    db = SessionLocal()\n    try:\n        yield db\n    finally:\n        db.close()",
-        "detail": "backend.app.database",
+        "importPath": "backend.app.auth.routes",
+        "description": "backend.app.auth.routes",
+        "peekOfCode": "def register(user: UserRegister, db: Session = Depends(get_db)):\n    existing = db.query(User).filter(User.email == user.email).first()\n    if existing:\n        raise HTTPException(\n            status_code=status.HTTP_400_BAD_REQUEST,\n            detail=\"Email ya registrado\",\n        )\n    new_user = User(\n        email=user.email,\n        password_hash=hash_password(user.password),",
+        "detail": "backend.app.auth.routes",
         "documentation": {}
     },
     {
-        "label": "SQLALCHEMY_DATABASE_URL",
+        "label": "login",
+        "kind": 2,
+        "importPath": "backend.app.auth.routes",
+        "description": "backend.app.auth.routes",
+        "peekOfCode": "def login(user: UserLogin, db: Session = Depends(get_db)):\n    db_user = db.query(User).filter(User.email == user.email).first()\n    if not db_user or not verify_password(user.password, db_user.password_hash):\n        raise HTTPException(\n            status_code=status.HTTP_401_UNAUTHORIZED,\n            detail=\"Credenciales incorrectas\",\n        )\n    token = create_token({\"user_id\": db_user.id, \"email\": db_user.email})\n    return {\"access_token\": token, \"token_type\": \"bearer\"}",
+        "detail": "backend.app.auth.routes",
+        "documentation": {}
+    },
+    {
+        "label": "router",
+        "kind": 5,
+        "importPath": "backend.app.auth.routes",
+        "description": "backend.app.auth.routes",
+        "peekOfCode": "router = APIRouter(prefix=\"/auth\", tags=[\"auth\"])\n@router.post(\"/register\", response_model=Token)\ndef register(user: UserRegister, db: Session = Depends(get_db)):\n    existing = db.query(User).filter(User.email == user.email).first()\n    if existing:\n        raise HTTPException(\n            status_code=status.HTTP_400_BAD_REQUEST,\n            detail=\"Email ya registrado\",\n        )\n    new_user = User(",
+        "detail": "backend.app.auth.routes",
+        "documentation": {}
+    },
+    {
+        "label": "UserRegister",
+        "kind": 6,
+        "importPath": "backend.app.auth.schemas",
+        "description": "backend.app.auth.schemas",
+        "peekOfCode": "class UserRegister(BaseModel):\n    email: EmailStr\n    password: str\n    name: Optional[str] = None\nclass UserLogin(BaseModel):\n    email: EmailStr\n    password: str\nclass Token(BaseModel):\n    access_token: str\n    token_type: str = \"bearer\"",
+        "detail": "backend.app.auth.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "UserLogin",
+        "kind": 6,
+        "importPath": "backend.app.auth.schemas",
+        "description": "backend.app.auth.schemas",
+        "peekOfCode": "class UserLogin(BaseModel):\n    email: EmailStr\n    password: str\nclass Token(BaseModel):\n    access_token: str\n    token_type: str = \"bearer\"",
+        "detail": "backend.app.auth.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "Token",
+        "kind": 6,
+        "importPath": "backend.app.auth.schemas",
+        "description": "backend.app.auth.schemas",
+        "peekOfCode": "class Token(BaseModel):\n    access_token: str\n    token_type: str = \"bearer\"",
+        "detail": "backend.app.auth.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "hash_password",
+        "kind": 2,
+        "importPath": "backend.app.auth.utils",
+        "description": "backend.app.auth.utils",
+        "peekOfCode": "def hash_password(password: str) -> str:\n    \"\"\"\n    Hashea la contraseña usando bcrypt.\n    Bcrypt sólo admite hasta 72 bytes, así que truncamos por seguridad.\n    \"\"\"\n    if password is None:\n        password = \"\"\n    #password = password[:72]\n    return pwd_context.hash(password)\ndef verify_password(plain: str, hashed: str) -> bool:",
+        "detail": "backend.app.auth.utils",
+        "documentation": {}
+    },
+    {
+        "label": "verify_password",
+        "kind": 2,
+        "importPath": "backend.app.auth.utils",
+        "description": "backend.app.auth.utils",
+        "peekOfCode": "def verify_password(plain: str, hashed: str) -> bool:\n    \"\"\"\n    Verifica la contraseña en texto plano contra el hash almacenado.\n    Aplicamos el mismo truncado que en hash_password.\n    \"\"\"\n    if plain is None:\n        plain = \"\"\n    #plain = plain[:72]\n    return pwd_context.verify(plain, hashed)\n# ===== TOKEN: CREAR =====",
+        "detail": "backend.app.auth.utils",
+        "documentation": {}
+    },
+    {
+        "label": "create_token",
+        "kind": 2,
+        "importPath": "backend.app.auth.utils",
+        "description": "backend.app.auth.utils",
+        "peekOfCode": "def create_token(data: dict):\n    to_encode = data.copy()\n    expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MIN)\n    to_encode.update({\"exp\": expire})\n    return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)\n# ===== DEPENDENCIA DB =====\ndef get_db():\n    db = SessionLocal()\n    try:\n        yield db",
+        "detail": "backend.app.auth.utils",
+        "documentation": {}
+    },
+    {
+        "label": "get_db",
+        "kind": 2,
+        "importPath": "backend.app.auth.utils",
+        "description": "backend.app.auth.utils",
+        "peekOfCode": "def get_db():\n    db = SessionLocal()\n    try:\n        yield db\n    finally:\n        db.close()\n# TOKEN: VALIDAR Y OBTENER USUARIO\ndef get_current_user(\n    token: str = Depends(oauth2_scheme),\n    db: Session = Depends(get_db)",
+        "detail": "backend.app.auth.utils",
+        "documentation": {}
+    },
+    {
+        "label": "get_current_user",
+        "kind": 2,
+        "importPath": "backend.app.auth.utils",
+        "description": "backend.app.auth.utils",
+        "peekOfCode": "def get_current_user(\n    token: str = Depends(oauth2_scheme),\n    db: Session = Depends(get_db)\n):\n    credentials_error = HTTPException(\n        status_code=status.HTTP_401_UNAUTHORIZED,\n        detail=\"Token inválido o expirado\",\n        headers={\"WWW-Authenticate\": \"Bearer\"},\n    )\n    try:",
+        "detail": "backend.app.auth.utils",
+        "documentation": {}
+    },
+    {
+        "label": "SECRET_KEY",
+        "kind": 5,
+        "importPath": "backend.app.auth.utils",
+        "description": "backend.app.auth.utils",
+        "peekOfCode": "SECRET_KEY = \"CAMBIA_ESTA_CLAVE\"\nALGORITHM = \"HS256\"\nACCESS_TOKEN_EXPIRE_MIN = 60\noauth2_scheme = OAuth2PasswordBearer(tokenUrl=\"/auth/login\")\npwd_context = CryptContext(schemes=[\"pbkdf2_sha256\"], deprecated=\"auto\")\n# ===== CONTRASEÑAS =====\ndef hash_password(password: str) -> str:\n    \"\"\"\n    Hashea la contraseña usando bcrypt.\n    Bcrypt sólo admite hasta 72 bytes, así que truncamos por seguridad.",
+        "detail": "backend.app.auth.utils",
+        "documentation": {}
+    },
+    {
+        "label": "ALGORITHM",
+        "kind": 5,
+        "importPath": "backend.app.auth.utils",
+        "description": "backend.app.auth.utils",
+        "peekOfCode": "ALGORITHM = \"HS256\"\nACCESS_TOKEN_EXPIRE_MIN = 60\noauth2_scheme = OAuth2PasswordBearer(tokenUrl=\"/auth/login\")\npwd_context = CryptContext(schemes=[\"pbkdf2_sha256\"], deprecated=\"auto\")\n# ===== CONTRASEÑAS =====\ndef hash_password(password: str) -> str:\n    \"\"\"\n    Hashea la contraseña usando bcrypt.\n    Bcrypt sólo admite hasta 72 bytes, así que truncamos por seguridad.\n    \"\"\"",
+        "detail": "backend.app.auth.utils",
+        "documentation": {}
+    },
+    {
+        "label": "ACCESS_TOKEN_EXPIRE_MIN",
+        "kind": 5,
+        "importPath": "backend.app.auth.utils",
+        "description": "backend.app.auth.utils",
+        "peekOfCode": "ACCESS_TOKEN_EXPIRE_MIN = 60\noauth2_scheme = OAuth2PasswordBearer(tokenUrl=\"/auth/login\")\npwd_context = CryptContext(schemes=[\"pbkdf2_sha256\"], deprecated=\"auto\")\n# ===== CONTRASEÑAS =====\ndef hash_password(password: str) -> str:\n    \"\"\"\n    Hashea la contraseña usando bcrypt.\n    Bcrypt sólo admite hasta 72 bytes, así que truncamos por seguridad.\n    \"\"\"\n    if password is None:",
+        "detail": "backend.app.auth.utils",
+        "documentation": {}
+    },
+    {
+        "label": "oauth2_scheme",
+        "kind": 5,
+        "importPath": "backend.app.auth.utils",
+        "description": "backend.app.auth.utils",
+        "peekOfCode": "oauth2_scheme = OAuth2PasswordBearer(tokenUrl=\"/auth/login\")\npwd_context = CryptContext(schemes=[\"pbkdf2_sha256\"], deprecated=\"auto\")\n# ===== CONTRASEÑAS =====\ndef hash_password(password: str) -> str:\n    \"\"\"\n    Hashea la contraseña usando bcrypt.\n    Bcrypt sólo admite hasta 72 bytes, así que truncamos por seguridad.\n    \"\"\"\n    if password is None:\n        password = \"\"",
+        "detail": "backend.app.auth.utils",
+        "documentation": {}
+    },
+    {
+        "label": "pwd_context",
+        "kind": 5,
+        "importPath": "backend.app.auth.utils",
+        "description": "backend.app.auth.utils",
+        "peekOfCode": "pwd_context = CryptContext(schemes=[\"pbkdf2_sha256\"], deprecated=\"auto\")\n# ===== CONTRASEÑAS =====\ndef hash_password(password: str) -> str:\n    \"\"\"\n    Hashea la contraseña usando bcrypt.\n    Bcrypt sólo admite hasta 72 bytes, así que truncamos por seguridad.\n    \"\"\"\n    if password is None:\n        password = \"\"\n    #password = password[:72]",
+        "detail": "backend.app.auth.utils",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "kind": 6,
+        "importPath": "backend.app.boards.models",
+        "description": "backend.app.boards.models",
+        "peekOfCode": "class User(Base):\n    __tablename__ = \"users\"\n    id = Column(Integer, primary_key=True, index=True)\n    email = Column(String(255), unique=True, nullable=False, index=True)\n    password_hash = Column(String(255), nullable=False)\n    name = Column(String(100), nullable=True)\n    role = Column(String(50), nullable=True)\n    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)\n    updated_at = Column(DateTime, default=datetime.utcnow, nullable=False)\n    # Relaciones",
+        "detail": "backend.app.boards.models",
+        "documentation": {}
+    },
+    {
+        "label": "Board",
+        "kind": 6,
+        "importPath": "backend.app.boards.models",
+        "description": "backend.app.boards.models",
+        "peekOfCode": "class Board(Base):\n    __tablename__ = \"boards\"\n    id = Column(Integer, primary_key=True, index=True)\n    name = Column(String(150), nullable=False)\n    user_id = Column(\n        Integer,\n        ForeignKey(\"users.id\", ondelete=\"CASCADE\"),\n        nullable=False,\n    )\n    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)",
+        "detail": "backend.app.boards.models",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "kind": 6,
+        "importPath": "backend.app.boards.models",
+        "description": "backend.app.boards.models",
+        "peekOfCode": "class List(Base):\n    __tablename__ = \"lists\"\n    id = Column(Integer, primary_key=True, index=True)\n    board_id = Column(\n        Integer,\n        ForeignKey(\"boards.id\", ondelete=\"CASCADE\"),\n        nullable=False,\n    )\n    name = Column(String(100), nullable=False)\n    position = Column(Integer, nullable=False)",
+        "detail": "backend.app.boards.models",
+        "documentation": {}
+    },
+    {
+        "label": "Card",
+        "kind": 6,
+        "importPath": "backend.app.boards.models",
+        "description": "backend.app.boards.models",
+        "peekOfCode": "class Card(Base):\n    __tablename__ = \"cards\"\n    id = Column(Integer, primary_key=True, index=True)\n    board_id = Column(\n        Integer,\n        ForeignKey(\"boards.id\", ondelete=\"CASCADE\"),\n        nullable=False,\n    )\n    list_id = Column(\n        Integer,",
+        "detail": "backend.app.boards.models",
+        "documentation": {}
+    },
+    {
+        "label": "TimeEntry",
+        "kind": 6,
+        "importPath": "backend.app.boards.models",
+        "description": "backend.app.boards.models",
+        "peekOfCode": "class TimeEntry(Base):\n    __tablename__ = \"time_entries\"\n    id = Column(Integer, primary_key=True, index=True)\n    user_id = Column(\n        Integer,\n        ForeignKey(\"users.id\"),\n        nullable=False,\n    )\n    card_id = Column(\n        Integer,",
+        "detail": "backend.app.boards.models",
+        "documentation": {}
+    },
+    {
+        "label": "BoardMember",
+        "kind": 6,
+        "importPath": "backend.app.boards.models",
+        "description": "backend.app.boards.models",
+        "peekOfCode": "class BoardMember(Base):\n    __tablename__ = \"board_members\"\n    __table_args__ = (\n        UniqueConstraint(\"board_id\", \"user_id\", name=\"uq_board_user\"),\n    )\n    id = Column(Integer, primary_key=True, index=True)\n    board_id = Column(\n        Integer,\n        ForeignKey(\"boards.id\", ondelete=\"CASCADE\"),\n        nullable=False,",
+        "detail": "backend.app.boards.models",
+        "documentation": {}
+    },
+    {
+        "label": "get_boards",
+        "kind": 2,
+        "importPath": "backend.app.boards.routes",
+        "description": "backend.app.boards.routes",
+        "peekOfCode": "def get_boards(\n    db: Session = Depends(get_db),\n    current_user: User = Depends(get_current_user)\n):\n    return db.query(Board).filter(Board.user_id == current_user.id).all()",
+        "detail": "backend.app.boards.routes",
+        "documentation": {}
+    },
+    {
+        "label": "router",
+        "kind": 5,
+        "importPath": "backend.app.boards.routes",
+        "description": "backend.app.boards.routes",
+        "peekOfCode": "router = APIRouter(prefix=\"/boards\", tags=[\"boards\"])\n@router.get(\"/\")\ndef get_boards(\n    db: Session = Depends(get_db),\n    current_user: User = Depends(get_current_user)\n):\n    return db.query(Board).filter(Board.user_id == current_user.id).all()",
+        "detail": "backend.app.boards.routes",
+        "documentation": {}
+    },
+    {
+        "label": "Settings",
+        "kind": 6,
+        "importPath": "backend.app.config",
+        "description": "backend.app.config",
+        "peekOfCode": "class Settings(BaseSettings):\n    # Database\n    DATABASE_URL: str = \"sqlite:///./test.db\"\n    # JWT\n    SECRET_KEY: str = \"your-secret-key-here\"\n    ALGORITHM: str = \"HS256\"\n    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30\n    class Config:\n        env_file = \".env\"\nsettings = Settings()",
+        "detail": "backend.app.config",
+        "documentation": {}
+    },
+    {
+        "label": "settings",
+        "kind": 5,
+        "importPath": "backend.app.config",
+        "description": "backend.app.config",
+        "peekOfCode": "settings = Settings()",
+        "detail": "backend.app.config",
+        "documentation": {}
+    },
+    {
+        "label": "DATABASE_URL",
         "kind": 5,
         "importPath": "backend.app.database",
         "description": "backend.app.database",
-        "peekOfCode": "SQLALCHEMY_DATABASE_URL = (\n    \"postgresql+psycopg2://postgres:postgres@localhost:5432/neocare_db\"\n)\n#Crea el engine (conexión física a la BD)\nengine = create_engine(\n    SQLALCHEMY_DATABASE_URL,\n    echo=True,      \n    future=True,    \n)\n#Crea la fábrica de sesiones (cada request usará una sesión)",
+        "peekOfCode": "DATABASE_URL = os.getenv(\n    \"DATABASE_URL\",\n    \"postgresql://postgres:niki2025@localhost/neocare_db\"\n)\n# =============================\n# 2) CREAR ENGINE\n# =============================\nengine = create_engine(\n    DATABASE_URL,\n    future=True,",
         "detail": "backend.app.database",
         "documentation": {}
     },
@@ -72,7 +594,7 @@
         "kind": 5,
         "importPath": "backend.app.database",
         "description": "backend.app.database",
-        "peekOfCode": "engine = create_engine(\n    SQLALCHEMY_DATABASE_URL,\n    echo=True,      \n    future=True,    \n)\n#Crea la fábrica de sesiones (cada request usará una sesión)\nSessionLocal = sessionmaker(\n    autocommit=False,\n    autoflush=False,\n    bind=engine,",
+        "peekOfCode": "engine = create_engine(\n    DATABASE_URL,\n    future=True,\n    echo=True  # muestra SQL en consola (útil en desarrollo)\n)\n# =============================\n# 3) SESIONES\n# =============================\nSessionLocal = sessionmaker(\n    autocommit=False,",
         "detail": "backend.app.database",
         "documentation": {}
     },
@@ -81,7 +603,7 @@
         "kind": 5,
         "importPath": "backend.app.database",
         "description": "backend.app.database",
-        "peekOfCode": "SessionLocal = sessionmaker(\n    autocommit=False,\n    autoflush=False,\n    bind=engine,\n)\n#Base para declarar  modelos (User, Board, etc.)\nBase = declarative_base()\n#Dependency para FastAPI: la usarás en las rutas con Depends(get_db)\ndef get_db():\n    db = SessionLocal()",
+        "peekOfCode": "SessionLocal = sessionmaker(\n    autocommit=False,\n    autoflush=False,\n    bind=engine\n)\n# =============================\n# 4) BASE PARA LOS MODELOS\n# =============================\nBase = declarative_base()",
         "detail": "backend.app.database",
         "documentation": {}
     },
@@ -90,8 +612,26 @@
         "kind": 5,
         "importPath": "backend.app.database",
         "description": "backend.app.database",
-        "peekOfCode": "Base = declarative_base()\n#Dependency para FastAPI: la usarás en las rutas con Depends(get_db)\ndef get_db():\n    db = SessionLocal()\n    try:\n        yield db\n    finally:\n        db.close()",
+        "peekOfCode": "Base = declarative_base()",
         "detail": "backend.app.database",
+        "documentation": {}
+    },
+    {
+        "label": "root",
+        "kind": 2,
+        "importPath": "backend.app.main",
+        "description": "backend.app.main",
+        "peekOfCode": "def root():\n    return {\"status\": \"NeoCare Backend Running\"}",
+        "detail": "backend.app.main",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "backend.app.main",
+        "description": "backend.app.main",
+        "peekOfCode": "app = FastAPI(title=\"NeoCare API\")\n# CORS (para que el frontend pueda llamar al backend)\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[\"*\"],  # luego lo ajustas si quieres\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],\n)\n# 👇 REGISTRAR RUTAS DE AUTH",
+        "detail": "backend.app.main",
         "documentation": {}
     },
     {
@@ -164,6 +704,42 @@
         "description": "frontend.node_modules.flatted.python.flatted",
         "peekOfCode": "def stringify(value, *args, **kwargs):\n    known = _Known()\n    input = []\n    output = []\n    i = int(_index(known, input, value))\n    while i < len(input):\n        output.append(_transform(known, input, input[i]))\n        i += 1\n    return _json.dumps(output, *args, **kwargs)",
         "detail": "frontend.node_modules.flatted.python.flatted",
+        "documentation": {}
+    },
+    {
+        "label": "_Known",
+        "kind": 6,
+        "importPath": "frontend_t.node_modules.flatted.python.flatted",
+        "description": "frontend_t.node_modules.flatted.python.flatted",
+        "peekOfCode": "class _Known:\n    def __init__(self):\n        self.key = []\n        self.value = []\nclass _String:\n    def __init__(self, value):\n        self.value = value\ndef _array_keys(value):\n    keys = []\n    i = 0",
+        "detail": "frontend_t.node_modules.flatted.python.flatted",
+        "documentation": {}
+    },
+    {
+        "label": "_String",
+        "kind": 6,
+        "importPath": "frontend_t.node_modules.flatted.python.flatted",
+        "description": "frontend_t.node_modules.flatted.python.flatted",
+        "peekOfCode": "class _String:\n    def __init__(self, value):\n        self.value = value\ndef _array_keys(value):\n    keys = []\n    i = 0\n    for _ in value:\n        keys.append(i)\n        i += 1\n    return keys",
+        "detail": "frontend_t.node_modules.flatted.python.flatted",
+        "documentation": {}
+    },
+    {
+        "label": "parse",
+        "kind": 2,
+        "importPath": "frontend_t.node_modules.flatted.python.flatted",
+        "description": "frontend_t.node_modules.flatted.python.flatted",
+        "peekOfCode": "def parse(value, *args, **kwargs):\n    json = _json.loads(value, *args, **kwargs)\n    wrapped = []\n    for value in json:\n        wrapped.append(_wrap(value))\n    input = []\n    for value in wrapped:\n        if isinstance(value, _String):\n            input.append(value.value)\n        else:",
+        "detail": "frontend_t.node_modules.flatted.python.flatted",
+        "documentation": {}
+    },
+    {
+        "label": "stringify",
+        "kind": 2,
+        "importPath": "frontend_t.node_modules.flatted.python.flatted",
+        "description": "frontend_t.node_modules.flatted.python.flatted",
+        "peekOfCode": "def stringify(value, *args, **kwargs):\n    known = _Known()\n    input = []\n    output = []\n    i = int(_index(known, input, value))\n    while i < len(input):\n        output.append(_transform(known, input, input[i]))\n        i += 1\n    return _json.dumps(output, *args, **kwargs)",
+        "detail": "frontend_t.node_modules.flatted.python.flatted",
         "documentation": {}
     }
 ]
