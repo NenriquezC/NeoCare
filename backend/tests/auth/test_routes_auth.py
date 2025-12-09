@@ -15,9 +15,9 @@ fake_token = "fake.jwt.token"
 # ----------------------------
 # Test /auth/register
 # ----------------------------
-@patch("backend.auth.routers.get_db")
-@patch("backend.auth.routers.hash_password")
-@patch("backend.auth.routers.create_token")
+@patch("app.auth.routes.get_db")
+@patch("app.auth.routes.hash_password")
+@patch("app.auth.routes.create_token")
 def test_register_success(mock_create_token, mock_hash_password, mock_get_db):
     # Mock DB session
     mock_session = MagicMock()
@@ -34,7 +34,7 @@ def test_register_success(mock_create_token, mock_hash_password, mock_get_db):
     mock_session.add.assert_called()  # Verifica que se llamó a add()
     mock_session.commit.assert_called()  # Verifica que se llamó a commit()
 
-@patch("backend.auth.routers.get_db")
+@patch("backend.auth.routes.get_db")
 def test_register_existing_email(mock_get_db):
     mock_session = MagicMock()
     # Simulamos que ya existe un usuario
@@ -48,9 +48,9 @@ def test_register_existing_email(mock_get_db):
 # ----------------------------
 # Test /auth/login
 # ----------------------------
-@patch("backend.auth.routers.get_db")
-@patch("backend.auth.routers.verify_password")
-@patch("backend.auth.routers.create_token")
+@patch("app.auth.routes.get_db")
+@patch("app.auth.routes.verify_password")
+@patch("app.auth.routes.create_token")
 def test_login_success(mock_create_token, mock_verify_password, mock_get_db):
     mock_session = MagicMock()
     # Simulamos usuario existente en DB
@@ -69,8 +69,8 @@ def test_login_success(mock_create_token, mock_verify_password, mock_get_db):
     assert response.status_code == 200
     assert response.json() == {"access_token": fake_token, "token_type": "bearer"}
 
-@patch("backend.auth.routers.get_db")
-@patch("backend.auth.routers.verify_password")
+@patch("app.auth.routes.get_db")
+@patch("app.auth.routes.verify_password")
 def test_login_invalid_credentials(mock_verify_password, mock_get_db):
     mock_session = MagicMock()
     mock_user = MagicMock()

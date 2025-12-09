@@ -42,8 +42,8 @@ def test_create_token_contenido():
 # =========================
 # Test get_current_user
 # =========================
-@patch("backend.auth.utils.SessionLocal")
-@patch("backend.auth.utils.jwt.decode")
+@patch("app.auth.utils.SessionLocal")
+@patch("app.auth.utils.jwt.decode")
 def test_get_current_user_exitoso(mock_jwt_decode, mock_session_local):
     # Mock del payload decodificado
     mock_jwt_decode.return_value = {"user_id": 1}
@@ -61,14 +61,14 @@ def test_get_current_user_exitoso(mock_jwt_decode, mock_session_local):
 
 def test_get_current_user_token_invalido():
     # JWTError simulado
-    with patch("backend.auth.utils.jwt.decode", side_effect=JWTError):
+    with patch("app.auth.utils.jwt.decode", side_effect=JWTError):
         with pytest.raises(Exception) as excinfo:
             get_current_user(token="bad.token", db=MagicMock())
         assert "Token inválido o expirado" in str(excinfo.value)
 
 def test_get_current_user_usuario_no_existe():
     # Token válido pero DB no devuelve usuario
-    with patch("backend.auth.utils.jwt.decode", return_value={"user_id": 1}):
+    with patch("app.auth.utils.jwt.decode", return_value={"user_id": 1}):
         db_mock = MagicMock()
         db_mock.query().filter().first.return_value = None
         with pytest.raises(Exception) as excinfo:
