@@ -1,67 +1,46 @@
-// src/pages/Boards.tsx
+/**
+ * @file BoardColumn.tsx
+ * Componente visual para mostrar una columna/tablero en un sistema tipo Kanban.
+ * Muestra el título de la columna y, eventualmente, las tarjetas asignadas.
+ */
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import { BoardColumn } from "../components/BoardColumn";
 
-export const Boards: React.FC = () => {
-  const navigate = useNavigate();
+/**
+ * Props para el componente BoardColumn.
+ * @property title - Título de la columna que se mostrará en el encabezado.
+ */
+interface BoardColumnProps {
+  title: string;
+}
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/login");
-  };
 
-  const columns = ["Por hacer", "En curso", "Hecho"];
+/**
+ * Componente BoardColumn
+ *
+ * Muestra una columna visual con un título y zona para tarjetas de tareas.
+ * Si no hay tarjetas, muestra un mensaje informativo.
+ *
+ * @param {BoardColumnProps} props - Propiedades del componente.
+ * @returns {JSX.Element} La columna del tablero renderizada.
+ */
 
+export const BoardColumn: React.FC<BoardColumnProps> = ({ title }) => {
   return (
     <div
       style={{
-        minHeight: "100vh",
-        display: "flex",
-        flexDirection: "column",
-        background: "#020617",
-        color: "white",
+        flex: 1,
+        background: "#1e293b",
+        borderRadius: "0.5rem",
+        padding: "1rem",
       }}
     >
-      {/* Header */}
-      <header
-        style={{
-          padding: "1rem 2rem",
-          background: "#0f172a",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <h1>NeoCare – Tablero de Innovación</h1>
-        <button
-          onClick={handleLogout}
-          style={{
-            padding: "0.5rem 1rem",
-            background: "#f97316",
-            border: "none",
-            borderRadius: "0.5rem",
-            color: "white",
-            cursor: "pointer",
-          }}
-        >
-          Cerrar sesión
-        </button>
-      </header>
-
-      {/* Contenido */}
-      <main
-        style={{
-          flex: 1,
-          display: "flex",
-          gap: "1rem",
-          padding: "1.5rem",
-        }}
-      >
-        {columns.map((col) => (
-          <BoardColumn key={col} title={col} />
-        ))}
-      </main>
+      <h2 style={{ marginBottom: "1rem", fontSize: "1.25rem" }}>{title}</h2>
+      <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+        {/* Aquí irán las tarjetas */}
+        <p style={{ color: "#94a3b8", textAlign: "center", padding: "2rem" }}>
+          No hay tarjetas
+        </p>
+      </div>
     </div>
   );
 };
