@@ -8,7 +8,7 @@ import os
 # Cambia TU_PASSWORD y el nombre de la base
 DATABASE_URL = os.getenv(
     "DATABASE_URL",
-    "postgresql://postgres:niki2025@localhost/neocare_db"
+    "postgresql://postgres:Limon1307@localhost:5432/neocare"
 )
 
 # =============================

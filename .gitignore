@@ -1,6 +1,15 @@
-Frontend Vite
+# Frontend Vite
 frontend_t/node_modules/
 frontend_t/.vite/
 
 # Cache de Vite (frontend)
 frontend_t/.vite/
+
+# IDE settings
+.vscode
+
+# backend
+.env
+*.pyc
+backend/__pycache__/
+backend/.venv/
