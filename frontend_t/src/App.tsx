@@ -1,8 +1,24 @@
+/**
+ * @file App.tsx
+ * Componente principal de la aplicación Vite + React de ejemplo.
+ * Muestra interacción con estados y enlaces a documentación
+ * de Vite y React.
+ */
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
+/**
+ * App
+ *
+ * Componente de demostración que:
+ * - Muestra los logos de Vite y React con enlaces.
+ * - Lleva un contador interactivo con React.useState.
+ * - Explica a los usuarios cómo probar HMR.
+ *
+ * @returns {JSX.Element} Interfaz gráfica principal de la aplicación.
+ */
 function App() {
   const [count, setCount] = useState(0)
 

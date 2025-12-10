@@ -136,6 +136,22 @@
         "documentation": {}
     },
     {
+        "label": "sessionmaker",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "sessionmaker",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
         "label": "BaseModel",
         "importPath": "pydantic",
         "description": "pydantic",
@@ -145,6 +161,14 @@
     },
     {
         "label": "EmailStr",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "ValidationError",
         "importPath": "pydantic",
         "description": "pydantic",
         "isExtraImport": true,
@@ -181,6 +205,54 @@
         "description": "datetime",
         "isExtraImport": true,
         "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timedelta",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "date",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "jwt",
+        "importPath": "jose",
+        "description": "jose",
+        "isExtraImport": true,
+        "detail": "jose",
+        "documentation": {}
+    },
+    {
+        "label": "JWTError",
+        "importPath": "jose",
+        "description": "jose",
+        "isExtraImport": true,
+        "detail": "jose",
         "documentation": {}
     },
     {
@@ -304,6 +376,22 @@
         "documentation": {}
     },
     {
+        "label": "create_engine",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "create_engine",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
         "label": "BaseSettings",
         "importPath": "pydantic_settings",
         "description": "pydantic_settings",
@@ -329,6 +417,303 @@
         "documentation": {}
     },
     {
+        "label": "pytest",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pytest",
+        "description": "pytest",
+        "detail": "pytest",
+        "documentation": {}
+    },
+    {
+        "label": "TestClient",
+        "importPath": "fastapi.testclient",
+        "description": "fastapi.testclient",
+        "isExtraImport": true,
+        "detail": "fastapi.testclient",
+        "documentation": {}
+    },
+    {
+        "label": "TestClient",
+        "importPath": "fastapi.testclient",
+        "description": "fastapi.testclient",
+        "isExtraImport": true,
+        "detail": "fastapi.testclient",
+        "documentation": {}
+    },
+    {
+        "label": "TestClient",
+        "importPath": "fastapi.testclient",
+        "description": "fastapi.testclient",
+        "isExtraImport": true,
+        "detail": "fastapi.testclient",
+        "documentation": {}
+    },
+    {
+        "label": "patch",
+        "importPath": "unittest.mock",
+        "description": "unittest.mock",
+        "isExtraImport": true,
+        "detail": "unittest.mock",
+        "documentation": {}
+    },
+    {
+        "label": "MagicMock",
+        "importPath": "unittest.mock",
+        "description": "unittest.mock",
+        "isExtraImport": true,
+        "detail": "unittest.mock",
+        "documentation": {}
+    },
+    {
+        "label": "patch",
+        "importPath": "unittest.mock",
+        "description": "unittest.mock",
+        "isExtraImport": true,
+        "detail": "unittest.mock",
+        "documentation": {}
+    },
+    {
+        "label": "MagicMock",
+        "importPath": "unittest.mock",
+        "description": "unittest.mock",
+        "isExtraImport": true,
+        "detail": "unittest.mock",
+        "documentation": {}
+    },
+    {
+        "label": "patch",
+        "importPath": "unittest.mock",
+        "description": "unittest.mock",
+        "isExtraImport": true,
+        "detail": "unittest.mock",
+        "documentation": {}
+    },
+    {
+        "label": "MagicMock",
+        "importPath": "unittest.mock",
+        "description": "unittest.mock",
+        "isExtraImport": true,
+        "detail": "unittest.mock",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "importPath": "app.main",
+        "description": "app.main",
+        "isExtraImport": true,
+        "detail": "app.main",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "importPath": "app.main",
+        "description": "app.main",
+        "isExtraImport": true,
+        "detail": "app.main",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "importPath": "app.main",
+        "description": "app.main",
+        "isExtraImport": true,
+        "detail": "app.main",
+        "documentation": {}
+    },
+    {
+        "label": "UserRegister",
+        "importPath": "app.auth.schemas",
+        "description": "app.auth.schemas",
+        "isExtraImport": true,
+        "detail": "app.auth.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "UserLogin",
+        "importPath": "app.auth.schemas",
+        "description": "app.auth.schemas",
+        "isExtraImport": true,
+        "detail": "app.auth.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "Token",
+        "importPath": "app.auth.schemas",
+        "description": "app.auth.schemas",
+        "isExtraImport": true,
+        "detail": "app.auth.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "hash_password",
+        "importPath": "app.auth.utils",
+        "description": "app.auth.utils",
+        "isExtraImport": true,
+        "detail": "app.auth.utils",
+        "documentation": {}
+    },
+    {
+        "label": "verify_password",
+        "importPath": "app.auth.utils",
+        "description": "app.auth.utils",
+        "isExtraImport": true,
+        "detail": "app.auth.utils",
+        "documentation": {}
+    },
+    {
+        "label": "create_token",
+        "importPath": "app.auth.utils",
+        "description": "app.auth.utils",
+        "isExtraImport": true,
+        "detail": "app.auth.utils",
+        "documentation": {}
+    },
+    {
+        "label": "get_current_user",
+        "importPath": "app.auth.utils",
+        "description": "app.auth.utils",
+        "isExtraImport": true,
+        "detail": "app.auth.utils",
+        "documentation": {}
+    },
+    {
+        "label": "SECRET_KEY",
+        "importPath": "app.auth.utils",
+        "description": "app.auth.utils",
+        "isExtraImport": true,
+        "detail": "app.auth.utils",
+        "documentation": {}
+    },
+    {
+        "label": "ALGORITHM",
+        "importPath": "app.auth.utils",
+        "description": "app.auth.utils",
+        "isExtraImport": true,
+        "detail": "app.auth.utils",
+        "documentation": {}
+    },
+    {
+        "label": "Base",
+        "importPath": "app.database",
+        "description": "app.database",
+        "isExtraImport": true,
+        "detail": "app.database",
+        "documentation": {}
+    },
+    {
+        "label": "Base",
+        "importPath": "app.database",
+        "description": "app.database",
+        "isExtraImport": true,
+        "detail": "app.database",
+        "documentation": {}
+    },
+    {
+        "label": "SessionLocal",
+        "importPath": "app.database",
+        "description": "app.database",
+        "isExtraImport": true,
+        "detail": "app.database",
+        "documentation": {}
+    },
+    {
+        "label": "engine",
+        "importPath": "app.database",
+        "description": "app.database",
+        "isExtraImport": true,
+        "detail": "app.database",
+        "documentation": {}
+    },
+    {
+        "label": "DATABASE_URL",
+        "importPath": "app.database",
+        "description": "app.database",
+        "isExtraImport": true,
+        "detail": "app.database",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "importPath": "app.boards.models",
+        "description": "app.boards.models",
+        "isExtraImport": true,
+        "detail": "app.boards.models",
+        "documentation": {}
+    },
+    {
+        "label": "Board",
+        "importPath": "app.boards.models",
+        "description": "app.boards.models",
+        "isExtraImport": true,
+        "detail": "app.boards.models",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "app.boards.models",
+        "description": "app.boards.models",
+        "isExtraImport": true,
+        "detail": "app.boards.models",
+        "documentation": {}
+    },
+    {
+        "label": "Card",
+        "importPath": "app.boards.models",
+        "description": "app.boards.models",
+        "isExtraImport": true,
+        "detail": "app.boards.models",
+        "documentation": {}
+    },
+    {
+        "label": "TimeEntry",
+        "importPath": "app.boards.models",
+        "description": "app.boards.models",
+        "isExtraImport": true,
+        "detail": "app.boards.models",
+        "documentation": {}
+    },
+    {
+        "label": "BoardMember",
+        "importPath": "app.boards.models",
+        "description": "app.boards.models",
+        "isExtraImport": true,
+        "detail": "app.boards.models",
+        "documentation": {}
+    },
+    {
+        "label": "Board",
+        "importPath": "app.boards.models",
+        "description": "app.boards.models",
+        "isExtraImport": true,
+        "detail": "app.boards.models",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "importPath": "app.boards.models",
+        "description": "app.boards.models",
+        "isExtraImport": true,
+        "detail": "app.boards.models",
+        "documentation": {}
+    },
+    {
+        "label": "Settings",
+        "importPath": "app.config",
+        "description": "app.config",
+        "isExtraImport": true,
+        "detail": "app.config",
+        "documentation": {}
+    },
+    {
+        "label": "settings",
+        "importPath": "app.config",
+        "description": "app.config",
+        "isExtraImport": true,
+        "detail": "app.config",
+        "documentation": {}
+    },
+    {
         "label": "requests",
         "kind": 6,
         "isExtraImport": true,
@@ -351,7 +736,7 @@
         "kind": 2,
         "importPath": "backend.app.auth.routes",
         "description": "backend.app.auth.routes",
-        "peekOfCode": "def register(user: UserRegister, db: Session = Depends(get_db)):\n    existing = db.query(User).filter(User.email == user.email).first()\n    if existing:\n        raise HTTPException(\n            status_code=status.HTTP_400_BAD_REQUEST,\n            detail=\"Email ya registrado\",\n        )\n    new_user = User(\n        email=user.email,\n        password_hash=hash_password(user.password),",
+        "peekOfCode": "def register(user: UserRegister, db: Session = Depends(get_db)):\n    \"\"\"\n    Crea un usuario nuevo y retorna un token de acceso JWT.\n    Parámetros:\n        user (UserRegister): Datos de registro recibidos en el cuerpo de la petición.\n        db (Session): Sesión de base de datos proporcionada por FastAPI.\n    Retorna:\n        Token: Diccionario con el JWT generado y el tipo de token.\n    Excepciones:\n        HTTP 400: Si el email ya está registrado en el sistema.",
         "detail": "backend.app.auth.routes",
         "documentation": {}
     },
@@ -360,7 +745,7 @@
         "kind": 2,
         "importPath": "backend.app.auth.routes",
         "description": "backend.app.auth.routes",
-        "peekOfCode": "def login(user: UserLogin, db: Session = Depends(get_db)):\n    db_user = db.query(User).filter(User.email == user.email).first()\n    if not db_user or not verify_password(user.password, db_user.password_hash):\n        raise HTTPException(\n            status_code=status.HTTP_401_UNAUTHORIZED,\n            detail=\"Credenciales incorrectas\",\n        )\n    token = create_token({\"user_id\": db_user.id, \"email\": db_user.email})\n    return {\"access_token\": token, \"token_type\": \"bearer\"}",
+        "peekOfCode": "def login(user: UserLogin, db: Session = Depends(get_db)):\n    \"\"\"\n    Autentica un usuario existente y retorna un token JWT si las credenciales son correctas.\n    Parámetros:\n        user (UserLogin): Credenciales enviadas por el cliente.\n        db (Session): Sesión de base de datos proporcionada por FastAPI.\n    Retorna:\n        Token: Diccionario con el JWT generado y el tipo de token.\n    Excepciones:\n        HTTP 401: Si el email no existe o la contraseña no coincide.",
         "detail": "backend.app.auth.routes",
         "documentation": {}
     },
@@ -369,7 +754,7 @@
         "kind": 5,
         "importPath": "backend.app.auth.routes",
         "description": "backend.app.auth.routes",
-        "peekOfCode": "router = APIRouter(prefix=\"/auth\", tags=[\"auth\"])\n@router.post(\"/register\", response_model=Token)\ndef register(user: UserRegister, db: Session = Depends(get_db)):\n    existing = db.query(User).filter(User.email == user.email).first()\n    if existing:\n        raise HTTPException(\n            status_code=status.HTTP_400_BAD_REQUEST,\n            detail=\"Email ya registrado\",\n        )\n    new_user = User(",
+        "peekOfCode": "router = APIRouter(prefix=\"/auth\", tags=[\"auth\"])\n@router.post(\"/register\", response_model=Token)\ndef register(user: UserRegister, db: Session = Depends(get_db)):\n    \"\"\"\n    Crea un usuario nuevo y retorna un token de acceso JWT.\n    Parámetros:\n        user (UserRegister): Datos de registro recibidos en el cuerpo de la petición.\n        db (Session): Sesión de base de datos proporcionada por FastAPI.\n    Retorna:\n        Token: Diccionario con el JWT generado y el tipo de token.",
         "detail": "backend.app.auth.routes",
         "documentation": {}
     },
@@ -378,7 +763,7 @@
         "kind": 6,
         "importPath": "backend.app.auth.schemas",
         "description": "backend.app.auth.schemas",
-        "peekOfCode": "class UserRegister(BaseModel):\n    email: EmailStr\n    password: str\n    name: Optional[str] = None\nclass UserLogin(BaseModel):\n    email: EmailStr\n    password: str\nclass Token(BaseModel):\n    access_token: str\n    token_type: str = \"bearer\"",
+        "peekOfCode": "class UserRegister(BaseModel):\n    \"\"\"\n    Esquema para recibir datos de registro de usuario.\n    Campos:\n        email (EmailStr): Correo electrónico válido.\n        password (str): Contraseña del usuario.\n        name (str, opcional): Nombre del usuario.\n    \"\"\"\n    email: EmailStr\n    password: str",
         "detail": "backend.app.auth.schemas",
         "documentation": {}
     },
@@ -387,7 +772,7 @@
         "kind": 6,
         "importPath": "backend.app.auth.schemas",
         "description": "backend.app.auth.schemas",
-        "peekOfCode": "class UserLogin(BaseModel):\n    email: EmailStr\n    password: str\nclass Token(BaseModel):\n    access_token: str\n    token_type: str = \"bearer\"",
+        "peekOfCode": "class UserLogin(BaseModel):\n    \"\"\"\n    Esquema para datos de login (inicio de sesión).\n    Campos:\n        email (EmailStr): Correo electrónico válido.\n        password (str): Contraseña del usuario.\n    \"\"\"\n    email: EmailStr\n    password: str\nclass Token(BaseModel):",
         "detail": "backend.app.auth.schemas",
         "documentation": {}
     },
@@ -396,7 +781,7 @@
         "kind": 6,
         "importPath": "backend.app.auth.schemas",
         "description": "backend.app.auth.schemas",
-        "peekOfCode": "class Token(BaseModel):\n    access_token: str\n    token_type: str = \"bearer\"",
+        "peekOfCode": "class Token(BaseModel):\n    \"\"\"\n    Esquema de respuesta para el token JWT.\n    Campos:\n        access_token (str): Token de acceso generado.\n        token_type (str): Tipo de autenticación (bearer por defecto).\n    \"\"\"\n    access_token: str\n    token_type: str = \"bearer\"",
         "detail": "backend.app.auth.schemas",
         "documentation": {}
     },
@@ -405,7 +790,7 @@
         "kind": 2,
         "importPath": "backend.app.auth.utils",
         "description": "backend.app.auth.utils",
-        "peekOfCode": "def hash_password(password: str) -> str:\n    \"\"\"\n    Hashea la contraseña usando bcrypt.\n    Bcrypt sólo admite hasta 72 bytes, así que truncamos por seguridad.\n    \"\"\"\n    if password is None:\n        password = \"\"\n    #password = password[:72]\n    return pwd_context.hash(password)\ndef verify_password(plain: str, hashed: str) -> bool:",
+        "peekOfCode": "def hash_password(password: str) -> str:\n    \"\"\"\n    Hashea la contraseña del usuario utilizando el algoritmo pbkdf2_sha256.\n    Args:\n        password (str): Contraseña original en texto plano.\n    Returns:\n        str: Contraseña encriptada/hasheada.\n    \"\"\"\n    if password is None:\n        password = \"\"",
         "detail": "backend.app.auth.utils",
         "documentation": {}
     },
@@ -414,7 +799,7 @@
         "kind": 2,
         "importPath": "backend.app.auth.utils",
         "description": "backend.app.auth.utils",
-        "peekOfCode": "def verify_password(plain: str, hashed: str) -> bool:\n    \"\"\"\n    Verifica la contraseña en texto plano contra el hash almacenado.\n    Aplicamos el mismo truncado que en hash_password.\n    \"\"\"\n    if plain is None:\n        plain = \"\"\n    #plain = plain[:72]\n    return pwd_context.verify(plain, hashed)\n# ===== TOKEN: CREAR =====",
+        "peekOfCode": "def verify_password(plain: str, hashed: str) -> bool:\n    \"\"\"\n    Verifica que la contraseña en texto plano coincida con el hash almacenado.\n    Args:\n        plain (str): Contraseña en texto plano proporcionada por el usuario.\n        hashed (str): Contraseña hasheada almacenada en la base de datos.\n    Returns:\n        bool: True si coincide, False si no.\n    \"\"\"\n    if plain is None:",
         "detail": "backend.app.auth.utils",
         "documentation": {}
     },
@@ -423,7 +808,7 @@
         "kind": 2,
         "importPath": "backend.app.auth.utils",
         "description": "backend.app.auth.utils",
-        "peekOfCode": "def create_token(data: dict):\n    to_encode = data.copy()\n    expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MIN)\n    to_encode.update({\"exp\": expire})\n    return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)\n# ===== DEPENDENCIA DB =====\ndef get_db():\n    db = SessionLocal()\n    try:\n        yield db",
+        "peekOfCode": "def create_token(data: dict):\n    \"\"\"\n    Genera un token JWT codificando los datos de usuario.\n    Args:\n        data (dict): Datos a incluir en el payload del token.\n    Returns:\n        str: Token JWT generado.\n    \"\"\"\n    to_encode = data.copy()\n    expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MIN)",
         "detail": "backend.app.auth.utils",
         "documentation": {}
     },
@@ -432,7 +817,7 @@
         "kind": 2,
         "importPath": "backend.app.auth.utils",
         "description": "backend.app.auth.utils",
-        "peekOfCode": "def get_db():\n    db = SessionLocal()\n    try:\n        yield db\n    finally:\n        db.close()\n# TOKEN: VALIDAR Y OBTENER USUARIO\ndef get_current_user(\n    token: str = Depends(oauth2_scheme),\n    db: Session = Depends(get_db)",
+        "peekOfCode": "def get_db():\n    \"\"\"\n    Genera una sesión nueva de base de datos para inyectar en rutas de FastAPI.\n    Yields:\n        Session: Sesión SQLAlchemy.\n    \"\"\"\n    db = SessionLocal()\n    try:\n        yield db\n    finally:",
         "detail": "backend.app.auth.utils",
         "documentation": {}
     },
@@ -441,7 +826,7 @@
         "kind": 2,
         "importPath": "backend.app.auth.utils",
         "description": "backend.app.auth.utils",
-        "peekOfCode": "def get_current_user(\n    token: str = Depends(oauth2_scheme),\n    db: Session = Depends(get_db)\n):\n    credentials_error = HTTPException(\n        status_code=status.HTTP_401_UNAUTHORIZED,\n        detail=\"Token inválido o expirado\",\n        headers={\"WWW-Authenticate\": \"Bearer\"},\n    )\n    try:",
+        "peekOfCode": "def get_current_user(token: str = Depends(oauth2_scheme),db: Session = Depends(get_db)):\n    \"\"\"\n    Obtiene el usuario actual autenticado a partir del token JWT.\n    Args:\n        token (str): Token JWT extraído automáticamente por FastAPI.\n        db (Session): Sesión SQLAlchemy, inyectada.\n    Raises:\n        HTTPException: Si el token es inválido o el usuario no existe.\n    Returns:\n        User: Instancia del usuario autenticado en base de datos.",
         "detail": "backend.app.auth.utils",
         "documentation": {}
     },
@@ -450,7 +835,7 @@
         "kind": 5,
         "importPath": "backend.app.auth.utils",
         "description": "backend.app.auth.utils",
-        "peekOfCode": "SECRET_KEY = \"CAMBIA_ESTA_CLAVE\"\nALGORITHM = \"HS256\"\nACCESS_TOKEN_EXPIRE_MIN = 60\noauth2_scheme = OAuth2PasswordBearer(tokenUrl=\"/auth/login\")\npwd_context = CryptContext(schemes=[\"pbkdf2_sha256\"], deprecated=\"auto\")\n# ===== CONTRASEÑAS =====\ndef hash_password(password: str) -> str:\n    \"\"\"\n    Hashea la contraseña usando bcrypt.\n    Bcrypt sólo admite hasta 72 bytes, así que truncamos por seguridad.",
+        "peekOfCode": "SECRET_KEY = \"CAMBIA_ESTA_CLAVE\"\nALGORITHM = \"HS256\"\nACCESS_TOKEN_EXPIRE_MIN = 60\noauth2_scheme = OAuth2PasswordBearer(tokenUrl=\"/auth/login\")\npwd_context = CryptContext(schemes=[\"pbkdf2_sha256\"], deprecated=\"auto\")\n# ===== CONTRASEÑAS =====\ndef hash_password(password: str) -> str:\n    \"\"\"\n    Hashea la contraseña del usuario utilizando el algoritmo pbkdf2_sha256.\n    Args:",
         "detail": "backend.app.auth.utils",
         "documentation": {}
     },
@@ -459,7 +844,7 @@
         "kind": 5,
         "importPath": "backend.app.auth.utils",
         "description": "backend.app.auth.utils",
-        "peekOfCode": "ALGORITHM = \"HS256\"\nACCESS_TOKEN_EXPIRE_MIN = 60\noauth2_scheme = OAuth2PasswordBearer(tokenUrl=\"/auth/login\")\npwd_context = CryptContext(schemes=[\"pbkdf2_sha256\"], deprecated=\"auto\")\n# ===== CONTRASEÑAS =====\ndef hash_password(password: str) -> str:\n    \"\"\"\n    Hashea la contraseña usando bcrypt.\n    Bcrypt sólo admite hasta 72 bytes, así que truncamos por seguridad.\n    \"\"\"",
+        "peekOfCode": "ALGORITHM = \"HS256\"\nACCESS_TOKEN_EXPIRE_MIN = 60\noauth2_scheme = OAuth2PasswordBearer(tokenUrl=\"/auth/login\")\npwd_context = CryptContext(schemes=[\"pbkdf2_sha256\"], deprecated=\"auto\")\n# ===== CONTRASEÑAS =====\ndef hash_password(password: str) -> str:\n    \"\"\"\n    Hashea la contraseña del usuario utilizando el algoritmo pbkdf2_sha256.\n    Args:\n        password (str): Contraseña original en texto plano.",
         "detail": "backend.app.auth.utils",
         "documentation": {}
     },
@@ -468,7 +853,7 @@
         "kind": 5,
         "importPath": "backend.app.auth.utils",
         "description": "backend.app.auth.utils",
-        "peekOfCode": "ACCESS_TOKEN_EXPIRE_MIN = 60\noauth2_scheme = OAuth2PasswordBearer(tokenUrl=\"/auth/login\")\npwd_context = CryptContext(schemes=[\"pbkdf2_sha256\"], deprecated=\"auto\")\n# ===== CONTRASEÑAS =====\ndef hash_password(password: str) -> str:\n    \"\"\"\n    Hashea la contraseña usando bcrypt.\n    Bcrypt sólo admite hasta 72 bytes, así que truncamos por seguridad.\n    \"\"\"\n    if password is None:",
+        "peekOfCode": "ACCESS_TOKEN_EXPIRE_MIN = 60\noauth2_scheme = OAuth2PasswordBearer(tokenUrl=\"/auth/login\")\npwd_context = CryptContext(schemes=[\"pbkdf2_sha256\"], deprecated=\"auto\")\n# ===== CONTRASEÑAS =====\ndef hash_password(password: str) -> str:\n    \"\"\"\n    Hashea la contraseña del usuario utilizando el algoritmo pbkdf2_sha256.\n    Args:\n        password (str): Contraseña original en texto plano.\n    Returns:",
         "detail": "backend.app.auth.utils",
         "documentation": {}
     },
@@ -477,7 +862,7 @@
         "kind": 5,
         "importPath": "backend.app.auth.utils",
         "description": "backend.app.auth.utils",
-        "peekOfCode": "oauth2_scheme = OAuth2PasswordBearer(tokenUrl=\"/auth/login\")\npwd_context = CryptContext(schemes=[\"pbkdf2_sha256\"], deprecated=\"auto\")\n# ===== CONTRASEÑAS =====\ndef hash_password(password: str) -> str:\n    \"\"\"\n    Hashea la contraseña usando bcrypt.\n    Bcrypt sólo admite hasta 72 bytes, así que truncamos por seguridad.\n    \"\"\"\n    if password is None:\n        password = \"\"",
+        "peekOfCode": "oauth2_scheme = OAuth2PasswordBearer(tokenUrl=\"/auth/login\")\npwd_context = CryptContext(schemes=[\"pbkdf2_sha256\"], deprecated=\"auto\")\n# ===== CONTRASEÑAS =====\ndef hash_password(password: str) -> str:\n    \"\"\"\n    Hashea la contraseña del usuario utilizando el algoritmo pbkdf2_sha256.\n    Args:\n        password (str): Contraseña original en texto plano.\n    Returns:\n        str: Contraseña encriptada/hasheada.",
         "detail": "backend.app.auth.utils",
         "documentation": {}
     },
@@ -486,7 +871,7 @@
         "kind": 5,
         "importPath": "backend.app.auth.utils",
         "description": "backend.app.auth.utils",
-        "peekOfCode": "pwd_context = CryptContext(schemes=[\"pbkdf2_sha256\"], deprecated=\"auto\")\n# ===== CONTRASEÑAS =====\ndef hash_password(password: str) -> str:\n    \"\"\"\n    Hashea la contraseña usando bcrypt.\n    Bcrypt sólo admite hasta 72 bytes, así que truncamos por seguridad.\n    \"\"\"\n    if password is None:\n        password = \"\"\n    #password = password[:72]",
+        "peekOfCode": "pwd_context = CryptContext(schemes=[\"pbkdf2_sha256\"], deprecated=\"auto\")\n# ===== CONTRASEÑAS =====\ndef hash_password(password: str) -> str:\n    \"\"\"\n    Hashea la contraseña del usuario utilizando el algoritmo pbkdf2_sha256.\n    Args:\n        password (str): Contraseña original en texto plano.\n    Returns:\n        str: Contraseña encriptada/hasheada.\n    \"\"\"",
         "detail": "backend.app.auth.utils",
         "documentation": {}
     },
@@ -495,7 +880,7 @@
         "kind": 6,
         "importPath": "backend.app.boards.models",
         "description": "backend.app.boards.models",
-        "peekOfCode": "class User(Base):\n    __tablename__ = \"users\"\n    id = Column(Integer, primary_key=True, index=True)\n    email = Column(String(255), unique=True, nullable=False, index=True)\n    password_hash = Column(String(255), nullable=False)\n    name = Column(String(100), nullable=True)\n    role = Column(String(50), nullable=True)\n    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)\n    updated_at = Column(DateTime, default=datetime.utcnow, nullable=False)\n    # Relaciones",
+        "peekOfCode": "class User(Base):\n    \"\"\"\n    Modelo de usuario del sistema.\n    Representa una cuenta con credenciales y relaciones hacia tableros,\n    tarjetas y registros de tiempo.\n    Campos principales:\n        id (int): Identificador único del usuario.\n        email (str): Correo único.\n        password_hash (str): Contraseña encriptada.\n        name (str): Nombre del usuario.",
         "detail": "backend.app.boards.models",
         "documentation": {}
     },
@@ -504,7 +889,7 @@
         "kind": 6,
         "importPath": "backend.app.boards.models",
         "description": "backend.app.boards.models",
-        "peekOfCode": "class Board(Base):\n    __tablename__ = \"boards\"\n    id = Column(Integer, primary_key=True, index=True)\n    name = Column(String(150), nullable=False)\n    user_id = Column(\n        Integer,\n        ForeignKey(\"users.id\", ondelete=\"CASCADE\"),\n        nullable=False,\n    )\n    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)",
+        "peekOfCode": "class Board(Base):\n    \"\"\"\n    Modelo de tablero Kanban.\n    Representa un tablero donde los usuarios organizan listas y tarjetas.\n    Campos principales:\n        id (int): Identificador único de tablero.\n        name (str): Nombre del tablero.\n        user_id (int): Usuario propietario del tablero.\n        created_at (datetime): Fecha de creación.\n    Relaciones:",
         "detail": "backend.app.boards.models",
         "documentation": {}
     },
@@ -513,7 +898,7 @@
         "kind": 6,
         "importPath": "backend.app.boards.models",
         "description": "backend.app.boards.models",
-        "peekOfCode": "class List(Base):\n    __tablename__ = \"lists\"\n    id = Column(Integer, primary_key=True, index=True)\n    board_id = Column(\n        Integer,\n        ForeignKey(\"boards.id\", ondelete=\"CASCADE\"),\n        nullable=False,\n    )\n    name = Column(String(100), nullable=False)\n    position = Column(Integer, nullable=False)",
+        "peekOfCode": "class List(Base):\n    \"\"\"\n    Modelo de lista dentro de un tablero.\n    Permite agrupar tarjetas por proceso, etapa o categoría.\n    Campos principales:\n        id (int): Identificador único de la lista.\n        board_id (int): Tablero al que pertenece.\n        name (str): Nombre de la lista.\n        position (int): Posición en el tablero.\n        created_at (datetime): Fecha de creación.",
         "detail": "backend.app.boards.models",
         "documentation": {}
     },
@@ -522,7 +907,7 @@
         "kind": 6,
         "importPath": "backend.app.boards.models",
         "description": "backend.app.boards.models",
-        "peekOfCode": "class Card(Base):\n    __tablename__ = \"cards\"\n    id = Column(Integer, primary_key=True, index=True)\n    board_id = Column(\n        Integer,\n        ForeignKey(\"boards.id\", ondelete=\"CASCADE\"),\n        nullable=False,\n    )\n    list_id = Column(\n        Integer,",
+        "peekOfCode": "class Card(Base):\n    \"\"\"\n    Modelo de tarjeta/do Kanban.\n    Define tareas o ítems que pueden moverse entre listas y tableros.\n    Campos principales:\n        id (int): Identificador único de la tarjeta.\n        board_id, list_id (int): Relación con tablero y lista.\n        title (str): Título de la tarea.\n        description (Text): Descripción detallada.\n        due_date (Date): Fecha de entrega.",
         "detail": "backend.app.boards.models",
         "documentation": {}
     },
@@ -531,7 +916,7 @@
         "kind": 6,
         "importPath": "backend.app.boards.models",
         "description": "backend.app.boards.models",
-        "peekOfCode": "class TimeEntry(Base):\n    __tablename__ = \"time_entries\"\n    id = Column(Integer, primary_key=True, index=True)\n    user_id = Column(\n        Integer,\n        ForeignKey(\"users.id\"),\n        nullable=False,\n    )\n    card_id = Column(\n        Integer,",
+        "peekOfCode": "class TimeEntry(Base):\n    \"\"\"\n    Registro de tiempo invertido en una tarjeta.\n    Permite cuantificar esfuerzos y generar historiales de trabajo.\n    Campos principales:\n        id (int): Identificador único.\n        user_id (int): Usuario que registró el tiempo.\n        card_id (int): Tarjeta asociada.\n        date (Date): Fecha del registro.\n        hours (Numeric): Horas trabajadas.",
         "detail": "backend.app.boards.models",
         "documentation": {}
     },
@@ -540,7 +925,7 @@
         "kind": 6,
         "importPath": "backend.app.boards.models",
         "description": "backend.app.boards.models",
-        "peekOfCode": "class BoardMember(Base):\n    __tablename__ = \"board_members\"\n    __table_args__ = (\n        UniqueConstraint(\"board_id\", \"user_id\", name=\"uq_board_user\"),\n    )\n    id = Column(Integer, primary_key=True, index=True)\n    board_id = Column(\n        Integer,\n        ForeignKey(\"boards.id\", ondelete=\"CASCADE\"),\n        nullable=False,",
+        "peekOfCode": "class BoardMember(Base):\n    \"\"\"\n    Asociación entre usuarios y tableros (membresías).\n    Permite controlar roles y accesos de los usuarios a los tableros.\n    Campos principales:\n        id (int): Identificador único.\n        board_id (int): Tablero asociado.\n        user_id (int): Usuario asociado.\n        role (str): Rol dentro del tablero.\n    Restricciones:",
         "detail": "backend.app.boards.models",
         "documentation": {}
     },
@@ -549,7 +934,7 @@
         "kind": 2,
         "importPath": "backend.app.boards.routes",
         "description": "backend.app.boards.routes",
-        "peekOfCode": "def get_boards(\n    db: Session = Depends(get_db),\n    current_user: User = Depends(get_current_user)\n):\n    return db.query(Board).filter(Board.user_id == current_user.id).all()",
+        "peekOfCode": "def get_boards(db: Session = Depends(get_db),current_user: User = Depends(get_current_user)):\n    \"\"\"\n    Obtiene todos los tableros pertenecientes al usuario autenticado.\n    Parámetros:\n        db (Session): Sesión actual de la base de datos inyectada por FastAPI.\n        current_user (User): Usuario autenticado inyectado por FastAPI.\n    Retorna:\n        List[Board]: Lista de objetos Board que pertenecen al usuario actual.\n    \"\"\"\n    return db.query(Board).filter(Board.user_id == current_user.id).all()",
         "detail": "backend.app.boards.routes",
         "documentation": {}
     },
@@ -558,7 +943,7 @@
         "kind": 5,
         "importPath": "backend.app.boards.routes",
         "description": "backend.app.boards.routes",
-        "peekOfCode": "router = APIRouter(prefix=\"/boards\", tags=[\"boards\"])\n@router.get(\"/\")\ndef get_boards(\n    db: Session = Depends(get_db),\n    current_user: User = Depends(get_current_user)\n):\n    return db.query(Board).filter(Board.user_id == current_user.id).all()",
+        "peekOfCode": "router = APIRouter(prefix=\"/boards\", tags=[\"boards\"])\n@router.get(\"/\")\ndef get_boards(db: Session = Depends(get_db),current_user: User = Depends(get_current_user)):\n    \"\"\"\n    Obtiene todos los tableros pertenecientes al usuario autenticado.\n    Parámetros:\n        db (Session): Sesión actual de la base de datos inyectada por FastAPI.\n        current_user (User): Usuario autenticado inyectado por FastAPI.\n    Retorna:\n        List[Board]: Lista de objetos Board que pertenecen al usuario actual.",
         "detail": "backend.app.boards.routes",
         "documentation": {}
     },
@@ -567,7 +952,7 @@
         "kind": 6,
         "importPath": "backend.app.config",
         "description": "backend.app.config",
-        "peekOfCode": "class Settings(BaseSettings):\n    # Database\n    DATABASE_URL: str = \"sqlite:///./test.db\"\n    # JWT\n    SECRET_KEY: str = \"your-secret-key-here\"\n    ALGORITHM: str = \"HS256\"\n    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30\n    class Config:\n        env_file = \".env\"\nsettings = Settings()",
+        "peekOfCode": "class Settings(BaseSettings):\n    \"\"\"\n    Configuración central de la aplicación.\n    Esta clase gestiona los principales parámetros de configuración accesibles\n    mediante variables de entorno (o valores por defecto). Utiliza Pydantic para\n    permitir validaciones automáticas y organización estructurada.\n    Atributos:\n        DATABASE_URL (str): Cadena de conexión para la base de datos.\n        SECRET_KEY (str): Clave secreta para la generación y validación de JWT.\n        ALGORITHM (str): Algoritmo utilizado para firmar los tokens JWT.",
         "detail": "backend.app.config",
         "documentation": {}
     },
@@ -585,7 +970,7 @@
         "kind": 5,
         "importPath": "backend.app.database",
         "description": "backend.app.database",
-        "peekOfCode": "DATABASE_URL = os.getenv(\n    \"DATABASE_URL\",\n    \"postgresql://postgres:niki2025@localhost/neocare_db\"\n)\n# =============================\n# 2) CREAR ENGINE\n# =============================\nengine = create_engine(\n    DATABASE_URL,\n    future=True,",
+        "peekOfCode": "DATABASE_URL = os.getenv(\n    \"DATABASE_URL\",\n    \"postgresql://postgres:niki2025@localhost/neocare_db\"\n)\n# Crea el motor de conexión con SQLAlchemy\nengine = create_engine(\n    DATABASE_URL,\n    future=True,\n    echo=True  # Muestra las consultas SQL generadas (útil para desarrollo y depuración)\n)",
         "detail": "backend.app.database",
         "documentation": {}
     },
@@ -594,7 +979,7 @@
         "kind": 5,
         "importPath": "backend.app.database",
         "description": "backend.app.database",
-        "peekOfCode": "engine = create_engine(\n    DATABASE_URL,\n    future=True,\n    echo=True  # muestra SQL en consola (útil en desarrollo)\n)\n# =============================\n# 3) SESIONES\n# =============================\nSessionLocal = sessionmaker(\n    autocommit=False,",
+        "peekOfCode": "engine = create_engine(\n    DATABASE_URL,\n    future=True,\n    echo=True  # Muestra las consultas SQL generadas (útil para desarrollo y depuración)\n)\n# Genera la clase de sesión para interactuar con la base de datos\nSessionLocal = sessionmaker(\n    autocommit=False,           # Las transacciones no se confirman automáticamente\n    autoflush=False,            # No se realiza autoflush en los cambios\n    bind=engine                 # No se realiza autoflush en los cambios",
         "detail": "backend.app.database",
         "documentation": {}
     },
@@ -603,7 +988,7 @@
         "kind": 5,
         "importPath": "backend.app.database",
         "description": "backend.app.database",
-        "peekOfCode": "SessionLocal = sessionmaker(\n    autocommit=False,\n    autoflush=False,\n    bind=engine\n)\n# =============================\n# 4) BASE PARA LOS MODELOS\n# =============================\nBase = declarative_base()",
+        "peekOfCode": "SessionLocal = sessionmaker(\n    autocommit=False,           # Las transacciones no se confirman automáticamente\n    autoflush=False,            # No se realiza autoflush en los cambios\n    bind=engine                 # No se realiza autoflush en los cambios\n)\n# Clase base para los modelos ORM\nBase = declarative_base()",
         "detail": "backend.app.database",
         "documentation": {}
     },
@@ -621,7 +1006,7 @@
         "kind": 2,
         "importPath": "backend.app.main",
         "description": "backend.app.main",
-        "peekOfCode": "def root():\n    return {\"status\": \"NeoCare Backend Running\"}",
+        "peekOfCode": "def root():\n    \"\"\"\n    Endpoint raíz (health check).\n    Permite verificar si el backend de NeoCare está operativo.\n    \"\"\"\n    return {\"status\": \"NeoCare Backend Running\"}",
         "detail": "backend.app.main",
         "documentation": {}
     },
@@ -630,8 +1015,449 @@
         "kind": 5,
         "importPath": "backend.app.main",
         "description": "backend.app.main",
-        "peekOfCode": "app = FastAPI(title=\"NeoCare API\")\n# CORS (para que el frontend pueda llamar al backend)\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[\"*\"],  # luego lo ajustas si quieres\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],\n)\n# 👇 REGISTRAR RUTAS DE AUTH",
+        "peekOfCode": "app = FastAPI(title=\"NeoCare API\")\n# CORS (para que el frontend pueda llamar al backend)\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[\"*\"],   #¡En producción, define los dominios permitidos!\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],\n)\n# Registra las rutas de autenticación bajo el router correspondiente",
         "detail": "backend.app.main",
+        "documentation": {}
+    },
+    {
+        "label": "test_register_success",
+        "kind": 2,
+        "importPath": "backend.test.auth.test_routes_auth",
+        "description": "backend.test.auth.test_routes_auth",
+        "peekOfCode": "def test_register_success(mock_create_token, mock_hash_password, mock_get_db):\n    \"\"\"\n    Registro exitoso de usuario.\n    - Se parchea `get_db` para devolver una sesión simulada donde no existe el usuario.\n    - Se parchea `hash_password` y `create_token` para controlar sus salidas.\n    - Se realiza una petición POST a /auth/register con `user_data`.\n    - Se comprueba que la respuesta contiene el token esperado y que la sesión DB\n    recibió llamadas a `add` y `commit`.\n    \"\"\"\n    # Mock de sesión de DB: simular que no existe un usuario con ese email",
+        "detail": "backend.test.auth.test_routes_auth",
+        "documentation": {}
+    },
+    {
+        "label": "test_register_existing_email",
+        "kind": 2,
+        "importPath": "backend.test.auth.test_routes_auth",
+        "description": "backend.test.auth.test_routes_auth",
+        "peekOfCode": "def test_register_existing_email(mock_get_db):\n    \"\"\"\n    Registro fallido por email ya registrado.\n    - Se parchea `get_db` para que la consulta indique que ya existe un usuario.\n    - Se espera una respuesta 400 con detalle \"Email ya registrado\".\n    \"\"\"\n    mock_session = MagicMock()\n    # Simulamos que ya existe un usuario\n    mock_session.query().filter().first.return_value = True\n    mock_get_db.return_value = mock_session",
+        "detail": "backend.test.auth.test_routes_auth",
+        "documentation": {}
+    },
+    {
+        "label": "test_login_success",
+        "kind": 2,
+        "importPath": "backend.test.auth.test_routes_auth",
+        "description": "backend.test.auth.test_routes_auth",
+        "peekOfCode": "def test_login_success(mock_create_token, mock_verify_password, mock_get_db):\n    \"\"\"\n    Login exitoso con credenciales válidas.\n    - Se parchea `get_db` para devolver un usuario simulado.\n    - Se parchea `verify_password` para que valide la contraseña.\n    - Se parchea `create_token` para devolver un token predefinido.\n    - Se realiza POST a /auth/login y se comprueba el token en la respuesta.\n    \"\"\"\n    mock_session = MagicMock()\n    # Simulamos usuario existente en DB",
+        "detail": "backend.test.auth.test_routes_auth",
+        "documentation": {}
+    },
+    {
+        "label": "test_login_invalid_credentials",
+        "kind": 2,
+        "importPath": "backend.test.auth.test_routes_auth",
+        "description": "backend.test.auth.test_routes_auth",
+        "peekOfCode": "def test_login_invalid_credentials(mock_verify_password, mock_get_db):\n    \"\"\"\n    Login fallido por credenciales inválidas.\n    - Se parchea `get_db` para devolver un usuario existente.\n    - Se parchea `verify_password` para que devuelva False, simulando contraseña incorrecta.\n    - Se espera una respuesta 401 con detalle \"Credenciales incorrectas\".\n    \"\"\"\n    mock_session = MagicMock()\n    mock_user = MagicMock()\n    mock_user.password_hash = \"hashed_password\"",
+        "detail": "backend.test.auth.test_routes_auth",
+        "documentation": {}
+    },
+    {
+        "label": "client",
+        "kind": 5,
+        "importPath": "backend.test.auth.test_routes_auth",
+        "description": "backend.test.auth.test_routes_auth",
+        "peekOfCode": "client = TestClient(app)\n# Datos de ejemplo\nuser_data = {\"email\": \"test@example.com\", \"password\": \"password123\", \"name\": \"Test User\"}\nlogin_data = {\"email\": \"test@example.com\", \"password\": \"password123\"}\nfake_token = \"fake.jwt.token\"\n# ----------------------------\n# Test /auth/register\n# ----------------------------\n@patch(\"app.auth.routes.get_db\")\n@patch(\"app.auth.routes.hash_password\")",
+        "detail": "backend.test.auth.test_routes_auth",
+        "documentation": {}
+    },
+    {
+        "label": "user_data",
+        "kind": 5,
+        "importPath": "backend.test.auth.test_routes_auth",
+        "description": "backend.test.auth.test_routes_auth",
+        "peekOfCode": "user_data = {\"email\": \"test@example.com\", \"password\": \"password123\", \"name\": \"Test User\"}\nlogin_data = {\"email\": \"test@example.com\", \"password\": \"password123\"}\nfake_token = \"fake.jwt.token\"\n# ----------------------------\n# Test /auth/register\n# ----------------------------\n@patch(\"app.auth.routes.get_db\")\n@patch(\"app.auth.routes.hash_password\")\n@patch(\"app.auth.routes.create_token\")\ndef test_register_success(mock_create_token, mock_hash_password, mock_get_db):",
+        "detail": "backend.test.auth.test_routes_auth",
+        "documentation": {}
+    },
+    {
+        "label": "login_data",
+        "kind": 5,
+        "importPath": "backend.test.auth.test_routes_auth",
+        "description": "backend.test.auth.test_routes_auth",
+        "peekOfCode": "login_data = {\"email\": \"test@example.com\", \"password\": \"password123\"}\nfake_token = \"fake.jwt.token\"\n# ----------------------------\n# Test /auth/register\n# ----------------------------\n@patch(\"app.auth.routes.get_db\")\n@patch(\"app.auth.routes.hash_password\")\n@patch(\"app.auth.routes.create_token\")\ndef test_register_success(mock_create_token, mock_hash_password, mock_get_db):\n    \"\"\"",
+        "detail": "backend.test.auth.test_routes_auth",
+        "documentation": {}
+    },
+    {
+        "label": "fake_token",
+        "kind": 5,
+        "importPath": "backend.test.auth.test_routes_auth",
+        "description": "backend.test.auth.test_routes_auth",
+        "peekOfCode": "fake_token = \"fake.jwt.token\"\n# ----------------------------\n# Test /auth/register\n# ----------------------------\n@patch(\"app.auth.routes.get_db\")\n@patch(\"app.auth.routes.hash_password\")\n@patch(\"app.auth.routes.create_token\")\ndef test_register_success(mock_create_token, mock_hash_password, mock_get_db):\n    \"\"\"\n    Registro exitoso de usuario.",
+        "detail": "backend.test.auth.test_routes_auth",
+        "documentation": {}
+    },
+    {
+        "label": "test_user_register_valido",
+        "kind": 2,
+        "importPath": "backend.test.auth.test_schemas",
+        "description": "backend.test.auth.test_schemas",
+        "peekOfCode": "def test_user_register_valido():\n    \"\"\"\n    Verifica que la creación de un UserRegister con datos válidos funcione.\n    - Crea una instancia con email, password y name.\n    - Comprueba que los atributos contienen los valores proporcionados.\n    \"\"\"\n    user = UserRegister(email=\"test@example.com\", password=\"password123\", name=\"Test User\")\n    assert user.email == \"test@example.com\"\n    assert user.password == \"password123\"\n    assert user.name == \"Test User\"",
+        "detail": "backend.test.auth.test_schemas",
+        "documentation": {}
+    },
+    {
+        "label": "test_user_register_sin_name",
+        "kind": 2,
+        "importPath": "backend.test.auth.test_schemas",
+        "description": "backend.test.auth.test_schemas",
+        "peekOfCode": "def test_user_register_sin_name():\n    \"\"\"\n    Verifica el comportamiento cuando el campo `name` es omitido.\n    - `name` es opcional en el esquema; al no proporcionarlo, debe ser None.\n    \"\"\"\n    user = UserRegister(email=\"user2@example.com\", password=\"password123\")\n    assert user.name is None  # El campo opcional debe ser None por defecto\ndef test_user_register_email_invalido():\n    \"\"\"\n    Asegura que un email inválido lance un ValidationError.",
+        "detail": "backend.test.auth.test_schemas",
+        "documentation": {}
+    },
+    {
+        "label": "test_user_register_email_invalido",
+        "kind": 2,
+        "importPath": "backend.test.auth.test_schemas",
+        "description": "backend.test.auth.test_schemas",
+        "peekOfCode": "def test_user_register_email_invalido():\n    \"\"\"\n    Asegura que un email inválido lance un ValidationError.\n    - Proporciona un email con formato inválido y espera que Pydantic valide y\n    arroje ValidationError.\n    \"\"\"\n    with pytest.raises(ValidationError):\n        UserRegister(email=\"correo-invalido\", password=\"password123\", name=\"Test User\")\n# ----------------------------\n# Tests UserLogin",
+        "detail": "backend.test.auth.test_schemas",
+        "documentation": {}
+    },
+    {
+        "label": "test_user_login_valido",
+        "kind": 2,
+        "importPath": "backend.test.auth.test_schemas",
+        "description": "backend.test.auth.test_schemas",
+        "peekOfCode": "def test_user_login_valido():\n    \"\"\"\n    Verifica que UserLogin acepte datos válidos.\n    - Crea una instancia con email y password y comprueba los atributos.\n    \"\"\"\n    user = UserLogin(email=\"login@example.com\", password=\"password123\")\n    assert user.email == \"login@example.com\"\n    assert user.password == \"password123\"\ndef test_user_login_email_invalido():\n    \"\"\"",
+        "detail": "backend.test.auth.test_schemas",
+        "documentation": {}
+    },
+    {
+        "label": "test_user_login_email_invalido",
+        "kind": 2,
+        "importPath": "backend.test.auth.test_schemas",
+        "description": "backend.test.auth.test_schemas",
+        "peekOfCode": "def test_user_login_email_invalido():\n    \"\"\"\n    Asegura que un email inválido en UserLogin lance ValidationError.\n    \"\"\"\n    with pytest.raises(ValidationError):\n        UserLogin(email=\"login-invalido\", password=\"password123\")\n# ----------------------------\n# Tests Token\n# ----------------------------\ndef test_token_valido():",
+        "detail": "backend.test.auth.test_schemas",
+        "documentation": {}
+    },
+    {
+        "label": "test_token_valido",
+        "kind": 2,
+        "importPath": "backend.test.auth.test_schemas",
+        "description": "backend.test.auth.test_schemas",
+        "peekOfCode": "def test_token_valido():\n    \"\"\"\n    Verifica la creación de un Token con el comportamiento por defecto.\n    - Si no se especifica `token_type`, el valor por defecto debe ser \"bearer\".\n    \"\"\"\n    token = Token(access_token=\"fake.jwt.token\")\n    assert token.access_token == \"fake.jwt.token\"\n    assert token.token_type == \"bearer\"  # Valor por defecto\ndef test_token_tipo_personalizado():\n    \"\"\"",
+        "detail": "backend.test.auth.test_schemas",
+        "documentation": {}
+    },
+    {
+        "label": "test_token_tipo_personalizado",
+        "kind": 2,
+        "importPath": "backend.test.auth.test_schemas",
+        "description": "backend.test.auth.test_schemas",
+        "peekOfCode": "def test_token_tipo_personalizado():\n    \"\"\"\n    Comprueba que `token_type` se puede personalizar al instanciar Token.\n    \"\"\"\n    token = Token(access_token=\"fake.jwt.token\", token_type=\"custom\")\n    assert token.token_type == \"custom\"",
+        "detail": "backend.test.auth.test_schemas",
+        "documentation": {}
+    },
+    {
+        "label": "test_hash_y_verify_password",
+        "kind": 2,
+        "importPath": "backend.test.auth.test_utils",
+        "description": "backend.test.auth.test_utils",
+        "peekOfCode": "def test_hash_y_verify_password():\n    \"\"\"\n    Comprueba que hash_password genera un hash distinto de la contraseña en claro\n    y que verify_password valida correctamente la contraseña original y rechaza\n    una contraseña errónea.\n    \"\"\"\n    password = \"mi_password_seguro\"\n    hashed = hash_password(password)\n    assert hashed != password  # Debe estar hasheada\n    assert verify_password(password, hashed) is True",
+        "detail": "backend.test.auth.test_utils",
+        "documentation": {}
+    },
+    {
+        "label": "test_hash_password_none",
+        "kind": 2,
+        "importPath": "backend.test.auth.test_utils",
+        "description": "backend.test.auth.test_utils",
+        "peekOfCode": "def test_hash_password_none():\n    \"\"\"\n    Verifica el comportamiento cuando se pasa None a hash_password.\n    - Debe devolver una representación string.\n    - verify_password debe comportarse de forma consistente (aquí se asume que\n    None se normaliza a cadena vacía internamente).\n    \"\"\"\n    hashed = hash_password(None)\n    assert isinstance(hashed, str)\n    assert verify_password(\"\", hashed) is True  # None se convierte en \"\"",
+        "detail": "backend.test.auth.test_utils",
+        "documentation": {}
+    },
+    {
+        "label": "test_create_token_contenido",
+        "kind": 2,
+        "importPath": "backend.test.auth.test_utils",
+        "description": "backend.test.auth.test_utils",
+        "peekOfCode": "def test_create_token_contenido():\n    \"\"\"\n    Genera un token con create_token y valida su contenido decodificándolo\n    con la clave y el algoritmo esperados.\n    Comprueba que los campos user_id y email se incluyan y que exista la\n    reclamación 'exp' (expiración).\n    \"\"\"\n    data = {\"user_id\": 1, \"email\": \"test@example.com\"}\n    token = create_token(data)\n    decoded = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])",
+        "detail": "backend.test.auth.test_utils",
+        "documentation": {}
+    },
+    {
+        "label": "test_get_current_user_exitoso",
+        "kind": 2,
+        "importPath": "backend.test.auth.test_utils",
+        "description": "backend.test.auth.test_utils",
+        "peekOfCode": "def test_get_current_user_exitoso(mock_jwt_decode, mock_session_local):\n    \"\"\"\n    Casos exitoso para get_current_user:\n    - Se parchea jwt.decode para devolver un payload con user_id.\n    - Se parchea SessionLocal para que la consulta a la DB devuelva un usuario simulado.\n    - Se llama a get_current_user simulando la dependencia y se comprueba que\n    se devuelve el usuario esperado y que jwt.decode fue invocado.\n    \"\"\"\n    # Mock del payload decodificado\n    mock_jwt_decode.return_value = {\"user_id\": 1}",
+        "detail": "backend.test.auth.test_utils",
+        "documentation": {}
+    },
+    {
+        "label": "test_get_current_user_token_invalido",
+        "kind": 2,
+        "importPath": "backend.test.auth.test_utils",
+        "description": "backend.test.auth.test_utils",
+        "peekOfCode": "def test_get_current_user_token_invalido():\n    \"\"\"\n    Caso donde la decodificación del token falla (JWTError).\n    - Se parchea jwt.decode para que lance JWTError.\n    - Se espera que get_current_user lance una excepción con mensaje\n    indicando token inválido o expirado.\n    \"\"\"\n    # JWTError simulado\n    with patch(\"app.auth.utils.jwt.decode\", side_effect=JWTError):\n        with pytest.raises(Exception) as excinfo:",
+        "detail": "backend.test.auth.test_utils",
+        "documentation": {}
+    },
+    {
+        "label": "test_get_current_user_usuario_no_existe",
+        "kind": 2,
+        "importPath": "backend.test.auth.test_utils",
+        "description": "backend.test.auth.test_utils",
+        "peekOfCode": "def test_get_current_user_usuario_no_existe():\n    \"\"\"\n    Caso donde el token es válido pero la base de datos no devuelve un usuario.\n    - Se parchea jwt.decode para devolver un payload con user_id.\n    - Se parchea la sesión de DB para que la consulta devuelva None.\n    - Se espera que get_current_user lance una excepción indicando token inválido\n    o expirado (misma señalización usada por la implementación original).\n    \"\"\"\n    # Token válido pero DB no devuelve usuario\n    with patch(\"app.auth.utils.jwt.decode\", return_value={\"user_id\": 1}):",
+        "detail": "backend.test.auth.test_utils",
+        "documentation": {}
+    },
+    {
+        "label": "setup_db",
+        "kind": 2,
+        "importPath": "backend.test.boards.test_models",
+        "description": "backend.test.boards.test_models",
+        "peekOfCode": "def setup_db():\n    \"\"\"\n    Fixture de preparación y limpieza de la base de datos para el módulo.\n    Comportamiento:\n    - Crea todas las tablas definidas en `Base` antes de ejecutar las pruebas.\n    - Proporciona una sesión `db` ligada al engine en memoria.\n    - Al finalizar el módulo, cierra la sesión y elimina las tablas creadas.\n    Consideraciones:\n    - El scope \"module\" permite reutilizar la misma estructura de tablas entre\n    pruebas, lo que puede acelerar la ejecución pero comparte datos entre ellas.",
+        "detail": "backend.test.boards.test_models",
+        "documentation": {}
+    },
+    {
+        "label": "test_create_user",
+        "kind": 2,
+        "importPath": "backend.test.boards.test_models",
+        "description": "backend.test.boards.test_models",
+        "peekOfCode": "def test_create_user(setup_db):\n    \"\"\"\n    Verifica que se pueda crear y persistir una instancia de User.\n    - Se crea un User con email, password_hash y name.\n    - Se confirma la persistencia mediante commit y refresh.\n    - Se comprueba que se generó un id y que los campos coinciden.\n    \"\"\"\n    db = setup_db\n    user = User(email=\"test@example.com\", password_hash=\"hashed_pw\", name=\"Test User\")\n    db.add(user)",
+        "detail": "backend.test.boards.test_models",
+        "documentation": {}
+    },
+    {
+        "label": "test_create_board",
+        "kind": 2,
+        "importPath": "backend.test.boards.test_models",
+        "description": "backend.test.boards.test_models",
+        "peekOfCode": "def test_create_board(setup_db):\n    \"\"\"\n    Verifica la creación de un Board asociado a un User (owner).\n    - Crea un User, lo persiste y crea un Board relacionado.\n    - Comprueba que el board tenga id, owner correcto y nombre esperado.\n    \"\"\"\n    db = setup_db\n    user = User(email=\"owner@example.com\", password_hash=\"pw\")\n    db.add(user)\n    db.commit()",
+        "detail": "backend.test.boards.test_models",
+        "documentation": {}
+    },
+    {
+        "label": "test_create_list",
+        "kind": 2,
+        "importPath": "backend.test.boards.test_models",
+        "description": "backend.test.boards.test_models",
+        "peekOfCode": "def test_create_list(setup_db):\n    \"\"\"\n    Verifica la creación de una List vinculada a un Board.\n    - Crea User y Board, luego crea una List con posición definida.\n    - Comprueba id, relación con board y posición.\n    \"\"\"\n    db = setup_db\n    user = User(email=\"listowner@example.com\", password_hash=\"pw\")\n    db.add(user)\n    db.commit()",
+        "detail": "backend.test.boards.test_models",
+        "documentation": {}
+    },
+    {
+        "label": "test_create_card",
+        "kind": 2,
+        "importPath": "backend.test.boards.test_models",
+        "description": "backend.test.boards.test_models",
+        "peekOfCode": "def test_create_card(setup_db):\n    \"\"\"\n    Verifica la creación de una Card y sus relaciones con Board, List y User.\n    - Crea User, Board y List; luego crea la Card asignando created_by y responsible.\n    - Comprueba que la tarjeta fue persistida y las relaciones apuntan a las entidades creadas.\n    \"\"\"\n    db = setup_db\n    user = User(email=\"carduser@example.com\", password_hash=\"pw\")\n    db.add(user)\n    db.commit()",
+        "detail": "backend.test.boards.test_models",
+        "documentation": {}
+    },
+    {
+        "label": "test_create_time_entry",
+        "kind": 2,
+        "importPath": "backend.test.boards.test_models",
+        "description": "backend.test.boards.test_models",
+        "peekOfCode": "def test_create_time_entry(setup_db):\n    \"\"\"\n    Verifica la creación de una TimeEntry asociada a User y Card.\n    - Crea User, Board, List y Card; luego crea una TimeEntry con fecha y horas.\n    - Comprueba id, relaciones y valor de `hours`.\n    \"\"\"\n    db = setup_db\n    user = User(email=\"timeuser@example.com\", password_hash=\"pw\")\n    db.add(user)\n    db.commit()",
+        "detail": "backend.test.boards.test_models",
+        "documentation": {}
+    },
+    {
+        "label": "test_create_board_member",
+        "kind": 2,
+        "importPath": "backend.test.boards.test_models",
+        "description": "backend.test.boards.test_models",
+        "peekOfCode": "def test_create_board_member(setup_db):\n    \"\"\"\n    Verifica la creación de una relación BoardMember entre User y Board.\n    - Crea User y Board; luego crea un BoardMember con rol (por ejemplo \"admin\").\n    - Comprueba id, relaciones y el valor del rol.\n    \"\"\"\n    db = setup_db\n    user = User(email=\"member@example.com\", password_hash=\"pw\")\n    db.add(user)\n    db.commit()",
+        "detail": "backend.test.boards.test_models",
+        "documentation": {}
+    },
+    {
+        "label": "engine",
+        "kind": 5,
+        "importPath": "backend.test.boards.test_models",
+        "description": "backend.test.boards.test_models",
+        "peekOfCode": "engine = create_engine(\"sqlite:///:memory:\", echo=False)\nTestingSessionLocal = sessionmaker(bind=engine)\n@pytest.fixture(scope=\"module\")\ndef setup_db():\n    \"\"\"\n    Fixture de preparación y limpieza de la base de datos para el módulo.\n    Comportamiento:\n    - Crea todas las tablas definidas en `Base` antes de ejecutar las pruebas.\n    - Proporciona una sesión `db` ligada al engine en memoria.\n    - Al finalizar el módulo, cierra la sesión y elimina las tablas creadas.",
+        "detail": "backend.test.boards.test_models",
+        "documentation": {}
+    },
+    {
+        "label": "TestingSessionLocal",
+        "kind": 5,
+        "importPath": "backend.test.boards.test_models",
+        "description": "backend.test.boards.test_models",
+        "peekOfCode": "TestingSessionLocal = sessionmaker(bind=engine)\n@pytest.fixture(scope=\"module\")\ndef setup_db():\n    \"\"\"\n    Fixture de preparación y limpieza de la base de datos para el módulo.\n    Comportamiento:\n    - Crea todas las tablas definidas en `Base` antes de ejecutar las pruebas.\n    - Proporciona una sesión `db` ligada al engine en memoria.\n    - Al finalizar el módulo, cierra la sesión y elimina las tablas creadas.\n    Consideraciones:",
+        "detail": "backend.test.boards.test_models",
+        "documentation": {}
+    },
+    {
+        "label": "test_get_boards_exitoso",
+        "kind": 2,
+        "importPath": "backend.test.boards.test_routes_boards",
+        "description": "backend.test.boards.test_routes_boards",
+        "peekOfCode": "def test_get_boards_exitoso(mock_get_user, mock_get_db):\n    \"\"\"\n    Verifica la respuesta exitosa al obtener la lista de boards del usuario.\n    Flujo:\n    - Se parchea `get_current_user` para devolver un usuario simulado (fake_user).\n    - Se parchea `get_db` para devolver una sesión simulada cuyo `query(...).filter(...).all()`\n    devolverá la lista `fake_boards`.\n    - Se realiza una petición GET a \"/boards/\" y se comprueba el status code 200.\n    - Se valida que el JSON devuelto contiene los nombres esperados y que las\n    llamadas a la sesión se realizaron (query -> filter -> all).",
+        "detail": "backend.test.boards.test_routes_boards",
+        "documentation": {}
+    },
+    {
+        "label": "test_get_boards_vacio",
+        "kind": 2,
+        "importPath": "backend.test.boards.test_routes_boards",
+        "description": "backend.test.boards.test_routes_boards",
+        "peekOfCode": "def test_get_boards_vacio(mock_get_user, mock_get_db):\n    \"\"\"\n    Verifica que la ruta devuelva una lista vacía cuando el usuario no tiene boards.\n    Flujo:\n    - Se parchea `get_current_user` para devolver el usuario simulado.\n    - Se parchea `get_db` para devolver una sesión simulada cuyo `query(...).filter(...).all()`\n    devolverá una lista vacía.\n    - Se realiza la petición GET y se comprueba que el cuerpo de la respuesta es [].\n    \"\"\"\n    # Mock de usuario autenticado",
+        "detail": "backend.test.boards.test_routes_boards",
+        "documentation": {}
+    },
+    {
+        "label": "client",
+        "kind": 5,
+        "importPath": "backend.test.boards.test_routes_boards",
+        "description": "backend.test.boards.test_routes_boards",
+        "peekOfCode": "client = TestClient(app)\n# Datos de ejemplo y mocks reusables\n# fake_user simula al usuario autenticado que retornará el mock de get_current\nfake_user = MagicMock()\nfake_user.id = 1\n# fake_boards simula una lista de objetos Board retornados por la consulta a la DB\nfake_boards = [\n    MagicMock(spec=Board, id=1, name=\"Board 1\", user_id=fake_user.id),\n    MagicMock(spec=Board, id=2, name=\"Board 2\", user_id=fake_user.id),\n]",
+        "detail": "backend.test.boards.test_routes_boards",
+        "documentation": {}
+    },
+    {
+        "label": "fake_user",
+        "kind": 5,
+        "importPath": "backend.test.boards.test_routes_boards",
+        "description": "backend.test.boards.test_routes_boards",
+        "peekOfCode": "fake_user = MagicMock()\nfake_user.id = 1\n# fake_boards simula una lista de objetos Board retornados por la consulta a la DB\nfake_boards = [\n    MagicMock(spec=Board, id=1, name=\"Board 1\", user_id=fake_user.id),\n    MagicMock(spec=Board, id=2, name=\"Board 2\", user_id=fake_user.id),\n]\n# ----------------------------\n# Test GET /boards/\n# ----------------------------",
+        "detail": "backend.test.boards.test_routes_boards",
+        "documentation": {}
+    },
+    {
+        "label": "fake_user.id",
+        "kind": 5,
+        "importPath": "backend.test.boards.test_routes_boards",
+        "description": "backend.test.boards.test_routes_boards",
+        "peekOfCode": "fake_user.id = 1\n# fake_boards simula una lista de objetos Board retornados por la consulta a la DB\nfake_boards = [\n    MagicMock(spec=Board, id=1, name=\"Board 1\", user_id=fake_user.id),\n    MagicMock(spec=Board, id=2, name=\"Board 2\", user_id=fake_user.id),\n]\n# ----------------------------\n# Test GET /boards/\n# ----------------------------\n@patch(\"backend.boards.routers.get_db\")",
+        "detail": "backend.test.boards.test_routes_boards",
+        "documentation": {}
+    },
+    {
+        "label": "fake_boards",
+        "kind": 5,
+        "importPath": "backend.test.boards.test_routes_boards",
+        "description": "backend.test.boards.test_routes_boards",
+        "peekOfCode": "fake_boards = [\n    MagicMock(spec=Board, id=1, name=\"Board 1\", user_id=fake_user.id),\n    MagicMock(spec=Board, id=2, name=\"Board 2\", user_id=fake_user.id),\n]\n# ----------------------------\n# Test GET /boards/\n# ----------------------------\n@patch(\"backend.boards.routers.get_db\")\n@patch(\"backend.boards.routers.get_current_user\")\ndef test_get_boards_exitoso(mock_get_user, mock_get_db):",
+        "detail": "backend.test.boards.test_routes_boards",
+        "documentation": {}
+    },
+    {
+        "label": "test_login_exitoso",
+        "kind": 2,
+        "importPath": "backend.test.testE2E",
+        "description": "backend.test.testE2E",
+        "peekOfCode": "def test_login_exitoso(page):\n    \"\"\"\n    Prueba de inicio de sesión exitoso.\n    Pasos:\n    1. Navegar a la página de login.\n    2. Rellenar los campos de email y contraseña con credenciales válidas.\n    3. Enviar el formulario de autenticación.\n    4. Esperar la redirección al dashboard.\n    Aserciones:\n    - La URL resultante corresponde al dashboard.",
+        "detail": "backend.test.testE2E",
+        "documentation": {}
+    },
+    {
+        "label": "test_login_fallido",
+        "kind": 2,
+        "importPath": "backend.test.testE2E",
+        "description": "backend.test.testE2E",
+        "peekOfCode": "def test_login_fallido(page):\n    \"\"\"\n    Prueba de manejo de credenciales inválidas en el inicio de sesión.\n    Pasos:\n    1. Navegar a la página de login.\n    2. Rellenar el email con un usuario válido pero la contraseña con un valor\n        incorrecto.\n    3. Enviar el formulario.\n    4. Esperar que se muestre el mensaje de error específico \"Credenciales inválidas\".\n    Aserciones:",
+        "detail": "backend.test.testE2E",
+        "documentation": {}
+    },
+    {
+        "label": "test_dashboard_protegido",
+        "kind": 2,
+        "importPath": "backend.test.testE2E",
+        "description": "backend.test.testE2E",
+        "peekOfCode": "def test_dashboard_protegido(page):\n    \"\"\"\n    Verifica que la ruta /dashboard esté protegida para usuarios no autenticados.\n    Pasos:\n    1. Intentar acceder directamente a /dashboard sin haber iniciado sesión.\n    2. Esperar la redirección a la página de login.\n    Aserciones:\n    - La URL actual contiene '/login', confirmando que el acceso fue denegado y\n    el usuario fue redirigido para autenticarse.\n    \"\"\"",
+        "detail": "backend.test.testE2E",
+        "documentation": {}
+    },
+    {
+        "label": "test_dashboard_con_token",
+        "kind": 2,
+        "importPath": "backend.test.testE2E",
+        "description": "backend.test.testE2E",
+        "peekOfCode": "def test_dashboard_con_token(page):\n    \"\"\"\n    Comprueba que un usuario con token válido en localStorage puede acceder al dashboard.\n    Pasos:\n    1. Navegar a /login (para inicializar el contexto del navegador).\n    2. Inyectar un token JWT simulado en localStorage.\n    3. Navegar a /dashboard.\n    4. Esperar la carga del dashboard.\n    Aserciones:\n    - La URL resultante corresponde a /dashboard, indicando que la aplicación",
+        "detail": "backend.test.testE2E",
+        "documentation": {}
+    },
+    {
+        "label": "BASE_URL",
+        "kind": 5,
+        "importPath": "backend.test.testE2E",
+        "description": "backend.test.testE2E",
+        "peekOfCode": "BASE_URL = \"http://localhost:3000\"\ndef test_login_exitoso(page):\n    \"\"\"\n    Prueba de inicio de sesión exitoso.\n    Pasos:\n    1. Navegar a la página de login.\n    2. Rellenar los campos de email y contraseña con credenciales válidas.\n    3. Enviar el formulario de autenticación.\n    4. Esperar la redirección al dashboard.\n    Aserciones:",
+        "detail": "backend.test.testE2E",
+        "documentation": {}
+    },
+    {
+        "label": "test_valores_por_defecto",
+        "kind": 2,
+        "importPath": "backend.test.test_config",
+        "description": "backend.test.test_config",
+        "peekOfCode": "def test_valores_por_defecto():\n    \"\"\"\n    Verifica los valores por defecto de la configuración.\n    Comportamiento esperado:\n    - La instancia global `settings` expone los valores por defecto definidos en\n    la aplicación cuando no existen variables de entorno que los sobrescriban.\n    - Se comprueba que el tipo/valor de `ACCESS_TOKEN_EXPIRE_MINUTES` sea el\n    esperado (entero).\n    - No se modifica el entorno en esta prueba, por lo que debe ejecutarse en\n    un entorno controlado (p. ej. CI o entorno de desarrollo con variables",
+        "detail": "backend.test.test_config",
+        "documentation": {}
+    },
+    {
+        "label": "test_carga_desde_env",
+        "kind": 2,
+        "importPath": "backend.test.test_config",
+        "description": "backend.test.test_config",
+        "peekOfCode": "def test_carga_desde_env(monkeypatch):\n    \"\"\"\n    Verifica que Settings cargue y convierta correctamente valores desde el entorno.\n    Pasos:\n    1. Usar `monkeypatch.setenv` para inyectar variables de entorno de prueba.\n    2. Instanciar `Settings()` para forzar la lectura desde el entorno actual.\n    3. Comprobar que los atributos de la instancia reflejan los valores\n    proporcionados por las variables de entorno.\n    Consideraciones:\n    - `monkeypatch` aísla los cambios en las variables de entorno y los revierte",
+        "detail": "backend.test.test_config",
+        "documentation": {}
+    },
+    {
+        "label": "test_database_url_definida",
+        "kind": 2,
+        "importPath": "backend.test.test_database",
+        "description": "backend.test.test_database",
+        "peekOfCode": "def test_database_url_definida():\n    \"\"\"\n    Verifica que la configuración de la aplicación exponga una URL de base de datos.\n    Comprueba:\n    - Que DATABASE_URL no sea None.\n    - Que el esquema sea uno de los esperados (postgresql:// o sqlite://).\n    Propósito:\n    - Detectar problemas de configuración antes de que otras pruebas que dependan\n    de la base de datos sean ejecutadas.\n    \"\"\"",
+        "detail": "backend.test.test_database",
+        "documentation": {}
+    },
+    {
+        "label": "test_engine_y_session_local",
+        "kind": 2,
+        "importPath": "backend.test.test_database",
+        "description": "backend.test.test_database",
+        "peekOfCode": "def test_engine_y_session_local():\n    \"\"\"\n    Comprueba que el engine y la fábrica de sesiones están disponibles.\n    Pasos:\n    - Verificar que el objeto `engine` exportado por app.database no sea None.\n    - Crear una sesión con `SessionLocal()` y cerrarla correctamente.\n    Propósito:\n    - Validar la configuración básica de SQLAlchemy usada por la aplicación.\n    \"\"\"\n    assert engine is not None",
+        "detail": "backend.test.test_database",
+        "documentation": {}
+    },
+    {
+        "label": "test_crear_tablas_temporales",
+        "kind": 2,
+        "importPath": "backend.test.test_database",
+        "description": "backend.test.test_database",
+        "peekOfCode": "def test_crear_tablas_temporales():\n    \"\"\"\n    Crea un engine SQLite en memoria y registra las tablas definidas en `Base`.\n    Pasos:\n    1. Crear un engine con sqlite:///:memory: para aislamiento total.\n    2. Crear un SessionLocal ligado a ese engine.\n    3. Ejecutar Base.metadata.create_all() para crear las tablas en memoria.\n    4. Abrir y cerrar una sesión para validar que la configuración funciona.\n    Propósito:\n    - Asegurar que las definiciones de modelos (Base) son correctas y que pueden",
+        "detail": "backend.test.test_database",
+        "documentation": {}
+    },
+    {
+        "label": "test_root_endpoint",
+        "kind": 2,
+        "importPath": "backend.test.test_main",
+        "description": "backend.test.test_main",
+        "peekOfCode": "def test_root_endpoint():\n    \"\"\"\n    Comprueba que el endpoint raíz (GET /) responde correctamente.\n    Flujo:\n    - Se realiza una petición GET al endpoint raíz.\n    - Se espera un código HTTP 200.\n    - Se valida que el JSON devuelto coincida con el estado esperado de la API.\n    Aserciones:\n    - response.status_code == 200\n    - response.json() == {\"status\": \"NeoCare Backend Running\"}",
+        "detail": "backend.test.test_main",
+        "documentation": {}
+    },
+    {
+        "label": "test_auth_router_included",
+        "kind": 2,
+        "importPath": "backend.test.test_main",
+        "description": "backend.test.test_main",
+        "peekOfCode": "def test_auth_router_included():\n    \"\"\"\n    Verifica de forma indirecta que el router de autenticación está montado.\n    Flujo:\n    - Se realiza una petición GET a la ruta base de auth (\"/auth\").\n    Nota: este endpoint suele no exponer GET en la raíz del router y por lo\n    tanto se espera un 404 o un 405 según la configuración del router.\n    - Se comprueba que el status code esté en la lista [404, 405], lo que indica\n    que la ruta existe en la aplicación (o al menos que el prefijo está registrado).\n    Consideraciones:",
+        "detail": "backend.test.test_main",
+        "documentation": {}
+    },
+    {
+        "label": "client",
+        "kind": 5,
+        "importPath": "backend.test.test_main",
+        "description": "backend.test.test_main",
+        "peekOfCode": "client = TestClient(app)\n# ----------------------------\n# Test GET /\n# ----------------------------\ndef test_root_endpoint():\n    \"\"\"\n    Comprueba que el endpoint raíz (GET /) responde correctamente.\n    Flujo:\n    - Se realiza una petición GET al endpoint raíz.\n    - Se espera un código HTTP 200.",
+        "detail": "backend.test.test_main",
         "documentation": {}
     },
     {
@@ -639,7 +1465,7 @@
         "kind": 2,
         "importPath": "backend.prueba",
         "description": "backend.prueba",
-        "peekOfCode": "def read_root():\n    return {\"message\": \"Hola Néstor, FastAPI ya está funcionando 🚀\"}\n@app.get(\"/items/{item_id}\")\ndef read_item(item_id: int, q: str | None = None):\n    return {\n        \"item_id\": item_id,\n        \"q\": q,\n        \"mensaje\": \"Este es tu primer endpoint con path + query params\",\n    }",
+        "peekOfCode": "def read_root():\n    \"\"\"\nMódulo FastAPI de ejemplo simple.\nExpone dos endpoints:\n- \"/\"        : Mensaje de bienvenida y verificación de estado.\n- \"/items/{item_id}\" : Retorna información de un ítem usando parámetros de path y query.\n\"\"\"\n    return {\"message\": \"Hola Néstor, FastAPI ya está funcionando 🚀\"}\n@app.get(\"/items/{item_id}\")\ndef read_item(item_id: int, q: str | None = None):",
         "detail": "backend.prueba",
         "documentation": {}
     },
@@ -648,7 +1474,7 @@
         "kind": 2,
         "importPath": "backend.prueba",
         "description": "backend.prueba",
-        "peekOfCode": "def read_item(item_id: int, q: str | None = None):\n    return {\n        \"item_id\": item_id,\n        \"q\": q,\n        \"mensaje\": \"Este es tu primer endpoint con path + query params\",\n    }",
+        "peekOfCode": "def read_item(item_id: int, q: str | None = None):\n    \"\"\"\n    Obtiene la información de un ítem según su ID y parámetro opcional de búsqueda.\n    Args:\n        item_id (int): Identificador del ítem recibido desde la URL (path).\n        q (str, optional): Parámetro de consulta (query string) opcional.\n    Returns:\n        dict: Diccionario con el ID del ítem, query recibido y mensaje de prueba.\n    \"\"\"\n    return {",
         "detail": "backend.prueba",
         "documentation": {}
     },
@@ -657,7 +1483,7 @@
         "kind": 5,
         "importPath": "backend.prueba",
         "description": "backend.prueba",
-        "peekOfCode": "app = FastAPI()\n@app.get(\"/\")\ndef read_root():\n    return {\"message\": \"Hola Néstor, FastAPI ya está funcionando 🚀\"}\n@app.get(\"/items/{item_id}\")\ndef read_item(item_id: int, q: str | None = None):\n    return {\n        \"item_id\": item_id,\n        \"q\": q,\n        \"mensaje\": \"Este es tu primer endpoint con path + query params\",",
+        "peekOfCode": "app = FastAPI()\n@app.get(\"/\")\ndef read_root():\n    \"\"\"\nMódulo FastAPI de ejemplo simple.\nExpone dos endpoints:\n- \"/\"        : Mensaje de bienvenida y verificación de estado.\n- \"/items/{item_id}\" : Retorna información de un ítem usando parámetros de path y query.\n\"\"\"\n    return {\"message\": \"Hola Néstor, FastAPI ya está funcionando 🚀\"}",
         "detail": "backend.prueba",
         "documentation": {}
     },
