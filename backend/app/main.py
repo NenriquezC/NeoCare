@@ -16,6 +16,8 @@ app = FastAPI(title="NeoCare API")
 
 # CORS (para que el frontend pueda llamar al backend)
 app.add_middleware(
+
+
     CORSMiddleware,
     allow_origins=["*"],   #¡En producción, define los dominios permitidos!
     allow_credentials=True,
