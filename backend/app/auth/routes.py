@@ -7,7 +7,7 @@ y autenticar el acceso mediante JWT, utilizando modelos y esquemas definidos.
 from fastapi import APIRouter, Depends, HTTPException, status   # 👈 IMPORTANTE
 from sqlalchemy.orm import Session
 
-from ..boards.models import User
+from ..boards.models import User, Board, List
 from ..auth.schemas import UserRegister, UserLogin, Token
 from ..auth.utils import hash_password, verify_password, create_token, get_db
 
@@ -36,17 +36,52 @@ def register(user: UserRegister, db: Session = Depends(get_db)):
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Email ya registrado",
         )
-    # Crea el usuario con contraseña hasheada
-    new_user = User(
-        email=user.email,
-        password_hash=hash_password(user.password),
-        name=user.name,
-    )
-    db.add(new_user)
-    db.commit()
-    db.refresh(new_user)
 
-    # Genera el JWT para el usuario recién creado
+    try:
+        # 1) Crea el usuario con contraseña hasheada
+        new_user = User(
+            email=user.email,
+            password_hash=hash_password(user.password),
+            name=user.name,
+        )
+        db.add(new_user)
+        db.commit()
+        db.refresh(new_user)
+
+        """
+        NUEVO: crear tablero y listas por defecto para evitar que /boards/ devuelva [].
+
+        - Crea 1 tablero "Tablero principal" asociado al usuario.
+        - Crea 3 listas dentro del tablero, con position obligatorio (0,1,2).
+        """
+
+        # 2) Crea tablero por defecto
+        default_board = Board(
+            name="Tablero principal",
+            user_id=new_user.id,
+        )
+        db.add(default_board)
+        db.commit()
+        db.refresh(default_board)
+
+        # 3) Crea listas por defecto
+        default_lists = [
+            List(name="Por hacer", board_id=default_board.id, position=0),
+            List(name="En curso", board_id=default_board.id, position=1),
+            List(name="Hecho", board_id=default_board.id, position=2),
+        ]
+        db.add_all(default_lists)
+        db.commit()
+
+    except Exception:
+        # ✅ Cambio: si algo falla en medio, no dejamos la BD “a medias”
+        db.rollback()
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Error interno creando usuario/tablero por defecto",
+        )
+
+    # 4) Genera el JWT para el usuario recién creado
     token = create_token({"user_id": new_user.id, "email": new_user.email})
     return {"access_token": token, "token_type": "bearer"}
 
@@ -73,6 +108,7 @@ def login(user: UserLogin, db: Session = Depends(get_db)):
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Credenciales incorrectas",
         )
+
     # Genera el JWT para el usuario autenticado
     token = create_token({"user_id": db_user.id, "email": db_user.email})
     return {"access_token": token, "token_type": "bearer"}

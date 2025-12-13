@@ -12,7 +12,7 @@ import os
 # Extrae la URL de la base de datos desde la variable de entorno (o usa la URL por defecto)
 DATABASE_URL = os.getenv(
     "DATABASE_URL",
-    "postgresql://postgres:Limon1307@localhost:5432/neocare"
+    "postgresql://postgres:niki2025@localhost:5432/neocare_db"
 )
 
 # Crea el motor de conexión con SQLAlchemy
