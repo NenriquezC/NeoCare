@@ -2,6 +2,7 @@
 from unittest.mock import MagicMock, patch
 from fastapi.testclient import TestClient
 from app.main import app
+from datetime import datetime, timezone
 
 from app.boards.models import Board
 from app.main import app
@@ -48,15 +49,16 @@ def test_get_boards_exitoso():
     fake_user = MagicMock()
     fake_user.id = 123
 
-    # boards REALES
+    # boards REALES con created_at
+    now = datetime.now(timezone.utc)
     fake_boards = [
-        Board(id=1, name="Board 1", user_id=123),
-        Board(id=2, name="Board 2", user_id=123),
+        Board(id=1, name="Board 1", user_id=123, created_at=now),
+        Board(id=2, name="Board 2", user_id=123, created_at=now),
     ]
 
     # sesión falsa
     mock_session = MagicMock()
-    mock_session.query.return_value.filter.return_value.all.return_value = fake_boards
+    mock_session.query.return_value.filter.return_value.order_by.return_value.all.return_value = fake_boards
 
     # overrides
     def override_get_user():

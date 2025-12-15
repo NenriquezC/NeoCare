@@ -6,15 +6,17 @@ Provee endpoints para consultar los tableros de cada usuario autenticado.
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+from typing import List as ListType
 
 from ..auth.utils import get_current_user, get_db
 from ..boards.models import User
 from .models import Board, List
+from .schemas import BoardOut, ListOut
 
 router = APIRouter(prefix="/boards", tags=["boards"])
 
 
-@router.get("/")
+@router.get("/", response_model=ListType[BoardOut])
 def get_boards(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     """
     Obtiene todos los tableros pertenecientes al usuario autenticado.
@@ -52,8 +54,8 @@ def get_boards(db: Session = Depends(get_db), current_user: User = Depends(get_c
 
 
 # ✅ CAMBIO: aceptar /lists y /lists/ para eliminar el 307 redirect
-@router.get("/{board_id}/lists")
-@router.get("/{board_id}/lists/")
+@router.get("/{board_id}/lists", response_model=ListType[ListOut])
+@router.get("/{board_id}/lists/", response_model=ListType[ListOut])
 def get_board_lists(
     board_id: int,
     db: Session = Depends(get_db),
@@ -91,7 +93,7 @@ def get_board_lists(
         db.commit()
         lists = default_lists
 
-    return [{"id": l.id, "name": l.name, "position": l.position, "board_id": l.board_id} for l in lists]
+    return lists
 
 
 # CAMBIOS REALIZADOS Y POR QUÉ:

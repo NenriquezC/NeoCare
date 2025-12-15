@@ -1,92 +1,105 @@
+import os
+import time
+import uuid
+
 import pytest
+import requests
 
-BASE_URL = "http://localhost:5173/"
 
-"""
-Pruebas E2E de autenticación y protección de rutas usando Playwright + pytest.
+# Configuración de URLs (se pueden sobrescribir por variables de entorno)
+FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173")
+BACKEND_URL = os.getenv("BACKEND_URL", "http://127.0.0.1:8000")
 
-Este módulo contiene pruebas que verifican:
-- Inicio de sesión exitoso y redirección al listado de tableros (/boards).
-- Manejo de inicio de sesión fallido con mensaje de error visible.
-- Protección de la ruta /dashboard para usuarios no autenticados.
-- Acceso a /dashboard cuando existe un token simulado en localStorage.
 
-Notas:
-- Estas pruebas asumen que la aplicación frontend está disponible en BASE_URL.
-- Los selectores utilizados (input[type=email], input[type=password], button[type=submit]) se basan en la estructura actual del formulario de login.
-- La comprobación que valida contenido textual de la página en test_login_exitoso está comentada; descomentar si se desea verificar texto visible.
-"""
+def _ensure_user(email: str, password: str, name: str = "E2E User"):
+    """Crea un usuario de prueba vía API; si ya existe, el error 400 se ignora.
 
-def test_login_exitoso(page):
-    """Verifica que un usuario con credenciales válidas pueda iniciar sesión.
-
-    Flujo de la prueba:
-    1. Navega a la página de login.
-    2. Rellena los campos de email y contraseña con credenciales válidas.
-    3. Envía el formulario de login.
-    4. Espera a que la aplicación redirija a la ruta de tableros (/boards).
-
-    Aserciones/condiciones:
-    - Se espera una redirección a una URL que contenga '/boards'.
-    - Hay una comprobación comentada que valida la presencia del texto "Bienvenido" en el contenido de la página;
-    descomentar si se desea validar también el contenido textual.
+    Se basa en el endpoint real /auth/register, que también crea el tablero y las
+    listas por defecto ("Por hacer", "En curso", "Hecho").
     """
-    page.goto(f"{BASE_URL}/login")
-    page.fill("input[type=email]", "user@example.com")
-    page.fill("input[type=password]", "string")
+
+    payload = {"email": email, "password": password, "name": name}
+    res = requests.post(f"{BACKEND_URL}/auth/register", json=payload, timeout=10)
+
+    if res.status_code == 200:
+        return
+
+    if res.status_code == 400 and "Email ya registrado" in res.text:
+        # El usuario ya existe; seguimos adelante para usarlo en las pruebas.
+        return
+
+    raise RuntimeError(f"No se pudo preparar el usuario de pruebas: {res.status_code} {res.text}")
+
+
+@pytest.fixture(scope="session")
+def test_user():
+    """Genera un usuario único para toda la sesión de pruebas E2E."""
+
+    unique = uuid.uuid4().hex[:8]
+    email = f"e2e_{unique}@example.com"
+    password = "Password123!"
+    _ensure_user(email, password)
+    return {"email": email, "password": password}
+
+
+def ui_login(page, email: str, password: str):
+    """Realiza login vía UI y espera la carga de /boards."""
+
+    page.goto(f"{FRONTEND_URL}/login")
+    page.fill("input[type=email]", email)
+    page.fill("input[type=password]", password)
     page.click("button[type=submit]")
     page.wait_for_url("**/boards")
-    ##assert "Bienvenido" in page.content() 
 
-def test_login_fallido(page):
-    """Verifica que el sistema muestra un mensaje de error cuando las credenciales son incorrectas.
 
-    Flujo de la prueba:
-    1. Navega a la página de login.
-    2. Rellena los campos de email y contraseña con credenciales incorrectas.
-    3. Envía el formulario de login.
-    4. Espera a que aparezca un selector con el mensaje de error esperado.
+def test_login_exitoso_muestra_tablero(page, test_user):
+    """Login correcto y render de columnas principales."""
 
-    Aserciones/condiciones:
-    - Se espera que el selector de texto con el mensaje de error esté presente:
-    "No se ha podido iniciar sesión (API no disponible o credenciales incorrectas)".
-    """
-    page.goto(f"{BASE_URL}/login")
-    page.fill("input[type=email]", "usuario@example.com")
-    page.fill("input[type=password]", "incorrecta")
+    ui_login(page, test_user["email"], test_user["password"])
+    page.wait_for_selector("text=Por hacer")
+    page.wait_for_selector("text=En curso")
+    page.wait_for_selector("text=Hecho")
+
+
+def test_login_fallido_muestra_error(page):
+    """Login con credenciales inválidas muestra mensaje de error."""
+
+    page.goto(f"{FRONTEND_URL}/login")
+    page.fill("input[type=email]", "wrong@example.com")
+    page.fill("input[type=password]", "badpass")
     page.click("button[type=submit]")
-    page.wait_for_selector("text=No se ha podido iniciar sesión (API no disponible o credenciales incorrectas)")
+    page.wait_for_selector("text=No se ha podido iniciar sesión")
 
-def test_dashboard_protegido(page):
-    """Verifica que la ruta /dashboard está protegida y redirige a /login si no hay token.
 
-    Flujo de la prueba:
-    1. Intenta navegar directamente a /dashboard sin establecer token en localStorage.
-    2. Espera la redirección a la página de login.
+def test_crud_tarjeta_en_primer_tablero(page, test_user):
+    """Crea, edita y elimina una tarjeta usando la UI del tablero."""
 
-    Aserciones/condiciones:
-    - La URL final contiene '/login', lo que indica que el acceso fue denegado y se pidió autenticación.
-    """
+    ui_login(page, test_user["email"], test_user["password"])
 
-    page.goto(f"{BASE_URL}/dashboard")
-    page.wait_for_url("**/login")
-    assert "/login" in page.url
+    # Esperar a que las columnas estén listas
+    page.wait_for_selector("text=Por hacer")
 
-def test_dashboard_con_token(page):
-    """Verifica que al establecer un token en localStorage se puede acceder a /dashboard.
+    # Crear tarjeta
+    title = f"Tarea {int(time.time() * 1000)}"
+    desc = "Descripción E2E"
+    new_title = f"{title} editada"
 
-    Flujo de la prueba:
-    1. Navega a la página de login (para obtener el mismo origen y poder manipular localStorage).
-    2. Inserta un token simulado en window.localStorage.
-    3. Navega a /dashboard.
-    4. Espera la redirección/permiso de acceso a la ruta de dashboard.
+    page.get_by_text("+ Nueva tarjeta").click()
+    form = page.locator("form")
+    form.locator("input").first.fill(title)
+    form.locator("textarea").first.fill(desc)
+    form.locator("button", has_text="Crear tarjeta").click()
+    page.wait_for_selector(f"text={title}")
 
-    Aserciones/condiciones:
-    - La URL final contiene '/dashboard', indicando acceso correcto con token presente.
-    - El token usado es un placeholder; si la aplicación valida el token en el backend, puede ser necesario mockear la respuesta de la API.
-    """
-    page.goto(f"{BASE_URL}/login")
-    page.evaluate("window.localStorage.setItem('token','TOKEN_JWT_DE_PRUEBA')")
-    page.goto(f"{BASE_URL}/dashboard")
-    page.wait_for_url("**/dashboard")
-    assert "/dashboard" in page.url
+    # Editar tarjeta (click en la tarjeta para abrir modal)
+    page.get_by_text(title).click()
+    form.locator("input").first.fill(new_title)
+    form.locator("button", has_text="Guardar cambios").click()
+    page.wait_for_selector(f"text={new_title}")
+
+    # Eliminar tarjeta (aceptar diálogo de confirmación)
+    page.get_by_text(new_title).click()
+    page.once("dialog", lambda dialog: dialog.accept())
+    form.locator("button", has_text="Eliminar").click()
+    page.wait_for_timeout(300)  # pequeño margen para que desaparezca
+    assert page.query_selector(f"text={new_title}") is None

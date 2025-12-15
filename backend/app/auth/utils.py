@@ -5,7 +5,7 @@ Incluye funciones de hashing y verificación de contraseñas, generación y vali
 de tokens JWT, y dependencias para obtener usuarios autenticados y la sesión de base
 de datos.
 """
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from jose import jwt, JWTError
 from passlib.context import CryptContext
 from fastapi import Depends, HTTPException, status
@@ -70,7 +70,7 @@ def create_token(data: dict):
         str: Token JWT generado.
     """
     to_encode = data.copy()
-    expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MIN)
+    expire = datetime.now(timezone.utc) + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MIN)
     to_encode.update({"exp": expire})
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 

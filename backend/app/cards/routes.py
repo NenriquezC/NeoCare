@@ -133,6 +133,45 @@ def update_card(
     db.refresh(card)
     return card
 
+
+@router.patch("/{card_id}", response_model=CardOut)
+def patch_card(
+    card_id: int,
+    data: CardUpdate,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    """
+    Edita parcialmente una tarjeta existente (PATCH).
+
+    Reglas:
+    - La tarjeta debe existir.
+    - La tarjeta debe pertenecer a un board del usuario autenticado.
+    """
+    card = db.query(Card).filter(Card.id == card_id).first()
+    if not card:
+        raise HTTPException(status_code=404, detail="Tarjeta no encontrada")
+
+    # Seguridad: validamos permisos usando el board_id actual de la tarjeta
+    verify_board_permission(card.board_id, current_user.id, db)
+
+    # Aplicar cambios (solo si vienen en el body)
+    if data.title is not None:
+        card.title = data.title
+    if data.description is not None:
+        card.description = data.description
+    if data.due_date is not None:
+        card.due_date = data.due_date
+    if data.list_id is not None:
+        card.list_id = data.list_id
+
+    card.updated_at = datetime.now(timezone.utc)
+
+    db.add(card)
+    db.commit()
+    db.refresh(card)
+    return card
+
 @router.get("/", response_model=list[CardOut])
 def list_cards(
     board_id: int,

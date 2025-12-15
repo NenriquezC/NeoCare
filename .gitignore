@@ -13,3 +13,4 @@ frontend_t/.vite/
 *.pyc
 backend/__pycache__/
 backend/.venv/
+venv/

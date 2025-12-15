@@ -86,38 +86,40 @@ def crear_board_y_lista(user):
         user (User): instancia ORM del usuario propietario del board.
 
     Returns:
-        tuple(Board, List): las instancias ORM del tablero y de la lista creada.
+        tuple(int, int): los IDs del tablero y de la lista creada.
 
     Side effects:
         - Inserta y comitea registros en la base de datos.
-        - Devuelve objetos ya refrescados (con id) listos para usar en tests.
+        - Devuelve los IDs directamente para evitar problemas de sesión desconectada.
     """
     db = SessionLocal()
     board = Board(name="Tablero de pruebas", user_id=user.id)
     db.add(board)
     db.commit()
     db.refresh(board)
+    board_id = board.id
 
     lista = List(
         name="Por hacer",
-        board_id=board.id,
+        board_id=board_id,
         position=1,
     )
     db.add(lista)
     db.commit()
     db.refresh(lista)
+    list_id = lista.id
 
     db.close()
-    return board, lista
+    return board_id, list_id
 
 
-def crear_tarjeta_via_api(board, lista, headers):
+def crear_tarjeta_via_api(board_id, list_id, headers):
     """
     Crea una tarjeta llamando a POST /cards/ y devuelve el JSON de respuesta.
 
     Args:
-        board (Board): instancia ORM del tablero donde crear la tarjeta.
-        lista (List): instancia ORM de la lista donde colocar la tarjeta.
+        board_id (int): ID del tablero donde crear la tarjeta.
+        list_id (int): ID de la lista donde colocar la tarjeta.
         headers (dict): cabeceras HTTP a enviar (por ejemplo Authorization).
 
     Returns:
@@ -130,8 +132,8 @@ def crear_tarjeta_via_api(board, lista, headers):
         "title": "Tarea de prueba",
         "description": "Descripción opcional",
         "due_date": "2025-12-31",
-        "board_id": board.id,
-        "list_id": lista.id,
+        "board_id": board_id,
+        "list_id": list_id,
     }
 
     resp = client.post("/cards/", json=payload, headers=headers)
@@ -157,14 +159,14 @@ def test_crear_tarjeta_ok():
     - la tarjeta existe efectivamente en la base de datos.
     """
     user, token = crear_usuario_y_token()
-    board, lista = crear_board_y_lista(user)
+    board_id, list_id = crear_board_y_lista(user)
     headers = {"Authorization": f"Bearer {token}"}
 
-    card_data = crear_tarjeta_via_api(board, lista, headers)
+    card_data = crear_tarjeta_via_api(board_id, list_id, headers)
 
     assert card_data["title"] == "Tarea de prueba"
-    assert card_data["board_id"] == board.id
-    assert card_data["list_id"] == lista.id
+    assert card_data["board_id"] == board_id
+    assert card_data["list_id"] == list_id
 
     # Confirmar que está en la BD
     db = SessionLocal()
@@ -180,15 +182,15 @@ def test_crear_tarjeta_titulo_vacio():
     Verifica que Pydantic / validación del endpoint rechaza título vacío con 422.
     """
     user, token = crear_usuario_y_token()
-    board, lista = crear_board_y_lista(user)
+    board_id, list_id = crear_board_y_lista(user)
     headers = {"Authorization": f"Bearer {token}"}
 
     payload = {
         "title": "",  # título vacío
         "description": "Sin título",
         "due_date": "2025-12-31",
-        "board_id": board.id,
-        "list_id": lista.id,
+        "board_id": board_id,
+        "list_id": list_id,
     }
 
     resp = client.post("/cards/", json=payload, headers=headers)
@@ -202,15 +204,15 @@ def test_crear_tarjeta_fecha_invalida():
     Se espera un 422 porque Pydantic no puede parsear la fecha proporcionada.
     """
     user, token = crear_usuario_y_token()
-    board, lista = crear_board_y_lista(user)
+    board_id, list_id = crear_board_y_lista(user)
     headers = {"Authorization": f"Bearer {token}"}
 
     payload = {
         "title": "Fecha mala",
         "description": "Probando fecha inválida",
         "due_date": "2025-13-40",  # fecha imposible
-        "board_id": board.id,
-        "list_id": lista.id,
+        "board_id": board_id,
+        "list_id": list_id,
     }
 
     resp = client.post("/cards/", json=payload, headers=headers)
@@ -230,11 +232,11 @@ def test_editar_tarjeta_ok():
     - Verificar que la respuesta contiene los cambios y que la BD refleja los mismos.
     """
     user, token = crear_usuario_y_token()
-    board, lista = crear_board_y_lista(user)
+    board_id, list_id = crear_board_y_lista(user)
     headers = {"Authorization": f"Bearer {token}"}
 
     # Crear tarjeta
-    card_data = crear_tarjeta_via_api(board, lista, headers)
+    card_data = crear_tarjeta_via_api(board_id, list_id, headers)
     card_id = card_data["id"]
 
     # Editar
@@ -366,15 +368,15 @@ def test_flujo_completo_tarjeta():
     - La edición mediante PATCH refleja los cambios en la respuesta.
     """
     user, token = crear_usuario_y_token()
-    board, lista = crear_board_y_lista(user)
+    board_id, list_id = crear_board_y_lista(user)
     headers = {"Authorization": f"Bearer {token}"}
 
     # Crear
-    card_data = crear_tarjeta_via_api(board, lista, headers)
+    card_data = crear_tarjeta_via_api(board_id, list_id, headers)
     card_id = card_data["id"]
 
     # Listar por tablero
-    resp_list = client.get(f"/cards/?board_id={board.id}", headers=headers)
+    resp_list = client.get(f"/cards/?board_id={board_id}", headers=headers)
     assert resp_list.status_code == 200
     cards = resp_list.json()
     ids = [c["id"] for c in cards]
