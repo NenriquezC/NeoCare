@@ -47,18 +47,18 @@ const Login: React.FC = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        background: "#020617",
+        background: "linear-gradient(135deg, #e0f2fe 0%, #bfdbfe 50%, #93c5fd 100%)",
         color: "white",
       }}
     >
       <div
         style={{
-          background: "#020617",
+          background: "linear-gradient(135deg, #e0f2fe 0%, #bfdbfe 50%, #93c5fd 100%)",
           padding: "3rem",
           borderRadius: "1rem",
           width: "420px",
-          boxShadow: "0 10px 30px rgba(15,23,42,0.8)",
-          border: "1px solid #1e293b",
+          boxShadow: "0 10px 30px rgba(0, 0, 0, 0.2)",
+          border: "1px solid rgba(255, 255, 255, 0.3)",
         }}
       >
         <h1
@@ -66,13 +66,15 @@ const Login: React.FC = () => {
             fontSize: "2.5rem",
             marginBottom: "2rem",
             fontWeight: "700",
+            textShadow: "2px 2px 4px rgba(0, 0, 0, 0.6)",
+            color: "white",
           }}
         >
-          NeoCare – Login
+          NeoCare
         </h1>
 
         <form onSubmit={handleSubmit}>
-          <label style={{ display: "block", marginBottom: "0.5rem" }}>
+          <label style={{ display: "block", marginBottom: "0.5rem", color: "#1e40af", fontWeight: "600", textShadow: "1px 1px 2px rgba(0, 0, 0, 0.3)" }}>
             Email
           </label>
           <input
@@ -83,14 +85,14 @@ const Login: React.FC = () => {
               width: "100%",
               padding: "0.75rem 1rem",
               borderRadius: "0.5rem",
-              border: "1px solid #1f2937",
+              border: "1px solid rgba(30, 64, 175, 0.3)",
               marginBottom: "1.25rem",
-              background: "#111827",
-              color: "white",
+              background: "rgba(255, 255, 255, 0.7)",
+              color: "#1e3a8a",
             }}
           />
 
-          <label style={{ display: "block", marginBottom: "0.5rem" }}>
+          <label style={{ display: "block", marginBottom: "0.5rem", color: "#1e40af", fontWeight: "600", textShadow: "1px 1px 2px rgba(0, 0, 0, 0.3)" }}>
             Contraseña
           </label>
           <input
@@ -101,10 +103,10 @@ const Login: React.FC = () => {
               width: "100%",
               padding: "0.75rem 1rem",
               borderRadius: "0.5rem",
-              border: "1px solid #1f2937",
+              border: "1px solid rgba(30, 64, 175, 0.3)",
               marginBottom: "1.5rem",
-              background: "#111827",
-              color: "white",
+              background: "rgba(255, 255, 255, 0.7)",
+              color: "#1e3a8a",
             }}
           />
 
@@ -112,11 +114,12 @@ const Login: React.FC = () => {
             <div
               style={{
                 marginBottom: "1rem",
-                color: "#fecaca",
-                background: "#7f1d1d",
+                color: "white",
+                background: "rgba(127, 29, 29, 0.7)",
                 padding: "0.5rem 0.75rem",
                 borderRadius: "0.5rem",
                 fontSize: "0.9rem",
+                textShadow: "1px 1px 2px rgba(0, 0, 0, 0.5)",
               }}
             >
               {error}
@@ -129,13 +132,15 @@ const Login: React.FC = () => {
             style={{
               width: "100%",
               padding: "0.75rem 1rem",
-              background: loading ? "#3b82f6aa" : "#2563eb",
+              background: loading ? "linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%)" : "linear-gradient(135deg, #0c4a6e 0%, #1e40af 100%)",
               borderRadius: "0.75rem",
               border: "none",
               color: "white",
               fontWeight: "600",
               cursor: loading ? "default" : "pointer",
               fontSize: "1rem",
+              textShadow: "1px 1px 2px rgba(0, 0, 0, 0.5)",
+              boxShadow: "0 4px 6px rgba(0, 0, 0, 0.2)",
             }}
           >
             {loading ? "Iniciando sesión..." : "Iniciar sesión"}
