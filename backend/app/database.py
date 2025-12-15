@@ -12,14 +12,15 @@ import os
 # Extrae la URL de la base de datos desde la variable de entorno (o usa la URL por defecto)
 DATABASE_URL = os.getenv(
     "DATABASE_URL",
-    "postgresql://postgres:niki2025@localhost:5432/neocare_db"
+    "postgresql://postgres:Limon1307@localhost:5432/neocare"
 )
 
 # Crea el motor de conexión con SQLAlchemy
 engine = create_engine(
     DATABASE_URL,
     future=True,
-    echo=True  # Muestra las consultas SQL generadas (útil para desarrollo y depuración)
+    echo=True,  # Muestra las consultas SQL generadas (útil para desarrollo y depuración)
+    connect_args={"client_encoding": "utf8"}
 )
 
 # Genera la clase de sesión para interactuar con la base de datos

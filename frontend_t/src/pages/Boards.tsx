@@ -76,6 +76,13 @@ const Boards: React.FC = () => {
   const [selectedListId, setSelectedListId] = useState<number | null>(null);
 
   /**
+   * selectedColumn
+   *
+   * Nombre de la columna seleccionada para crear/editar.
+   */
+  const [selectedColumn, setSelectedColumn] = useState<string | null>(null);
+
+  /**
    * listIdByColumn
    *
    * Mapa nombre_columna -> id_lista real en BD.
@@ -244,14 +251,19 @@ const Boards: React.FC = () => {
       return;
     }
 
-    const realListId = listIdByColumn[targetColumn];
+    const mapEntries = Object.entries(listIdByColumn);
+    const fallbackEntry = mapEntries.length > 0 ? mapEntries[0] : null;
+    const realListId = listIdByColumn[targetColumn] ?? fallbackEntry?.[1];
+    const realColumnName = listIdByColumn[targetColumn] ? targetColumn : fallbackEntry?.[0] ?? targetColumn;
+
     if (!realListId) {
-      setFormError(`No existe la lista "${targetColumn}" en el tablero activo.`);
+      setFormError(`No existen listas cargadas para este tablero. Recarga la página o crea listas.`);
       setShowModal(true);
       return;
     }
 
     setSelectedListId(realListId);
+    setSelectedColumn(realColumnName);
     setShowModal(true);
   }
 
@@ -303,8 +315,12 @@ const Boards: React.FC = () => {
       return;
     }
 
-    if (!selectedListId) {
-      setFormError("No hay una columna/lista seleccionada (list_id).");
+    const targetColumn = selectedColumn || "Por hacer";
+    const mapEntries = Object.entries(listIdByColumn);
+    const fallbackEntry = mapEntries.length > 0 ? mapEntries[0] : null;
+    const listId = listIdByColumn[targetColumn] ?? fallbackEntry?.[1] ?? null;
+    if (!listId) {
+      setFormError(`No existe la lista "${targetColumn}" en el tablero activo ni hay listas disponibles.`);
       return;
     }
 
@@ -314,7 +330,7 @@ const Boards: React.FC = () => {
         title: form.title.trim(),
         description: form.description.trim() || null,
         due_date: form.due_date || null,
-        list_id: selectedListId,
+        list_id: listId,
         board_id: selectedBoardId,
       };
 

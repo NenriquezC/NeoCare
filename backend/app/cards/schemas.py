@@ -78,7 +78,7 @@ class CardOut(BaseModel):
     - archived (bool): Indica si la tarjeta está archivada.
 
     Configuración:
-    - orm_mode = True para permitir compatibilidad con objetos ORM (p. ej., SQLAlchemy).
+    - from_attributes = True para permitir compatibilidad con objetos ORM (p. ej., SQLAlchemy).
     """
     id: int
     board_id: int
@@ -93,4 +93,4 @@ class CardOut(BaseModel):
     archived: bool
 
     class Config:
-        orm_mode = True
+        from_attributes = True

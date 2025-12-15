@@ -80,6 +80,17 @@ def get_board_lists(
         .all()
     )
 
+    # ✅ CAMBIO: autocrear listas si el tablero no tiene ninguna
+    if not lists:
+        default_lists = [
+            List(name="Por hacer", board_id=board_id, position=0),
+            List(name="En curso", board_id=board_id, position=1),
+            List(name="Hecho", board_id=board_id, position=2),
+        ]
+        db.add_all(default_lists)
+        db.commit()
+        lists = default_lists
+
     return [{"id": l.id, "name": l.name, "position": l.position, "board_id": l.board_id} for l in lists]
 
 
