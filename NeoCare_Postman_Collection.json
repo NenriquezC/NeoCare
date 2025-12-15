@@ -1,0 +1,668 @@
+{
+  "info": {
+    "_postman_id": "neocare-api-collection-v2",
+    "name": "NeoCare API - Flujo Completo Automatizado",
+    "description": "Colección 100% automatizada: Register → Login → Get Boards → Get Lists → Create Card → List Cards. Sin necesidad de editar nada, ¡todo se genera dinámicamente!",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "📌 FLUJO AUTOMÁTICO - Ejecuta en orden",
+      "item": [
+        {
+          "name": "1️⃣ REGISTRO - Crear usuario",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// Generar email único cada ejecución",
+                  "const timestamp = Date.now();",
+                  "const randomId = Math.random().toString(36).substring(2, 8);",
+                  "const uniqueEmail = `user_${timestamp}_${randomId}@test.com`;",
+                  "pm.environment.set('user_email', uniqueEmail);",
+                  "pm.environment.set('user_password', 'password123');",
+                  "pm.environment.set('user_name', 'Usuario Test ' + timestamp);"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const responseCode = pm.response.code;",
+                  "const responseData = pm.response.json();",
+                  "",
+                  "if (responseCode === 200) {",
+                  "    pm.environment.set('access_token', responseData.access_token);",
+                  "    pm.test('✅ USUARIO REGISTRADO', function () {",
+                  "        pm.expect(responseCode).to.equal(200);",
+                  "        pm.expect(responseData).to.have.property('access_token');",
+                  "    });",
+                  "    console.log('📧 Email: ' + pm.environment.get('user_email'));",
+                  "    console.log('🔐 Token obtenido y guardado');",
+                  "} else {",
+                  "    pm.test('❌ Error en registro', function () {",
+                  "        pm.expect(responseCode).to.equal(200);",
+                  "    });",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{user_email}}\",\n  \"password\": \"{{user_password}}\",\n  \"name\": \"{{user_name}}\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/auth/register",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["auth", "register"]
+            }
+          }
+        },
+        {
+          "name": "2️⃣ LOGIN - Obtener token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const responseCode = pm.response.code;",
+                  "const responseData = pm.response.json();",
+                  "",
+                  "if (responseCode === 200) {",
+                  "    pm.environment.set('access_token', responseData.access_token);",
+                  "    pm.test('✅ LOGIN EXITOSO', function () {",
+                  "        pm.expect(responseCode).to.equal(200);",
+                  "    });",
+                  "    console.log('✅ Autenticado como: ' + pm.environment.get('user_email'));",
+                  "} else {",
+                  "    pm.test('❌ Error en login', function () {",
+                  "        pm.expect(responseCode).to.equal(200);",
+                  "    });",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{user_email}}\",\n  \"password\": \"{{user_password}}\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/auth/login",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "3️⃣ OBTENER TABLEROS",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const responseCode = pm.response.code;",
+                  "const responseData = pm.response.json();",
+                  "",
+                  "if (responseCode === 200 && responseData.length > 0) {",
+                  "    const boardId = responseData[0].id;",
+                  "    pm.environment.set('board_id', boardId);",
+                  "    pm.test('✅ TABLEROS OBTENIDOS', function () {",
+                  "        pm.expect(responseCode).to.equal(200);",
+                  "        pm.expect(responseData[0]).to.have.property('id');",
+                  "    });",
+                  "    console.log('📊 Tablero ID: ' + boardId);",
+                  "    console.log('📋 Nombre: ' + responseData[0].name);",
+                  "} else {",
+                  "    pm.test('⚠️ No hay tableros', function () {",
+                  "        pm.expect(responseCode).to.equal(200);",
+                  "    });",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/boards/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["boards", ""]
+            }
+          }
+        },
+        {
+          "name": "4️⃣ OBTENER LISTAS",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const responseCode = pm.response.code;",
+                  "const responseData = pm.response.json();",
+                  "",
+                  "if (responseCode === 200 && responseData.length > 0) {",
+                  "    const listId = responseData[0].id;",
+                  "    pm.environment.set('list_id', listId);",
+                  "    pm.test('✅ LISTAS OBTENIDAS', function () {",
+                  "        pm.expect(responseCode).to.equal(200);",
+                  "        pm.expect(responseData[0]).to.have.property('id');",
+                  "    });",
+                  "    console.log('📍 Lista ID: ' + listId);",
+                  "    console.log('Nombre: ' + responseData[0].name);",
+                  "} else {",
+                  "    pm.test('⚠️ Sin listas', function () {",
+                  "        pm.expect(responseCode).to.equal(200);",
+                  "    });",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/boards/{{board_id}}/lists/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["boards", "{{board_id}}", "lists", ""]
+            }
+          }
+        },
+        {
+          "name": "5️⃣ CREAR TARJETA",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const timestamp = Date.now();",
+                  "pm.environment.set('card_title', 'Tarea automática #' + timestamp);"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const responseCode = pm.response.code;",
+                  "const responseData = pm.response.json();",
+                  "",
+                  "if (responseCode === 200) {",
+                  "    pm.environment.set('card_id', responseData.id);",
+                  "    pm.test('✅ TARJETA CREADA', function () {",
+                  "        pm.expect(responseCode).to.equal(200);",
+                  "        pm.expect(responseData).to.have.property('id');",
+                  "    });",
+                  "    console.log('🎯 Tarjeta ID: ' + responseData.id);",
+                  "    console.log('Título: ' + responseData.title);",
+                  "} else {",
+                  "    pm.test('❌ Error al crear', function () {",
+                  "        pm.expect(responseCode).to.equal(200);",
+                  "    });",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"{{card_title}}\",\n  \"description\": \"Tarjeta creada automáticamente por Postman\",\n  \"due_date\": \"2025-12-31\",\n  \"board_id\": {{board_id}},\n  \"list_id\": {{list_id}}\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/cards/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["cards", ""]
+            }
+          }
+        },
+        {
+          "name": "6️⃣ LISTAR TARJETAS",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const responseCode = pm.response.code;",
+                  "const responseData = pm.response.json();",
+                  "",
+                  "if (responseCode === 200) {",
+                  "    pm.test('✅ TARJETAS LISTADAS', function () {",
+                  "        pm.expect(responseCode).to.equal(200);",
+                  "        pm.expect(responseData).to.be.an('array');",
+                  "    });",
+                  "    console.log('📄 Total de tarjetas: ' + responseData.length);",
+                  "    if (responseData.length > 0) {",
+                  "        console.log('Última: ' + responseData[0].title);",
+                  "    }",
+                  "} else {",
+                  "    pm.test('❌ Error', function () {",
+                  "        pm.expect(responseCode).to.equal(200);",
+                  "    });",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/cards/?board_id={{board_id}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["cards", ""],
+              "query": [
+                {
+                  "key": "board_id",
+                  "value": "{{board_id}}"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🛠️ PRUEBAS ADICIONALES - Flujo Independiente",
+      "item": [
+        {
+          "name": "[SETUP] Registro para pruebas",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const timestamp = Date.now();",
+                  "const randomId = Math.random().toString(36).substring(2, 8);",
+                  "const uniqueEmail = `test_${timestamp}_${randomId}@test.com`;",
+                  "pm.environment.set('test_email', uniqueEmail);",
+                  "pm.environment.set('test_password', 'password123');",
+                  "pm.environment.set('test_name', 'Test Usuario ' + timestamp);"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    pm.environment.set('test_token', pm.response.json().access_token);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{test_email}}\",\n  \"password\": \"{{test_password}}\",\n  \"name\": \"{{test_name}}\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/auth/register",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["auth", "register"]
+            }
+          }
+        },
+        {
+          "name": "[SETUP] Login para pruebas",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    pm.environment.set('test_token', pm.response.json().access_token);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{test_email}}\",\n  \"password\": \"{{test_password}}\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/auth/login",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "[SETUP] Obtener tablero para pruebas",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200 && pm.response.json().length > 0) {",
+                  "    pm.environment.set('test_board_id', pm.response.json()[0].id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{test_token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/boards/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["boards", ""]
+            }
+          }
+        },
+        {
+          "name": "[SETUP] Obtener lista para pruebas",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200 && pm.response.json().length > 0) {",
+                  "    pm.environment.set('test_list_id', pm.response.json()[0].id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{test_token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/boards/{{test_board_id}}/lists/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["boards", "{{test_board_id}}", "lists", ""]
+            }
+          }
+        },
+        {
+          "name": "[SETUP] Crear tarjeta para pruebas",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "pm.environment.set('test_card_title', 'Tarjeta Test #' + Date.now());"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    pm.environment.set('test_card_id', pm.response.json().id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{test_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"{{test_card_title}}\",\n  \"description\": \"Tarjeta para pruebas adicionales\",\n  \"due_date\": \"2025-12-31\",\n  \"board_id\": {{test_board_id}},\n  \"list_id\": {{test_list_id}}\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/cards/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["cards", ""]
+            }
+          }
+        },
+        {
+          "name": "✅ Ver detalles de tarjeta",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('✅ Tarjeta obtenida correctamente', function () {",
+                  "    pm.expect(pm.response.code).to.equal(200);",
+                  "    pm.expect(pm.response.json()).to.have.property('id');",
+                  "    pm.expect(pm.response.json()).to.have.property('title');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{test_token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/cards/{{test_card_id}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["cards", "{{test_card_id}}"]
+            }
+          }
+        },
+        {
+          "name": "✅ Editar tarjeta (PATCH)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('✅ Tarjeta actualizada correctamente', function () {",
+                  "    pm.expect(pm.response.code).to.equal(200);",
+                  "    pm.expect(pm.response.json().title).to.equal('Tarjeta Editada');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{test_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Tarjeta Editada\",\n  \"description\": \"Actualizada mediante PATCH\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/cards/{{test_card_id}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["cards", "{{test_card_id}}"]
+            }
+          }
+        },
+        {
+          "name": "✅ Eliminar tarjeta",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('✅ Tarjeta eliminada correctamente', function () {",
+                  "    pm.expect(pm.response.code).to.equal(204);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{test_token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/caautomatizadosrds/{{test_card_id}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["cards", "{{test_card_id}}"]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "user_email",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "user_password",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "user_name",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "access_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "board_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "list_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "card_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "card_title",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}
