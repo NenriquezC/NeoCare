@@ -72,6 +72,46 @@
         "documentation": {}
     },
     {
+        "label": "HTTPException",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "APIRouter",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "Depends",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "HTTPException",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "status",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
         "label": "FastAPI",
         "importPath": "fastapi",
         "description": "fastapi",
@@ -105,6 +145,14 @@
     },
     {
         "label": "relationship",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "Session",
         "importPath": "sqlalchemy.orm",
         "description": "sqlalchemy.orm",
         "isExtraImport": true,
@@ -168,11 +216,35 @@
         "documentation": {}
     },
     {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "Field",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
         "label": "ValidationError",
         "importPath": "pydantic",
         "description": "pydantic",
         "isExtraImport": true,
         "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
         "documentation": {}
     },
     {
@@ -209,6 +281,38 @@
     },
     {
         "label": "timezone",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "date",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
         "importPath": "datetime",
         "description": "datetime",
         "isExtraImport": true,
@@ -450,7 +554,39 @@
         "documentation": {}
     },
     {
+        "label": "TestClient",
+        "importPath": "fastapi.testclient",
+        "description": "fastapi.testclient",
+        "isExtraImport": true,
+        "detail": "fastapi.testclient",
+        "documentation": {}
+    },
+    {
         "label": "patch",
+        "importPath": "unittest.mock",
+        "description": "unittest.mock",
+        "isExtraImport": true,
+        "detail": "unittest.mock",
+        "documentation": {}
+    },
+    {
+        "label": "MagicMock",
+        "importPath": "unittest.mock",
+        "description": "unittest.mock",
+        "isExtraImport": true,
+        "detail": "unittest.mock",
+        "documentation": {}
+    },
+    {
+        "label": "patch",
+        "importPath": "unittest.mock",
+        "description": "unittest.mock",
+        "isExtraImport": true,
+        "detail": "unittest.mock",
+        "documentation": {}
+    },
+    {
+        "label": "MagicMock",
         "importPath": "unittest.mock",
         "description": "unittest.mock",
         "isExtraImport": true,
@@ -474,27 +610,11 @@
         "documentation": {}
     },
     {
-        "label": "MagicMock",
-        "importPath": "unittest.mock",
-        "description": "unittest.mock",
+        "label": "app",
+        "importPath": "app.main",
+        "description": "app.main",
         "isExtraImport": true,
-        "detail": "unittest.mock",
-        "documentation": {}
-    },
-    {
-        "label": "MagicMock",
-        "importPath": "unittest.mock",
-        "description": "unittest.mock",
-        "isExtraImport": true,
-        "detail": "unittest.mock",
-        "documentation": {}
-    },
-    {
-        "label": "patch",
-        "importPath": "unittest.mock",
-        "description": "unittest.mock",
-        "isExtraImport": true,
-        "detail": "unittest.mock",
+        "detail": "app.main",
         "documentation": {}
     },
     {
@@ -626,6 +746,14 @@
         "documentation": {}
     },
     {
+        "label": "SessionLocal",
+        "importPath": "app.database",
+        "description": "app.database",
+        "isExtraImport": true,
+        "detail": "app.database",
+        "documentation": {}
+    },
+    {
         "label": "Base",
         "importPath": "app.database",
         "description": "app.database",
@@ -711,6 +839,47 @@
         "description": "app.boards.models",
         "isExtraImport": true,
         "detail": "app.boards.models",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "importPath": "app.boards.models",
+        "description": "app.boards.models",
+        "isExtraImport": true,
+        "detail": "app.boards.models",
+        "documentation": {}
+    },
+    {
+        "label": "Board",
+        "importPath": "app.boards.models",
+        "description": "app.boards.models",
+        "isExtraImport": true,
+        "detail": "app.boards.models",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "app.boards.models",
+        "description": "app.boards.models",
+        "isExtraImport": true,
+        "detail": "app.boards.models",
+        "documentation": {}
+    },
+    {
+        "label": "Card",
+        "importPath": "app.boards.models",
+        "description": "app.boards.models",
+        "isExtraImport": true,
+        "detail": "app.boards.models",
+        "documentation": {}
+    },
+    {
+        "label": "uuid",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "uuid",
+        "description": "uuid",
+        "detail": "uuid",
         "documentation": {}
     },
     {
@@ -950,7 +1119,16 @@
         "kind": 2,
         "importPath": "backend.app.boards.routes",
         "description": "backend.app.boards.routes",
-        "peekOfCode": "def get_boards(db: Session = Depends(get_db),current_user: User = Depends(get_current_user)):\n    \"\"\"\n    Obtiene todos los tableros pertenecientes al usuario autenticado.\n    Parámetros:\n        db (Session): Sesión actual de la base de datos inyectada por FastAPI.\n        current_user (User): Usuario autenticado inyectado por FastAPI.\n    Retorna:\n        List[Board]: Lista de objetos Board que pertenecen al usuario actual.\n    \"\"\"\n    return db.query(Board).filter(Board.user_id == current_user.id).all()",
+        "peekOfCode": "def get_boards(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):\n    \"\"\"\n    Obtiene todos los tableros pertenecientes al usuario autenticado.\n    Nota (importante):\n        Si el usuario NO tiene tableros (usuarios antiguos creados antes de la creación automática),\n        se crea automáticamente 1 tablero y sus 3 listas por defecto para evitar que el frontend\n        quede bloqueado.\n    \"\"\"\n    boards = (\n        db.query(Board)",
+        "detail": "backend.app.boards.routes",
+        "documentation": {}
+    },
+    {
+        "label": "get_board_lists",
+        "kind": 2,
+        "importPath": "backend.app.boards.routes",
+        "description": "backend.app.boards.routes",
+        "peekOfCode": "def get_board_lists(\n    board_id: int,\n    db: Session = Depends(get_db),\n    current_user: User = Depends(get_current_user),\n):\n    \"\"\"\n    Devuelve las listas (columnas) de un tablero específico.\n    Reglas de seguridad:\n        - El tablero debe existir.\n        - El tablero debe pertenecer al usuario autenticado.",
         "detail": "backend.app.boards.routes",
         "documentation": {}
     },
@@ -959,8 +1137,125 @@
         "kind": 5,
         "importPath": "backend.app.boards.routes",
         "description": "backend.app.boards.routes",
-        "peekOfCode": "router = APIRouter(prefix=\"/boards\", tags=[\"boards\"])\n@router.get(\"/\")\ndef get_boards(db: Session = Depends(get_db),current_user: User = Depends(get_current_user)):\n    \"\"\"\n    Obtiene todos los tableros pertenecientes al usuario autenticado.\n    Parámetros:\n        db (Session): Sesión actual de la base de datos inyectada por FastAPI.\n        current_user (User): Usuario autenticado inyectado por FastAPI.\n    Retorna:\n        List[Board]: Lista de objetos Board que pertenecen al usuario actual.",
+        "peekOfCode": "router = APIRouter(prefix=\"/boards\", tags=[\"boards\"])\n@router.get(\"/\")\ndef get_boards(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):\n    \"\"\"\n    Obtiene todos los tableros pertenecientes al usuario autenticado.\n    Nota (importante):\n        Si el usuario NO tiene tableros (usuarios antiguos creados antes de la creación automática),\n        se crea automáticamente 1 tablero y sus 3 listas por defecto para evitar que el frontend\n        quede bloqueado.\n    \"\"\"",
         "detail": "backend.app.boards.routes",
+        "documentation": {}
+    },
+    {
+        "label": "verify_board_permission",
+        "kind": 2,
+        "importPath": "backend.app.cards.routes",
+        "description": "backend.app.cards.routes",
+        "peekOfCode": "def verify_board_permission(board_id: int, user_id: int, db: Session):\n    board = db.query(Board).filter(Board.id == board_id).first()\n    if not board:\n        raise HTTPException(status_code=404, detail=\"Tablero no encontrado\")\n    if board.user_id != user_id:\n        raise HTTPException(status_code=403, detail=\"No tienes permiso para este tablero\")\n    return board\n@router.post(\"/\", response_model=CardOut)\ndef create_card(data: CardCreate,\n                db: Session = Depends(get_db),",
+        "detail": "backend.app.cards.routes",
+        "documentation": {}
+    },
+    {
+        "label": "create_card",
+        "kind": 2,
+        "importPath": "backend.app.cards.routes",
+        "description": "backend.app.cards.routes",
+        "peekOfCode": "def create_card(data: CardCreate,\n                db: Session = Depends(get_db),\n                current_user: User = Depends(get_current_user)):\n    verify_board_permission(data.board_id, current_user.id, db)\n    new_card = Card(\n        board_id=data.board_id,\n        list_id=data.list_id,\n        title=data.title,\n        description=data.description,\n        due_date=data.due_date,",
+        "detail": "backend.app.cards.routes",
+        "documentation": {}
+    },
+    {
+        "label": "get_cards",
+        "kind": 2,
+        "importPath": "backend.app.cards.routes",
+        "description": "backend.app.cards.routes",
+        "peekOfCode": "def get_cards(board_id: int,\n            db: Session = Depends(get_db),\n            current_user: User = Depends(get_current_user)):\n    verify_board_permission(board_id, current_user.id, db)\n    return db.query(Card).filter(Card.board_id == board_id).all()\n@router.get(\"/{card_id}\", response_model=CardOut)\ndef get_card(card_id: int,\n            db: Session = Depends(get_db),\n            current_user: User = Depends(get_current_user)):\n    card = db.query(Card).filter(Card.id == card_id).first()",
+        "detail": "backend.app.cards.routes",
+        "documentation": {}
+    },
+    {
+        "label": "get_card",
+        "kind": 2,
+        "importPath": "backend.app.cards.routes",
+        "description": "backend.app.cards.routes",
+        "peekOfCode": "def get_card(card_id: int,\n            db: Session = Depends(get_db),\n            current_user: User = Depends(get_current_user)):\n    card = db.query(Card).filter(Card.id == card_id).first()\n    if not card:\n        raise HTTPException(status_code=404, detail=\"Tarjeta no encontrada\")\n    verify_board_permission(card.board_id, current_user.id, db)\n    return card\n\"\"\"\n@router.patch(\"/{card_id}\", response_model=CardOut)",
+        "detail": "backend.app.cards.routes",
+        "documentation": {}
+    },
+    {
+        "label": "update_card",
+        "kind": 2,
+        "importPath": "backend.app.cards.routes",
+        "description": "backend.app.cards.routes",
+        "peekOfCode": "def update_card(card_id: int,\n                data: CardUpdate,\n                db: Session = Depends(get_db),\n                current_user: User = Depends(get_current_user)):\n    card = db.query(Card).filter(Card.id == card_id).first()\n    if not card:\n        raise HTTPException(status_code=404, detail=\"Tarjeta no encontrada\")\n    verify_board_permission(card.board_id, current_user.id, db)\n    update_data = data.model_dump(exclude_unset=True)\n    for key, value in update_data.items():",
+        "detail": "backend.app.cards.routes",
+        "documentation": {}
+    },
+    {
+        "label": "update_card",
+        "kind": 2,
+        "importPath": "backend.app.cards.routes",
+        "description": "backend.app.cards.routes",
+        "peekOfCode": "def update_card(\n    card_id: int,\n    data: CardUpdate,\n    db: Session = Depends(get_db),\n    current_user: User = Depends(get_current_user),\n):\n    \"\"\"\n    Edita una tarjeta existente.\n    Reglas:\n    - La tarjeta debe existir.",
+        "detail": "backend.app.cards.routes",
+        "documentation": {}
+    },
+    {
+        "label": "list_cards",
+        "kind": 2,
+        "importPath": "backend.app.cards.routes",
+        "description": "backend.app.cards.routes",
+        "peekOfCode": "def list_cards(\n    board_id: int,\n    db: Session = Depends(get_db),\n    current_user: User = Depends(get_current_user),\n):\n    # seguridad: board existe y es del usuario\n    board = db.query(Board).filter(Board.id == board_id).first()\n    if not board:\n        raise HTTPException(status_code=404, detail=\"Tablero no encontrado\")\n    if board.user_id != current_user.id:",
+        "detail": "backend.app.cards.routes",
+        "documentation": {}
+    },
+    {
+        "label": "delete_card",
+        "kind": 2,
+        "importPath": "backend.app.cards.routes",
+        "description": "backend.app.cards.routes",
+        "peekOfCode": "def delete_card(card_id: int,\n                db: Session = Depends(get_db),\n                current_user: User = Depends(get_current_user)):\n    card = db.query(Card).filter(Card.id == card_id).first()\n    if not card:\n        raise HTTPException(status_code=404, detail=\"Tarjeta no encontrada\")\n    verify_board_permission(card.board_id, current_user.id, db)\n    db.delete(card)\n    db.commit()\n    return None",
+        "detail": "backend.app.cards.routes",
+        "documentation": {}
+    },
+    {
+        "label": "delete_card",
+        "kind": 2,
+        "importPath": "backend.app.cards.routes",
+        "description": "backend.app.cards.routes",
+        "peekOfCode": "def delete_card(\n    card_id: int,\n    db: Session = Depends(get_db),\n    current_user: User = Depends(get_current_user),\n):\n    \"\"\"\n    Elimina una tarjeta por ID si pertenece a un tablero del usuario autenticado.\n    Retorna 204 si se elimina correctamente.\n    \"\"\"\n    card = db.query(Card).filter(Card.id == card_id).first()",
+        "detail": "backend.app.cards.routes",
+        "documentation": {}
+    },
+    {
+        "label": "router",
+        "kind": 5,
+        "importPath": "backend.app.cards.routes",
+        "description": "backend.app.cards.routes",
+        "peekOfCode": "router = APIRouter(prefix=\"/cards\", tags=[\"cards\"])\ndef verify_board_permission(board_id: int, user_id: int, db: Session):\n    board = db.query(Board).filter(Board.id == board_id).first()\n    if not board:\n        raise HTTPException(status_code=404, detail=\"Tablero no encontrado\")\n    if board.user_id != user_id:\n        raise HTTPException(status_code=403, detail=\"No tienes permiso para este tablero\")\n    return board\n@router.post(\"/\", response_model=CardOut)\ndef create_card(data: CardCreate,",
+        "detail": "backend.app.cards.routes",
+        "documentation": {}
+    },
+    {
+        "label": "CardCreate",
+        "kind": 6,
+        "importPath": "backend.app.cards.schemas",
+        "description": "backend.app.cards.schemas",
+        "peekOfCode": "class CardCreate(BaseModel):\n    \"\"\"\n    Esquema para crear una tarjeta (Card).\n    Campos:\n    - title (str): Título obligatorio de la tarjeta. Tiene longitud mínima de 1 carácter.\n    - description (Optional[str]): Descripción opcional de la tarjeta.\n    - due_date (Optional[date]): Fecha límite opcional para la tarjeta (solo fecha).\n    - board_id (int): Identificador del tablero al que pertenece la tarjeta.\n    - list_id (int): Identificador de la lista dentro del tablero donde se crea la tarjeta.\n    Validación destacada:",
+        "detail": "backend.app.cards.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "CardUpdate",
+        "kind": 6,
+        "importPath": "backend.app.cards.schemas",
+        "description": "backend.app.cards.schemas",
+        "peekOfCode": "class CardUpdate(BaseModel):\n    \"\"\"\n    Esquema para actualizar parcialmente una tarjeta existente.\n    Campos (todos opcionales):\n    - title (Optional[str]): Nuevo título; si se proporciona, debe ser una cadena.\n    - description (Optional[str]): Nueva descripción.\n    - due_date (Optional[date]): Nueva fecha límite (solo fecha).\n    - list_id (Optional[int]): Nuevo identificador de lista para mover la tarjeta.\n    - archived (Optional[bool]): Marcar/desmarcar la tarjeta como archivada.\n    Uso:",
+        "detail": "backend.app.cards.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "CardOut",
+        "kind": 6,
+        "importPath": "backend.app.cards.schemas",
+        "description": "backend.app.cards.schemas",
+        "peekOfCode": "class CardOut(BaseModel):\n    \"\"\"\n    Esquema de salida (read/model) que representa una tarjeta tal como se devuelve desde la API.\n    Campos:\n    - id (int): Identificador único de la tarjeta.\n    - board_id (int): Identificador del tablero al que pertenece la tarjeta.\n    - list_id (int): Identificador de la lista contenedora.\n    - title (str): Título de la tarjeta.\n    - description (Optional[str]): Descripción de la tarjeta.\n    - due_date (Optional[date]): Fecha límite (solo fecha).",
+        "detail": "backend.app.cards.schemas",
         "documentation": {}
     },
     {
@@ -986,7 +1281,7 @@
         "kind": 5,
         "importPath": "backend.app.database",
         "description": "backend.app.database",
-        "peekOfCode": "DATABASE_URL = os.getenv(\n    \"DATABASE_URL\",\n    \"postgresql://postgres:Limon1307@localhost:5432/neocare\"\n)\n# Crea el motor de conexión con SQLAlchemy\nengine = create_engine(\n    DATABASE_URL,\n    future=True,\n    echo=True  # Muestra las consultas SQL generadas (útil para desarrollo y depuración)\n)",
+        "peekOfCode": "DATABASE_URL = os.getenv(\n    \"DATABASE_URL\",\n    \"postgresql://postgres:niki2025@localhost:5432/neocare_db\"\n)\n# Crea el motor de conexión con SQLAlchemy\nengine = create_engine(\n    DATABASE_URL,\n    future=True,\n    echo=True  # Muestra las consultas SQL generadas (útil para desarrollo y depuración)\n)",
         "detail": "backend.app.database",
         "documentation": {}
     },
@@ -1031,7 +1326,7 @@
         "kind": 5,
         "importPath": "backend.app.main",
         "description": "backend.app.main",
-        "peekOfCode": "app = FastAPI(title=\"NeoCare API\")\n# CORS (para que el frontend pueda llamar al backend)\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[\"*\"],   #¡En producción, define los dominios permitidos!\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],\n)\n# Registra las rutas de autenticación bajo el router correspondiente",
+        "peekOfCode": "app = FastAPI(title=\"NeoCare API\")\n# CORS (para que el frontend pueda llamar al backend)\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[\"*\"],  # ¡En producción, define los dominios permitidos!\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],\n)\n# Registra las rutas",
         "detail": "backend.app.main",
         "documentation": {}
     },
@@ -1321,6 +1616,114 @@
         "description": "backend.tests.boards.test_routes_boards",
         "peekOfCode": "client = TestClient(app)\n\"\"\"Pruebas de las rutas relacionadas con 'boards'.\nEste módulo contiene pruebas que verifican el comportamiento de la ruta GET /boards/\nutilizando TestClient de FastAPI y mocks para evitar dependencias externas (base de datos\ny autenticación real).\nDescripción y notas:\n- Se simula un usuario autenticado sobrescribiendo la dependencia get_current_user.\n- Se simula la sesión/consulta a la base de datos sobrescribiendo la dependencia get_db.\n- Las pruebas esperan resultados deterministas usando objetos Board creados en memoria.\n- Al final de cada prueba se limpia app.dependency_overrides para no afectar otras pruebas.",
         "detail": "backend.tests.boards.test_routes_boards",
+        "documentation": {}
+    },
+    {
+        "label": "crear_usuario_y_token",
+        "kind": 2,
+        "importPath": "backend.tests.cards.test_cards",
+        "description": "backend.tests.cards.test_cards",
+        "peekOfCode": "def crear_usuario_y_token():\n    \"\"\"\n    Registra un usuario vía API y devuelve el usuario persistido en BD y su token.\n    Comportamiento:\n    - Genera un email único con uuid para evitar colisiones entre pruebas.\n    - Llama al endpoint /auth/register enviando email, password y name.\n    - Verifica que la respuesta HTTP sea 200 y extrae access_token del JSON.\n    - Recupera el usuario directamente desde la base de datos (SessionLocal).\n    - Cierra la sesión y devuelve (user, token).\n    Returns:",
+        "detail": "backend.tests.cards.test_cards",
+        "documentation": {}
+    },
+    {
+        "label": "crear_board_y_lista",
+        "kind": 2,
+        "importPath": "backend.tests.cards.test_cards",
+        "description": "backend.tests.cards.test_cards",
+        "peekOfCode": "def crear_board_y_lista(user):\n    \"\"\"\n    Crea directamente en la base de datos un Board y una List asociados a `user`.\n    Este helper no usa la API, sino que inserta registros via ORM para preparar\n    el estado necesario en las pruebas.\n    Args:\n        user (User): instancia ORM del usuario propietario del board.\n    Returns:\n        tuple(Board, List): las instancias ORM del tablero y de la lista creada.\n    Side effects:",
+        "detail": "backend.tests.cards.test_cards",
+        "documentation": {}
+    },
+    {
+        "label": "crear_tarjeta_via_api",
+        "kind": 2,
+        "importPath": "backend.tests.cards.test_cards",
+        "description": "backend.tests.cards.test_cards",
+        "peekOfCode": "def crear_tarjeta_via_api(board, lista, headers):\n    \"\"\"\n    Crea una tarjeta llamando a POST /cards/ y devuelve el JSON de respuesta.\n    Args:\n        board (Board): instancia ORM del tablero donde crear la tarjeta.\n        lista (List): instancia ORM de la lista donde colocar la tarjeta.\n        headers (dict): cabeceras HTTP a enviar (por ejemplo Authorization).\n    Returns:\n        dict: JSON parseado devuelto por la API que representa la tarjeta creada.\n    Asserts:",
+        "detail": "backend.tests.cards.test_cards",
+        "documentation": {}
+    },
+    {
+        "label": "test_crear_tarjeta_ok",
+        "kind": 2,
+        "importPath": "backend.tests.cards.test_cards",
+        "description": "backend.tests.cards.test_cards",
+        "peekOfCode": "def test_crear_tarjeta_ok():\n    \"\"\"\n    Caso feliz: un usuario registrado crea una tarjeta válida.\n    Flujo:\n    - Registrar usuario y obtener token.\n    - Crear board/list directamente en BD.\n    - Llamar a la API para crear la tarjeta.\n    - Comprobar que los campos devueltos coinciden y que la tarjeta existe en BD.\n    Aserciones clave:\n    - status 200 en creación.",
+        "detail": "backend.tests.cards.test_cards",
+        "documentation": {}
+    },
+    {
+        "label": "test_crear_tarjeta_titulo_vacio",
+        "kind": 2,
+        "importPath": "backend.tests.cards.test_cards",
+        "description": "backend.tests.cards.test_cards",
+        "peekOfCode": "def test_crear_tarjeta_titulo_vacio():\n    \"\"\"\n    Validación: intentar crear una tarjeta con título vacío debe fallar.\n    Verifica que Pydantic / validación del endpoint rechaza título vacío con 422.\n    \"\"\"\n    user, token = crear_usuario_y_token()\n    board, lista = crear_board_y_lista(user)\n    headers = {\"Authorization\": f\"Bearer {token}\"}\n    payload = {\n        \"title\": \"\",  # título vacío",
+        "detail": "backend.tests.cards.test_cards",
+        "documentation": {}
+    },
+    {
+        "label": "test_crear_tarjeta_fecha_invalida",
+        "kind": 2,
+        "importPath": "backend.tests.cards.test_cards",
+        "description": "backend.tests.cards.test_cards",
+        "peekOfCode": "def test_crear_tarjeta_fecha_invalida():\n    \"\"\"\n    Validación: intentar crear una tarjeta con una fecha inválida debe fallar.\n    Se espera un 422 porque Pydantic no puede parsear la fecha proporcionada.\n    \"\"\"\n    user, token = crear_usuario_y_token()\n    board, lista = crear_board_y_lista(user)\n    headers = {\"Authorization\": f\"Bearer {token}\"}\n    payload = {\n        \"title\": \"Fecha mala\",",
+        "detail": "backend.tests.cards.test_cards",
+        "documentation": {}
+    },
+    {
+        "label": "test_editar_tarjeta_ok",
+        "kind": 2,
+        "importPath": "backend.tests.cards.test_cards",
+        "description": "backend.tests.cards.test_cards",
+        "peekOfCode": "def test_editar_tarjeta_ok():\n    \"\"\"\n    Edición de tarjeta: crear una tarjeta y luego editar sus campos (title, description).\n    Flujo:\n    - Registrar usuario y obtener token.\n    - Preparar board/list y crear tarjeta vía API.\n    - Llamar PATCH /cards/{id} con los campos a actualizar.\n    - Verificar que la respuesta contiene los cambios y que la BD refleja los mismos.\n    \"\"\"\n    user, token = crear_usuario_y_token()",
+        "detail": "backend.tests.cards.test_cards",
+        "documentation": {}
+    },
+    {
+        "label": "test_crear_tarjeta_sin_token",
+        "kind": 2,
+        "importPath": "backend.tests.cards.test_cards",
+        "description": "backend.tests.cards.test_cards",
+        "peekOfCode": "def test_crear_tarjeta_sin_token():\n    \"\"\"\n    Intento de creación sin autenticación: debe devolver 401 (no autorizado).\n    No se envía cabecera Authorization y se espera que la API rechace la petición.\n    \"\"\"\n    # No enviamos Authorization en headers\n    payload = {\n        \"title\": \"Sin auth\",\n        \"board_id\": 1,\n        \"list_id\": 1,",
+        "detail": "backend.tests.cards.test_cards",
+        "documentation": {}
+    },
+    {
+        "label": "test_ver_tarjeta_inexistente",
+        "kind": 2,
+        "importPath": "backend.tests.cards.test_cards",
+        "description": "backend.tests.cards.test_cards",
+        "peekOfCode": "def test_ver_tarjeta_inexistente():\n    \"\"\"\n    Petición GET a una tarjeta inexistente: se espera 404.\n    \"\"\"\n    user, token = crear_usuario_y_token()\n    headers = {\"Authorization\": f\"Bearer {token}\"}\n    resp = client.get(\"/cards/999999\", headers=headers)\n    assert resp.status_code == 404\ndef test_no_puede_ver_tarjeta_de_otro_usuario():\n    \"\"\"",
+        "detail": "backend.tests.cards.test_cards",
+        "documentation": {}
+    },
+    {
+        "label": "test_no_puede_ver_tarjeta_de_otro_usuario",
+        "kind": 2,
+        "importPath": "backend.tests.cards.test_cards",
+        "description": "backend.tests.cards.test_cards",
+        "peekOfCode": "def test_no_puede_ver_tarjeta_de_otro_usuario():\n    \"\"\"\n    Verificación de permisos entre usuarios:\n    - Crea Usuario A en la BD y le crea un board/list y una tarjeta asociada.\n    - Registra Usuario B vía API (para obtener token real).\n    - Usuario B intenta acceder a la tarjeta de A y debe obtener 403 o 404\n    (dependiendo de la implementación de permisos la API puede ocultar la\n    existencia con 404 o devolver 403 por falta de permiso).\n    \"\"\"\n    # Crear usuario A directamente en BD",
+        "detail": "backend.tests.cards.test_cards",
+        "documentation": {}
+    },
+    {
+        "label": "test_flujo_completo_tarjeta",
+        "kind": 2,
+        "importPath": "backend.tests.cards.test_cards",
+        "description": "backend.tests.cards.test_cards",
+        "peekOfCode": "def test_flujo_completo_tarjeta():\n    \"\"\"\n    Flujo funcional completo para una tarjeta:\n    1. Registro (login implícito) y obtención de token.\n    2. Creación de board/list y tarjeta.\n    3. Listado de tarjetas por board.\n    4. Edición de la tarjeta.\n    5. Verificación de los cambios a través de la API.\n    Aserciones:\n    - La tarjeta creada aparece en el listado filtrado por board_id.",
+        "detail": "backend.tests.cards.test_cards",
+        "documentation": {}
+    },
+    {
+        "label": "client",
+        "kind": 5,
+        "importPath": "backend.tests.cards.test_cards",
+        "description": "backend.tests.cards.test_cards",
+        "peekOfCode": "client = TestClient(app)\n# HELPERS \ndef crear_usuario_y_token():\n    \"\"\"\n    Registra un usuario vía API y devuelve el usuario persistido en BD y su token.\n    Comportamiento:\n    - Genera un email único con uuid para evitar colisiones entre pruebas.\n    - Llama al endpoint /auth/register enviando email, password y name.\n    - Verifica que la respuesta HTTP sea 200 y extrae access_token del JSON.\n    - Recupera el usuario directamente desde la base de datos (SessionLocal).",
+        "detail": "backend.tests.cards.test_cards",
         "documentation": {}
     },
     {
