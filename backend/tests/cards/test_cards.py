@@ -141,6 +141,37 @@ def crear_tarjeta_via_api(board_id, list_id, headers):
     return resp.json()
 
 
+#CODIGO TERCERA SEMANA
+def mover_tarjeta_via_api(card_id, list_id, order, headers):
+    """
+    Mueve una tarjeta usando PATCH /cards/{id}/move.
+
+    Args:
+        card_id (int): ID de la tarjeta a mover.
+        list_id (int): ID de la lista destino.
+        order (int): nueva posición.
+        headers (dict): cabeceras HTTP con Authorization.
+
+    Returns:
+        dict: JSON devuelto por la API.
+    """
+    payload = {
+        "list_id": list_id,
+        "order": order,
+    }
+
+    resp = client.patch(
+        f"/cards/{card_id}/move",
+        json=payload,
+        headers=headers,
+    )
+    assert resp.status_code == 200, resp.text
+    return resp.json()
+
+
+
+
+
 #TESTS CREACIÓN 
 
 def test_crear_tarjeta_ok():
@@ -394,3 +425,75 @@ def test_flujo_completo_tarjeta():
     assert resp_update.status_code == 200
     data = resp_update.json()
     assert data["title"] == "Flujo - editada"
+
+#CODIGO SEMANA 3
+def test_mover_tarjeta_misma_lista():
+    user, token = crear_usuario_y_token()
+    board_id, list_id = crear_board_y_lista(user)
+    headers = {"Authorization": f"Bearer {token}"}
+
+    # Crear 3 tarjetas
+    c1 = crear_tarjeta_via_api(board_id, list_id, headers)
+    c2 = crear_tarjeta_via_api(board_id, list_id, headers)
+    c3 = crear_tarjeta_via_api(board_id, list_id, headers)
+
+    # Mover la primera al final
+    mover_tarjeta_via_api(c1["id"], list_id, 2, headers)
+
+    resp = client.get(f"/cards/?board_id={board_id}", headers=headers)
+    cards = resp.json()
+
+    orders = [c["order"] for c in cards]
+    assert orders == [0, 1, 2]
+
+#CODIGO SEMANA 3
+def test_mover_tarjeta_a_otra_lista():
+    user, token = crear_usuario_y_token()
+    board_id, list_a = crear_board_y_lista(user)
+
+    # Crear segunda lista
+    db = SessionLocal()
+    list_b = List(name="En progreso", board_id=board_id, position=2)
+    db.add(list_b)
+    db.commit()
+    db.refresh(list_b)
+    db.close()
+
+    headers = {"Authorization": f"Bearer {token}"}
+
+    c1 = crear_tarjeta_via_api(board_id, list_a, headers)
+    c2 = crear_tarjeta_via_api(board_id, list_a, headers)
+
+    mover_tarjeta_via_api(c1["id"], list_b.id, 0, headers)
+
+    resp = client.get(f"/cards/?board_id={board_id}", headers=headers)
+    cards = resp.json()
+
+    moved = next(c for c in cards if c["id"] == c1["id"])
+    assert moved["list_id"] == list_b.id
+    assert moved["order"] == 0
+
+#CODIGO SEMANA 3
+def test_mover_tarjeta_sin_token():
+    resp = client.patch(
+        "/cards/1/move",
+        json={"list_id": 1, "order": 0},
+    )
+    assert resp.status_code == 401
+
+
+#CODIGO SEMANA 3
+def test_mover_tarjeta_order_negativo():
+    user, token = crear_usuario_y_token()
+    board_id, list_id = crear_board_y_lista(user)
+    headers = {"Authorization": f"Bearer {token}"}
+
+    card = crear_tarjeta_via_api(board_id, list_id, headers)
+
+    resp = client.patch(
+        f"/cards/{card['id']}/move",
+        json={"list_id": list_id, "order": -1},
+        headers=headers,
+    )
+
+    assert resp.status_code == 422

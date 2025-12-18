@@ -59,6 +59,21 @@ class CardUpdate(BaseModel):
     archived: Optional[bool] = None
 
 
+#Codigo de las Semana 3 
+class CardMove(BaseModel):
+    """
+    Esquema para mover/reordenar una tarjeta (Semana 3 Drag & Drop).
+
+    Campos:
+    - list_id (int): columna destino.
+    - order (int): nueva posición dentro de la columna destino (>= 0).
+    """
+    list_id:int
+    order: int = Field(..., ge=0, description="Posición destino (>= 0)")
+
+
+
+
 
 class CardOut(BaseModel):
     """
@@ -83,6 +98,8 @@ class CardOut(BaseModel):
     id: int
     board_id: int
     list_id: int
+    #codigo semana 3
+    order: int
     title: str
     description: Optional[str]
     due_date: Optional[date]

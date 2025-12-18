@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { apiFetch } from "../lib/api";
 import {
   DndContext,
-  type DragEndEvent,
+  DragEndEvent,
   DragOverlay,
-  type DragStartEvent,
+  DragStartEvent,
   useSensor,
   useSensors,
   PointerSensor,
@@ -342,15 +342,13 @@ const Boards: React.FC = () => {
     let targetListId: number | null = null;
 
     // Determinar el list_id de destino
+    // Si se suelta sobre otra tarjeta, usar su list_id
     const targetCard = cards.find((c) => c.id === over.id);
     if (targetCard) {
       targetListId = targetCard.list_id;
-    } else if (typeof over.id === "number") {
-      targetListId = over.id;
-    } else if (typeof over.id === "string" && over.id.startsWith("column-")) {
-      // Si es un string tipo "column-Por hacer", buscar el ID en listIdByColumn
-      const colName = over.id.replace("column-", "");
-      targetListId = listIdByColumn[colName] || null;
+    } else {
+      // Si se suelta directamente en la columna, usar el id de la columna
+      targetListId = over.id as number;
     }
 
     if (!targetListId) return;
@@ -358,29 +356,28 @@ const Boards: React.FC = () => {
     const card = cards.find((c) => c.id === cardId);
     if (!card) return;
 
-    // Si es la misma lista y la misma posición, no hacer nada
-    if (card.list_id === targetListId && active.id === over.id) return;
+    // Si la tarjeta ya está en la misma lista, no hacer nada
+    if (card.list_id === targetListId) return;
 
     // Optimistic UI: actualizar localmente primero
-    const oldCards = [...cards];
-    
-    // Calcular el nuevo orden
-    const cardsInTargetList = cards.filter((c) => c.list_id === targetListId);
-    const newPosition = cardsInTargetList.length;
-
+    const oldListId = card.list_id;
     setCards((prev) =>
       prev.map((c) =>
-        c.id === cardId ? { ...c, list_id: targetListId, position: newPosition } : c
+        c.id === cardId ? { ...c, list_id: targetListId } : c
       )
     );
 
+    // Calcular el nuevo orden (al final de la lista destino)
+    const cardsInTargetList = cards.filter((c) => c.list_id === targetListId);
+    const newOrder = cardsInTargetList.length;
+
     try {
-      // Llamar al backend para actualizar la tarjeta (PATCH)
-      const res = await apiFetch(`/cards/${cardId}`, {
+      // Llamar al backend para mover la tarjeta
+      const res = await apiFetch(`/cards/${cardId}/move`, {
         method: "PATCH",
         body: JSON.stringify({
           list_id: targetListId,
-          position: newPosition,
+          order: newOrder,
         }),
       });
 
@@ -391,13 +388,19 @@ const Boards: React.FC = () => {
 
       const updated = await res.json().catch(() => null);
       if (updated) {
+        // Actualizar con la respuesta del servidor
         setCards((prev) =>
           prev.map((c) => (c.id === updated.id ? updated : c))
         );
       }
     } catch (err) {
       console.error("Error moviendo tarjeta:", err);
-      setCards(oldCards);
+      // Revertir el cambio si falla
+      setCards((prev) =>
+        prev.map((c) =>
+          c.id === cardId ? { ...c, list_id: oldListId } : c
+        )
+      );
       setFormError(err instanceof Error ? err.message : "Error moviendo tarjeta");
     }
   }
@@ -420,242 +423,242 @@ const Boards: React.FC = () => {
       >
         {/* Header */}
         <header
-          style={{
-            padding: "1rem 2rem",
-            background: "linear-gradient(135deg, #e0f2fe 0%, #bfdbfe 50%, #93c5fd 100%)",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-          }}
-        >
-          <h1 style={{ color: "white", textShadow: "2px 2px 4px rgba(0, 0, 0, 0.6)" }}>NeoCare</h1>
-          <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-            <button
-              onClick={() => openCreate("Por hacer")}
-              style={{
-                padding: "0.5rem 1rem",
-                background: "linear-gradient(135deg, #0c4a6e 0%, #1e40af 100%)",
-                border: "none",
-                borderRadius: "0.5rem",
-                color: "white",
-                cursor: "pointer",
-                textShadow: "1px 1px 2px rgba(0, 0, 0, 0.5)",
-                fontWeight: "600",
-                boxShadow: "0 4px 6px rgba(0, 0, 0, 0.2)",
-              }}
-            >
-              + Nueva tarjeta
-            </button>
+        style={{
+          padding: "1rem 2rem",
+          background: "linear-gradient(135deg, #e0f2fe 0%, #bfdbfe 50%, #93c5fd 100%)",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+        }}
+      >
+        <h1 style={{ color: "white", textShadow: "2px 2px 4px rgba(0, 0, 0, 0.6)" }}>NeoCare</h1>
+        <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
+          <button
+            onClick={() => openCreate("Por hacer")}
+            style={{
+              padding: "0.5rem 1rem",
+              background: "linear-gradient(135deg, #0c4a6e 0%, #1e40af 100%)",
+              border: "none",
+              borderRadius: "0.5rem",
+              color: "white",
+              cursor: "pointer",
+              textShadow: "1px 1px 2px rgba(0, 0, 0, 0.5)",
+              fontWeight: "600",
+              boxShadow: "0 4px 6px rgba(0, 0, 0, 0.2)",
+            }}
+          >
+            + Nueva tarjeta
+          </button>
 
-            <button
-              onClick={handleLogout}
-              style={{
-                padding: "0.5rem 1rem",
-                background: "linear-gradient(135deg, #0c4a6e 0%, #1e40af 100%)",
-                border: "none",
-                borderRadius: "0.5rem",
-                color: "white",
-                cursor: "pointer",
-                textShadow: "1px 1px 2px rgba(0, 0, 0, 0.5)",
-                fontWeight: "600",
-                boxShadow: "0 4px 6px rgba(0, 0, 0, 0.2)",
-              }}
-            >
-              Cerrar sesión
-            </button>
-          </div>
-        </header>
+          <button
+            onClick={handleLogout}
+            style={{
+              padding: "0.5rem 1rem",
+              background: "linear-gradient(135deg, #0c4a6e 0%, #1e40af 100%)",
+              border: "none",
+              borderRadius: "0.5rem",
+              color: "white",
+              cursor: "pointer",
+              textShadow: "1px 1px 2px rgba(0, 0, 0, 0.5)",
+              fontWeight: "600",
+              boxShadow: "0 4px 6px rgba(0, 0, 0, 0.2)",
+            }}
+          >
+            Cerrar sesión
+          </button>
+        </div>
+      </header>
 
-        {formError && <div style={{ padding: "10px 24px", color: "#fecaca" }}>{formError}</div>}
+      {formError && <div style={{ padding: "10px 24px", color: "#fecaca" }}>{formError}</div>}
 
-        {/* Contenido */}
-        <main
-          style={{
-            flex: 1,
-            display: "flex",
-            gap: "1rem",
-            padding: "1.5rem",
-          }}
-        >
-          {columns.map((col) => {
-            const listId = listIdByColumn[col];
-            const colCards = listId ? cards.filter((c) => c?.list_id === listId) : [];
+      {/* Contenido */}
+      <main
+        style={{
+          flex: 1,
+          display: "flex",
+          gap: "1rem",
+          padding: "1.5rem",
+        }}
+      >
+        {columns.map((col) => {
+          const listId = listIdByColumn[col];
+          const colCards = listId ? cards.filter((c) => c?.list_id === listId) : [];
 
-            return (
-              <DroppableColumn
-                key={col}
-                listId={listId}
-                columnName={col}
-                cards={colCards}
-                onCreateCard={() => openCreate(col)}
-                onEditCard={openEdit}
-                badgeStyle={badgeStyle}
-                getDueBadge={getDueBadge}
+          return (
+            <DroppableColumn
+              key={col}
+              listId={listId}
+              columnName={col}
+              cards={colCards}
+              onCreateCard={() => openCreate(col)}
+              onEditCard={openEdit}
+              badgeStyle={badgeStyle}
+              getDueBadge={getDueBadge}
+            />
+          );
+        })}
+      </main>
+
+      {/* Modal para crear/editar tarjeta */}
+      {showModal && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center p-4 z-50">
+          <div
+            style={{
+              background: "linear-gradient(135deg, #e0f2fe 0%, #bfdbfe 50%, #93c5fd 100%)",
+              color: "#1e3a8a",
+              width: 540,
+              borderRadius: 8,
+              padding: 20,
+              boxShadow: "0 10px 30px rgba(0, 0, 0, 0.2)",
+            }}
+          >
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
+              <h3 style={{ margin: 0, textShadow: "1px 1px 2px rgba(128, 128, 128, 0.3)" }}>{editingCard ? "Editar tarjeta" : "Nueva tarjeta"}</h3>
+              <button
+                onClick={closeModal}
+                style={{
+                  background: "transparent",
+                  border: "none",
+                  color: "#1e3a8a",
+                  fontSize: 18,
+                }}
+              >
+                ✕
+              </button>
+            </div>
+
+            <form onSubmit={editingCard ? handleUpdate : handleCreate}>
+              <label style={{ display: "block", marginBottom: 6, color: "#1e40af", fontWeight: "600", textShadow: "1px 1px 2px rgba(128, 128, 128, 0.3)" }}>Título</label>
+              <input
+                value={form.title}
+                onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
+                style={{
+                  width: "100%",
+                  padding: 8,
+                  marginBottom: 10,
+                  borderRadius: 6,
+                  border: "1px solid #93c5fd",
+                  background: "rgba(255, 255, 255, 0.8)",
+                  color: "#1e3a8a",
+                }}
               />
-            );
-          })}
-        </main>
 
-        {/* Modal para crear/editar tarjeta */}
-        {showModal && (
-          <div className="fixed inset-0 bg-black/40 flex items-center justify-center p-4 z-50">
-            <div
-              style={{
-                background: "linear-gradient(135deg, #e0f2fe 0%, #bfdbfe 50%, #93c5fd 100%)",
-                color: "#1e3a8a",
-                width: 540,
-                borderRadius: 8,
-                padding: 20,
-                boxShadow: "0 10px 30px rgba(0, 0, 0, 0.2)",
-              }}
-            >
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-                <h3 style={{ margin: 0, textShadow: "1px 1px 2px rgba(128, 128, 128, 0.3)" }}>{editingCard ? "Editar tarjeta" : "Nueva tarjeta"}</h3>
+              <label style={{ display: "block", marginBottom: 6, color: "#1e40af", fontWeight: "600", textShadow: "1px 1px 2px rgba(128, 128, 128, 0.3)" }}>Descripción</label>
+              <textarea
+                rows={3}
+                value={form.description}
+                onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
+                style={{
+                  width: "100%",
+                  padding: 8,
+                  marginBottom: 10,
+                  borderRadius: 6,
+                  border: "1px solid #93c5fd",
+                  background: "rgba(255, 255, 255, 0.8)",
+                  color: "#1e3a8a",
+                }}
+              />
+
+              <label style={{ display: "block", marginBottom: 6, color: "#1e40af", fontWeight: "600", textShadow: "1px 1px 2px rgba(128, 128, 128, 0.3)" }}>Fecha límite</label>
+              <input
+                type="date"
+                value={form.due_date}
+                onChange={(e) => setForm((f) => ({ ...f, due_date: e.target.value }))}
+                style={{
+                  padding: 8,
+                  marginBottom: 12,
+                  borderRadius: 6,
+                  border: "1px solid #93c5fd",
+                  background: "rgba(255, 255, 255, 0.8)",
+                  color: "#1e3a8a",
+                }}
+              />
+
+              {formError && <div style={{ color: "#7f1d1d", marginBottom: 8, textShadow: "1px 1px 2px rgba(128, 128, 128, 0.3)" }}>{formError}</div>}
+
+              <div style={{ display: "flex", gap: 8 }}>
                 <button
-                  onClick={closeModal}
+                  type="submit"
+                  disabled={saving}
                   style={{
-                    background: "transparent",
+                    padding: "0.5rem 1rem",
+                    background: editingCard ? "#f59e0b" : "#10b981",
                     border: "none",
-                    color: "#1e3a8a",
-                    fontSize: 18,
+                    borderRadius: 6,
+                    color: "white",
                   }}
                 >
-                  ✕
+                  {saving ? (editingCard ? "Guardando…" : "Creando…") : editingCard ? "Guardar cambios" : "Crear tarjeta"}
                 </button>
-              </div>
 
-              <form onSubmit={editingCard ? handleUpdate : handleCreate}>
-                <label style={{ display: "block", marginBottom: 6, color: "#1e40af", fontWeight: "600", textShadow: "1px 1px 2px rgba(128, 128, 128, 0.3)" }}>Título</label>
-                <input
-                  value={form.title}
-                  onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
+                <button
+                  type="button"
+                  onClick={closeModal}
                   style={{
-                    width: "100%",
-                    padding: 8,
-                    marginBottom: 10,
+                    padding: "0.5rem 1rem",
+                    background: "#334155",
+                    border: "none",
                     borderRadius: 6,
-                    border: "1px solid #93c5fd",
-                    background: "rgba(255, 255, 255, 0.8)",
-                    color: "#1e3a8a",
+                    color: "white",
                   }}
-                />
+                >
+                  Cancelar
+                </button>
 
-                <label style={{ display: "block", marginBottom: 6, color: "#1e40af", fontWeight: "600", textShadow: "1px 1px 2px rgba(128, 128, 128, 0.3)" }}>Descripción</label>
-                <textarea
-                  rows={3}
-                  value={form.description}
-                  onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
-                  style={{
-                    width: "100%",
-                    padding: 8,
-                    marginBottom: 10,
-                    borderRadius: 6,
-                    border: "1px solid #93c5fd",
-                    background: "rgba(255, 255, 255, 0.8)",
-                    color: "#1e3a8a",
-                  }}
-                />
-
-                <label style={{ display: "block", marginBottom: 6, color: "#1e40af", fontWeight: "600", textShadow: "1px 1px 2px rgba(128, 128, 128, 0.3)" }}>Fecha límite</label>
-                <input
-                  type="date"
-                  value={form.due_date}
-                  onChange={(e) => setForm((f) => ({ ...f, due_date: e.target.value }))}
-                  style={{
-                    padding: 8,
-                    marginBottom: 12,
-                    borderRadius: 6,
-                    border: "1px solid #93c5fd",
-                    background: "rgba(255, 255, 255, 0.8)",
-                    color: "#1e3a8a",
-                  }}
-                />
-
-                {formError && <div style={{ color: "#7f1d1d", marginBottom: 8, textShadow: "1px 1px 2px rgba(128, 128, 128, 0.3)" }}>{formError}</div>}
-
-                <div style={{ display: "flex", gap: 8 }}>
+                {editingCard && (
                   <button
-                    type="submit"
+                    type="button"
+                    onClick={handleDelete}
                     disabled={saving}
                     style={{
                       padding: "0.5rem 1rem",
-                      background: editingCard ? "#f59e0b" : "#10b981",
+                      background: "#7f1d1d",
                       border: "none",
                       borderRadius: 6,
                       color: "white",
                     }}
+                    title="Eliminar tarjeta"
                   >
-                    {saving ? (editingCard ? "Guardando…" : "Creando…") : editingCard ? "Guardar cambios" : "Crear tarjeta"}
+                    Eliminar
                   </button>
+                )}
+              </div>
 
-                  <button
-                    type="button"
-                    onClick={closeModal}
-                    style={{
-                      padding: "0.5rem 1rem",
-                      background: "#334155",
-                      border: "none",
-                      borderRadius: 6,
-                      color: "white",
-                    }}
-                  >
-                    Cancelar
-                  </button>
-
-                  {editingCard && (
-                    <button
-                      type="button"
-                      onClick={handleDelete}
-                      disabled={saving}
-                      style={{
-                        padding: "0.5rem 1rem",
-                        background: "#7f1d1d",
-                        border: "none",
-                        borderRadius: 6,
-                        color: "white",
-                      }}
-                      title="Eliminar tarjeta"
-                    >
-                      Eliminar
-                    </button>
-                  )}
-                </div>
-
-                <div style={{ marginTop: 10, fontSize: 12, color: "#94a3b8" }}>
-                  board_id: {selectedBoardId ?? "—"} | list_id: {selectedListId ?? "—"}
-                  {editingCard?.id ? ` | editing_card_id: ${editingCard.id}` : ""}
-                </div>
-              </form>
-            </div>
+              <div style={{ marginTop: 10, fontSize: 12, color: "#94a3b8" }}>
+                board_id: {selectedBoardId ?? "—"} | list_id: {selectedListId ?? "—"}
+                {editingCard?.id ? ` | editing_card_id: ${editingCard.id}` : ""}
+              </div>
+            </form>
           </div>
-        )}
+        </div>
+      )}
 
-        <DragOverlay>
-          {activeCard ? (
-            <div
-              style={{
-                textAlign: "left",
-                background: "rgba(255, 255, 255, 0.95)",
-                border: "2px solid #3b82f6",
-                borderRadius: 10,
-                padding: 10,
-                color: "#1e3a8a",
-                cursor: "grabbing",
-                boxShadow: "0 12px 24px rgba(0, 0, 0, 0.25)",
-                transform: "scale(1.05)",
-                opacity: 0.9,
-              }}
-            >
-              <div style={{ fontWeight: 800, fontSize: 14 }}>{activeCard.title}</div>
-              {activeCard.description && (
-                <div style={{ color: "#1e3a8a", marginTop: 8, fontSize: 12 }}>
-                  {activeCard.description}
-                </div>
-              )}
-            </div>
-          ) : null}
-        </DragOverlay>
+      <DragOverlay>
+        {activeCard ? (
+          <div
+            style={{
+              textAlign: "left",
+              background: "rgba(255, 255, 255, 0.95)",
+              border: "2px solid #3b82f6",
+              borderRadius: 10,
+              padding: 10,
+              color: "#1e3a8a",
+              cursor: "grabbing",
+              boxShadow: "0 12px 24px rgba(0, 0, 0, 0.25)",
+              transform: "scale(1.05)",
+              opacity: 0.9,
+            }}
+          >
+            <div style={{ fontWeight: 800, fontSize: 14 }}>{activeCard.title}</div>
+            {activeCard.description && (
+              <div style={{ color: "#1e3a8a", marginTop: 8, fontSize: 12 }}>
+                {activeCard.description}
+              </div>
+            )}
+          </div>
+        ) : null}
+      </DragOverlay>
       </div>
     </DndContext>
   );

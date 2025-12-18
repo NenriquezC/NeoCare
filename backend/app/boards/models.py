@@ -170,6 +170,19 @@ class Card(Base):
     priority = Column(String(20), nullable=True)
     archived = Column(Boolean, nullable=False, default=False)
 
+    #codigo semana 3
+    @property
+    def order(self) -> int:
+        """
+        Alias lógico para exponer el orden de la tarjeta en la API.
+
+        - La base de datos usa `position`
+        - La API (Semana 3) usa `order`
+        """
+        return self.position
+
+
+
     # Relaciones
     board = relationship("Board", back_populates="cards")
     list = relationship("List", back_populates="cards")
