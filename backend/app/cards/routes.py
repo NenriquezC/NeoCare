@@ -47,17 +47,6 @@ def create_card(data: CardCreate,
 
 
 
-@router.get("/", response_model=list[CardOut])
-def get_cards(board_id: int,
-            db: Session = Depends(get_db),
-            current_user: User = Depends(get_current_user)):
-
-    verify_board_permission(board_id, current_user.id, db)
-
-    return db.query(Card).filter(Card.board_id == board_id).all()
-
-
-
 @router.get("/{card_id}", response_model=CardOut)
 def get_card(card_id: int,
             db: Session = Depends(get_db),
@@ -125,6 +114,8 @@ def update_card(
         card.due_date = data.due_date
     if data.list_id is not None:
         card.list_id = data.list_id
+    if data.position is not None:
+        card.position = data.position
 
     card.updated_at = datetime.now(timezone.utc)
 
@@ -164,6 +155,8 @@ def patch_card(
         card.due_date = data.due_date
     if data.list_id is not None:
         card.list_id = data.list_id
+    if data.position is not None:
+        card.position = data.position
 
     card.updated_at = datetime.now(timezone.utc)
 
@@ -185,7 +178,7 @@ def list_cards(
     if board.user_id != current_user.id:
         raise HTTPException(status_code=403, detail="No tienes permiso para este tablero")
 
-    return db.query(Card).filter(Card.board_id == board_id).order_by(Card.id.desc()).all()
+    return db.query(Card).filter(Card.board_id == board_id).order_by(Card.position.asc(), Card.id.desc()).all()
 
 """
 @router.delete("/{card_id}", status_code=204)

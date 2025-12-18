@@ -47,6 +47,7 @@ class CardUpdate(BaseModel):
     - description (Optional[str]): Nueva descripción.
     - due_date (Optional[date]): Nueva fecha límite (solo fecha).
     - list_id (Optional[int]): Nuevo identificador de lista para mover la tarjeta.
+    - position (Optional[int]): Nueva posición de la tarjeta en la lista.
     - archived (Optional[bool]): Marcar/desmarcar la tarjeta como archivada.
 
     Uso:
@@ -56,6 +57,7 @@ class CardUpdate(BaseModel):
     description: Optional[str] = None
     due_date: Optional[date] = None
     list_id: Optional[int] = None
+    position: Optional[int] = None
     archived: Optional[bool] = None
 
 
@@ -75,6 +77,7 @@ class CardOut(BaseModel):
     - responsible_id (Optional[int]): Identificador del usuario responsable de la tarjeta (si aplica).
     - created_at (datetime): Marca temporal de creación.
     - updated_at (datetime): Marca temporal de la última actualización.
+    - position (int): Posición de la tarjeta en la lista.
     - archived (bool): Indica si la tarjeta está archivada.
 
     Configuración:
@@ -90,6 +93,7 @@ class CardOut(BaseModel):
     responsible_id: Optional[int]
     created_at: datetime
     updated_at: datetime
+    position: int
     archived: bool
 
     model_config = ConfigDict(from_attributes=True)
