@@ -6,45 +6,202 @@ import pytest
 import requests
 
 
-# Configuración de URLs (se pueden sobrescribir por variables de entorno)
+# Configuración de URLs
 FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173")
 BACKEND_URL = os.getenv("BACKEND_URL", "http://127.0.0.1:8000")
 
 
 def _ensure_user(email: str, password: str, name: str = "E2E User"):
-    """Crea un usuario de prueba vía API; si ya existe, el error 400 se ignora.
-
-    Se basa en el endpoint real /auth/register, que también crea el tablero y las
-    listas por defecto ("Por hacer", "En curso", "Hecho").
-    """
-
+    """Crea un usuario de prueba vía API."""
     payload = {"email": email, "password": password, "name": name}
     res = requests.post(f"{BACKEND_URL}/auth/register", json=payload, timeout=10)
-
-    if res.status_code == 200:
-        return
-
+    
+    if res.status_code in [200, 201]:
+        return res.json().get("access_token")
+    
     if res.status_code == 400 and "Email ya registrado" in res.text:
-        # El usuario ya existe; seguimos adelante para usarlo en las pruebas.
-        return
-
-    raise RuntimeError(f"No se pudo preparar el usuario de pruebas: {res.status_code} {res.text}")
+        # Login si ya existe
+        login_res = requests.post(f"{BACKEND_URL}/auth/login", json={"email": email, "password": password}, timeout=10)
+        return login_res.json().get("access_token")
+    
+    raise RuntimeError(f"No se pudo preparar el usuario: {res.status_code} {res.text}")
 
 
 @pytest.fixture(scope="session")
 def test_user():
-    """Genera un usuario único para toda la sesión de pruebas E2E."""
-
+    """Genera un usuario único para toda la sesión."""
     unique = uuid.uuid4().hex[:8]
     email = f"e2e_{unique}@example.com"
     password = "Password123!"
-    _ensure_user(email, password)
-    return {"email": email, "password": password}
+    token = _ensure_user(email, password)
+    return {"email": email, "password": password, "token": token}
 
+
+# ========================
+# TESTS DE BOARDS (GET)
+# ========================
+
+def test_api_get_boards(test_user):
+    """GET /boards/ - Obtiene los tableros del usuario"""
+    headers = {"Authorization": f"Bearer {test_user['token']}"}
+    res = requests.get(f"{BACKEND_URL}/boards/", headers=headers, timeout=10)
+    
+    assert res.status_code == 200, f"Error al obtener boards: {res.text}"
+    boards = res.json()
+    assert isinstance(boards, list), "La respuesta debe ser una lista"
+    assert len(boards) > 0, "Debe haber al menos 1 board"
+    
+    # Guardar board_id para usar en otros tests
+    test_user["board_id"] = boards[0]["id"]
+    print(f"✅ Board obtenido: ID={boards[0]['id']}, Nombre={boards[0]['name']}")
+
+
+# ========================
+# TESTS DE LISTS (GET)
+# ========================
+
+def test_api_get_lists(test_user):
+    """GET /boards/{board_id}/lists/ - Obtiene las listas del tablero"""
+    board_id = test_user.get("board_id", 1)  # Usar el board del test anterior
+    headers = {"Authorization": f"Bearer {test_user['token']}"}
+    res = requests.get(f"{BACKEND_URL}/boards/{board_id}/lists/", headers=headers, timeout=10)
+    
+    assert res.status_code == 200, f"Error al obtener lists: {res.text}"
+    lists = res.json()
+    assert isinstance(lists, list), "La respuesta debe ser una lista"
+    assert len(lists) >= 3, "Debe haber al menos 3 listas (Por hacer, En curso, Hecho)"
+    
+    # Guardar list_id para tests de cards
+    test_user["list_id"] = lists[0]["id"]
+    print(f"✅ Lists obtenidas: {len(lists)} listas")
+
+
+# ========================
+# TESTS DE CARDS (CRUD COMPLETO)
+# ========================
+
+def test_api_create_card(test_user):
+    """POST /cards/ - Crear una nueva tarjeta"""
+    board_id = test_user.get("board_id", 1)
+    list_id = test_user.get("list_id", 1)
+    headers = {"Authorization": f"Bearer {test_user['token']}"}
+    
+    payload = {
+        "title": f"Tarjeta E2E {int(time.time())}",
+        "description": "Descripción de prueba E2E",
+        "due_date": "2025-12-31",
+        "board_id": board_id,
+        "list_id": list_id
+    }
+    
+    res = requests.post(f"{BACKEND_URL}/cards/", json=payload, headers=headers, timeout=10)
+    assert res.status_code == 200, f"Error al crear card: {res.text}"
+    
+    card = res.json()
+    assert "id" in card, "La respuesta debe contener el ID de la tarjeta"
+    assert card["title"] == payload["title"], "El título debe coincidir"
+    
+    test_user["card_id"] = card["id"]
+    print(f"✅ Card creada: ID={card['id']}, Título={card['title']}")
+
+
+def test_api_list_cards(test_user):
+    """GET /cards/?board_id={board_id} - Listar tarjetas del tablero"""
+    board_id = test_user.get("board_id", 1)
+    headers = {"Authorization": f"Bearer {test_user['token']}"}
+    
+    res = requests.get(f"{BACKEND_URL}/cards/?board_id={board_id}", headers=headers, timeout=10)
+    assert res.status_code == 200, f"Error al listar cards: {res.text}"
+    
+    cards = res.json()
+    assert isinstance(cards, list), "La respuesta debe ser una lista"
+    assert len(cards) > 0, "Debe haber al menos 1 tarjeta"
+    print(f"✅ Cards listadas: {len(cards)} tarjetas")
+
+
+def test_api_get_card_detail(test_user):
+    """GET /cards/{card_id} - Obtener detalle de una tarjeta"""
+    card_id = test_user.get("card_id")
+    headers = {"Authorization": f"Bearer {test_user['token']}"}
+    
+    res = requests.get(f"{BACKEND_URL}/cards/{card_id}", headers=headers, timeout=10)
+    assert res.status_code == 200, f"Error al obtener card: {res.text}"
+    
+    card = res.json()
+    assert card["id"] == card_id, "El ID debe coincidir"
+    print(f"✅ Card detalle obtenida: {card['title']}")
+
+
+def test_api_update_card_patch(test_user):
+    """PATCH /cards/{card_id} - Actualizar parcialmente una tarjeta"""
+    card_id = test_user.get("card_id")
+    headers = {"Authorization": f"Bearer {test_user['token']}"}
+    
+    payload = {"title": "Tarjeta Actualizada PATCH"}
+    res = requests.patch(f"{BACKEND_URL}/cards/{card_id}", json=payload, headers=headers, timeout=10)
+    
+    assert res.status_code == 200, f"Error al actualizar card (PATCH): {res.text}"
+    card = res.json()
+    assert card["title"] == payload["title"], "El título debe estar actualizado"
+    print(f"✅ Card actualizada (PATCH): {card['title']}")
+
+
+def test_api_update_card_put(test_user):
+    """PUT /cards/{card_id} - Actualizar completamente una tarjeta"""
+    card_id = test_user.get("card_id")
+    board_id = test_user.get("board_id", 1)
+    list_id = test_user.get("list_id", 1)
+    headers = {"Authorization": f"Bearer {test_user['token']}"}
+    
+    payload = {
+        "title": "Tarjeta Actualizada PUT",
+        "description": "Nueva descripción completa",
+        "due_date": "2025-12-25",
+        "board_id": board_id,
+        "list_id": list_id
+    }
+    
+    res = requests.put(f"{BACKEND_URL}/cards/{card_id}", json=payload, headers=headers, timeout=10)
+    assert res.status_code == 200, f"Error al actualizar card (PUT): {res.text}"
+    
+    card = res.json()
+    assert card["title"] == payload["title"], "El título debe estar actualizado"
+    print(f"✅ Card actualizada (PUT): {card['title']}")
+
+
+def test_api_move_card(test_user):
+    """PATCH /cards/{card_id}/move - Mover tarjeta a otra posición"""
+    card_id = test_user.get("card_id")
+    list_id = test_user.get("list_id", 1)
+    headers = {"Authorization": f"Bearer {test_user['token']}"}
+    
+    payload = {"list_id": list_id, "order": 0}
+    res = requests.patch(f"{BACKEND_URL}/cards/{card_id}/move", json=payload, headers=headers, timeout=10)
+    
+    assert res.status_code == 200, f"Error al mover card: {res.text}"
+    print(f"✅ Card movida correctamente")
+
+
+def test_api_delete_card(test_user):
+    """DELETE /cards/{card_id} - Eliminar una tarjeta"""
+    card_id = test_user.get("card_id")
+    headers = {"Authorization": f"Bearer {test_user['token']}"}
+    
+    res = requests.delete(f"{BACKEND_URL}/cards/{card_id}", headers=headers, timeout=10)
+    assert res.status_code == 204, f"Error al eliminar card: {res.text}"
+    
+    # Verificar que ya no existe
+    get_res = requests.get(f"{BACKEND_URL}/cards/{card_id}", headers=headers, timeout=10)
+    assert get_res.status_code == 404, "La tarjeta debería estar eliminada"
+    print(f"✅ Card eliminada correctamente")
+
+
+# ========================
+# TESTS UI (Playwright)
+# ========================
 
 def ui_login(page, email: str, password: str):
-    """Realiza login vía UI y espera la carga de /boards."""
-
+    """Realiza login vía UI"""
     page.goto(f"{FRONTEND_URL}/login")
     page.fill("input[type=email]", email)
     page.fill("input[type=password]", password)
@@ -52,54 +209,21 @@ def ui_login(page, email: str, password: str):
     page.wait_for_url("**/boards")
 
 
-def test_login_exitoso_muestra_tablero(page, test_user):
-    """Login correcto y render de columnas principales."""
-
+def test_ui_login_exitoso(page, test_user):
+    """Login correcto muestra el tablero"""
     ui_login(page, test_user["email"], test_user["password"])
     page.wait_for_selector("text=Por hacer")
     page.wait_for_selector("text=En curso")
     page.wait_for_selector("text=Hecho")
+    print("✅ UI: Login exitoso y tablero cargado")
 
 
-def test_login_fallido_muestra_error(page):
-    """Login con credenciales inválidas muestra mensaje de error."""
-
+def test_ui_login_fallido(page):
+    """Login con credenciales inválidas muestra error"""
     page.goto(f"{FRONTEND_URL}/login")
     page.fill("input[type=email]", "wrong@example.com")
     page.fill("input[type=password]", "badpass")
     page.click("button[type=submit]")
     page.wait_for_selector("text=No se ha podido iniciar sesión")
+    print("✅ UI: Login fallido muestra error")
 
-
-def test_crud_tarjeta_en_primer_tablero(page, test_user):
-    """Crea, edita y elimina una tarjeta usando la UI del tablero."""
-
-    ui_login(page, test_user["email"], test_user["password"])
-
-    # Esperar a que las columnas estén listas
-    page.wait_for_selector("text=Por hacer")
-
-    # Crear tarjeta
-    title = f"Tarea {int(time.time() * 1000)}"
-    desc = "Descripción E2E"
-    new_title = f"{title} editada"
-
-    page.get_by_text("+ Nueva tarjeta").click()
-    form = page.locator("form")
-    form.locator("input").first.fill(title)
-    form.locator("textarea").first.fill(desc)
-    form.locator("button", has_text="Crear tarjeta").click()
-    page.wait_for_selector(f"text={title}")
-
-    # Editar tarjeta (click en la tarjeta para abrir modal)
-    page.get_by_text(title).click()
-    form.locator("input").first.fill(new_title)
-    form.locator("button", has_text="Guardar cambios").click()
-    page.wait_for_selector(f"text={new_title}")
-
-    # Eliminar tarjeta (aceptar diálogo de confirmación)
-    page.get_by_text(new_title).click()
-    page.once("dialog", lambda dialog: dialog.accept())
-    form.locator("button", has_text="Eliminar").click()
-    page.wait_for_timeout(300)  # pequeño margen para que desaparezca
-    assert page.query_selector(f"text={new_title}") is None

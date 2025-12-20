@@ -8,7 +8,7 @@ Módulo de modelos Pydantic para operaciones sobre "cards" (tarjetas) en un tabl
 Modelos:
 - CardCreate: esquema para la creación de una nueva tarjeta.
 - CardUpdate: esquema para actualización parcial de una tarjeta existente.
-- CardOut: esquema de salida (representación) de una tarjeta tal como se devuelve desde la API/ORMS.
+- CardOut: esquema de salida (representación) de una tarjeta tal como se devuelve desde la API/ORMS.        
 
 Notas:
 - Se usa pydantic para validación automática de tipos y restricciones.
@@ -59,7 +59,7 @@ class CardUpdate(BaseModel):
     archived: Optional[bool] = None
 
 
-#Codigo de las Semana 3 
+#Codigo de las Semana 3
 class CardMove(BaseModel):
     """
     Esquema para mover/reordenar una tarjeta (Semana 3 Drag & Drop).
@@ -87,7 +87,7 @@ class CardOut(BaseModel):
     - description (Optional[str]): Descripción de la tarjeta.
     - due_date (Optional[date]): Fecha límite (solo fecha).
     - created_by_id (int): Identificador del usuario que creó la tarjeta.
-    - responsible_id (Optional[int]): Identificador del usuario responsable de la tarjeta (si aplica).
+    - responsible_id (Optional[int]): Identificador del usuario responsable de la tarjeta (si aplica).      
     - created_at (datetime): Marca temporal de creación.
     - updated_at (datetime): Marca temporal de la última actualización.
     - archived (bool): Indica si la tarjeta está archivada.

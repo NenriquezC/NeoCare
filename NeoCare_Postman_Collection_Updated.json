@@ -368,7 +368,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"list_id\": {{list_id}},\n  \"order\": 0\n}"
+              "raw": "{\n  \"new_list_id\": {{list_id}},\n  \"new_position\": 0\n}"
             },
             "url": {
               "raw": "http://localhost:8000/cards/{{card_id}}/move",

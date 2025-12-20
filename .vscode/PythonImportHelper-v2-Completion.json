@@ -120,6 +120,70 @@
         "documentation": {}
     },
     {
+        "label": "APIRouter",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "Depends",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "HTTPException",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "status",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "APIRouter",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "Depends",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "HTTPException",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "FastAPI",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
         "label": "FastAPI",
         "importPath": "fastapi",
         "description": "fastapi",
@@ -184,6 +248,22 @@
         "documentation": {}
     },
     {
+        "label": "Session",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "Session",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
         "label": "sessionmaker",
         "importPath": "sqlalchemy.orm",
         "description": "sqlalchemy.orm",
@@ -193,6 +273,30 @@
     },
     {
         "label": "sessionmaker",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "sessionmaker",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "declarative_base",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "relationship",
         "importPath": "sqlalchemy.orm",
         "description": "sqlalchemy.orm",
         "isExtraImport": true,
@@ -224,7 +328,63 @@
         "documentation": {}
     },
     {
+        "label": "ConfigDict",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
         "label": "Field",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "ConfigDict",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "ConfigDict",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "EmailStr",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
         "importPath": "pydantic",
         "description": "pydantic",
         "isExtraImport": true,
@@ -248,6 +408,22 @@
         "documentation": {}
     },
     {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
         "label": "Optional",
         "importPath": "typing",
         "description": "typing",
@@ -272,6 +448,14 @@
         "documentation": {}
     },
     {
+        "label": "timezone",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
         "label": "datetime",
         "importPath": "datetime",
         "description": "datetime",
@@ -281,6 +465,14 @@
     },
     {
         "label": "timezone",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
         "importPath": "datetime",
         "description": "datetime",
         "isExtraImport": true,
@@ -336,11 +528,59 @@
         "documentation": {}
     },
     {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timedelta",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
         "label": "date",
         "importPath": "datetime",
         "description": "datetime",
         "isExtraImport": true,
         "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "jwt",
+        "importPath": "jose",
+        "description": "jose",
+        "isExtraImport": true,
+        "detail": "jose",
+        "documentation": {}
+    },
+    {
+        "label": "JWTError",
+        "importPath": "jose",
+        "description": "jose",
+        "isExtraImport": true,
+        "detail": "jose",
         "documentation": {}
     },
     {
@@ -381,6 +621,22 @@
         "description": "passlib.context",
         "isExtraImport": true,
         "detail": "passlib.context",
+        "documentation": {}
+    },
+    {
+        "label": "CryptContext",
+        "importPath": "passlib.context",
+        "description": "passlib.context",
+        "isExtraImport": true,
+        "detail": "passlib.context",
+        "documentation": {}
+    },
+    {
+        "label": "OAuth2PasswordBearer",
+        "importPath": "fastapi.security",
+        "description": "fastapi.security",
+        "isExtraImport": true,
+        "detail": "fastapi.security",
         "documentation": {}
     },
     {
@@ -496,6 +752,46 @@
         "documentation": {}
     },
     {
+        "label": "create_engine",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "Column",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "Integer",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "String",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "ForeignKey",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
         "label": "os",
         "kind": 6,
         "isExtraImport": true,
@@ -518,6 +814,342 @@
         "description": "fastapi.middleware.cors",
         "isExtraImport": true,
         "detail": "fastapi.middleware.cors",
+        "documentation": {}
+    },
+    {
+        "label": "get_db",
+        "importPath": "app.database",
+        "description": "app.database",
+        "isExtraImport": true,
+        "detail": "app.database",
+        "documentation": {}
+    },
+    {
+        "label": "get_db",
+        "importPath": "app.database",
+        "description": "app.database",
+        "isExtraImport": true,
+        "detail": "app.database",
+        "documentation": {}
+    },
+    {
+        "label": "Base",
+        "importPath": "app.database",
+        "description": "app.database",
+        "isExtraImport": true,
+        "detail": "app.database",
+        "documentation": {}
+    },
+    {
+        "label": "SessionLocal",
+        "importPath": "app.database",
+        "description": "app.database",
+        "isExtraImport": true,
+        "detail": "app.database",
+        "documentation": {}
+    },
+    {
+        "label": "Base",
+        "importPath": "app.database",
+        "description": "app.database",
+        "isExtraImport": true,
+        "detail": "app.database",
+        "documentation": {}
+    },
+    {
+        "label": "SessionLocal",
+        "importPath": "app.database",
+        "description": "app.database",
+        "isExtraImport": true,
+        "detail": "app.database",
+        "documentation": {}
+    },
+    {
+        "label": "engine",
+        "importPath": "app.database",
+        "description": "app.database",
+        "isExtraImport": true,
+        "detail": "app.database",
+        "documentation": {}
+    },
+    {
+        "label": "DATABASE_URL",
+        "importPath": "app.database",
+        "description": "app.database",
+        "isExtraImport": true,
+        "detail": "app.database",
+        "documentation": {}
+    },
+    {
+        "label": "Base",
+        "importPath": "app.database",
+        "description": "app.database",
+        "isExtraImport": true,
+        "detail": "app.database",
+        "documentation": {}
+    },
+    {
+        "label": "engine",
+        "importPath": "app.database",
+        "description": "app.database",
+        "isExtraImport": true,
+        "detail": "app.database",
+        "documentation": {}
+    },
+    {
+        "label": "Base",
+        "importPath": "app.database",
+        "description": "app.database",
+        "isExtraImport": true,
+        "detail": "app.database",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "app",
+        "description": "app",
+        "isExtraImport": true,
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "app",
+        "description": "app",
+        "isExtraImport": true,
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "UserRegister",
+        "importPath": "app.auth.schemas",
+        "description": "app.auth.schemas",
+        "isExtraImport": true,
+        "detail": "app.auth.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "UserLogin",
+        "importPath": "app.auth.schemas",
+        "description": "app.auth.schemas",
+        "isExtraImport": true,
+        "detail": "app.auth.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "UserOut",
+        "importPath": "app.auth.schemas",
+        "description": "app.auth.schemas",
+        "isExtraImport": true,
+        "detail": "app.auth.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "Token",
+        "importPath": "app.auth.schemas",
+        "description": "app.auth.schemas",
+        "isExtraImport": true,
+        "detail": "app.auth.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "UserRegister",
+        "importPath": "app.auth.schemas",
+        "description": "app.auth.schemas",
+        "isExtraImport": true,
+        "detail": "app.auth.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "UserLogin",
+        "importPath": "app.auth.schemas",
+        "description": "app.auth.schemas",
+        "isExtraImport": true,
+        "detail": "app.auth.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "Token",
+        "importPath": "app.auth.schemas",
+        "description": "app.auth.schemas",
+        "isExtraImport": true,
+        "detail": "app.auth.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "hash_password",
+        "importPath": "app.auth.utils",
+        "description": "app.auth.utils",
+        "isExtraImport": true,
+        "detail": "app.auth.utils",
+        "documentation": {}
+    },
+    {
+        "label": "verify_password",
+        "importPath": "app.auth.utils",
+        "description": "app.auth.utils",
+        "isExtraImport": true,
+        "detail": "app.auth.utils",
+        "documentation": {}
+    },
+    {
+        "label": "create_token",
+        "importPath": "app.auth.utils",
+        "description": "app.auth.utils",
+        "isExtraImport": true,
+        "detail": "app.auth.utils",
+        "documentation": {}
+    },
+    {
+        "label": "verify_token",
+        "importPath": "app.auth.utils",
+        "description": "app.auth.utils",
+        "isExtraImport": true,
+        "detail": "app.auth.utils",
+        "documentation": {}
+    },
+    {
+        "label": "hash_password",
+        "importPath": "app.auth.utils",
+        "description": "app.auth.utils",
+        "isExtraImport": true,
+        "detail": "app.auth.utils",
+        "documentation": {}
+    },
+    {
+        "label": "verify_password",
+        "importPath": "app.auth.utils",
+        "description": "app.auth.utils",
+        "isExtraImport": true,
+        "detail": "app.auth.utils",
+        "documentation": {}
+    },
+    {
+        "label": "create_token",
+        "importPath": "app.auth.utils",
+        "description": "app.auth.utils",
+        "isExtraImport": true,
+        "detail": "app.auth.utils",
+        "documentation": {}
+    },
+    {
+        "label": "get_current_user",
+        "importPath": "app.auth.utils",
+        "description": "app.auth.utils",
+        "isExtraImport": true,
+        "detail": "app.auth.utils",
+        "documentation": {}
+    },
+    {
+        "label": "SECRET_KEY",
+        "importPath": "app.auth.utils",
+        "description": "app.auth.utils",
+        "isExtraImport": true,
+        "detail": "app.auth.utils",
+        "documentation": {}
+    },
+    {
+        "label": "ALGORITHM",
+        "importPath": "app.auth.utils",
+        "description": "app.auth.utils",
+        "isExtraImport": true,
+        "detail": "app.auth.utils",
+        "documentation": {}
+    },
+    {
+        "label": "get_db",
+        "importPath": "app.auth.utils",
+        "description": "app.auth.utils",
+        "isExtraImport": true,
+        "detail": "app.auth.utils",
+        "documentation": {}
+    },
+    {
+        "label": "get_current_user",
+        "importPath": "app.auth.utils",
+        "description": "app.auth.utils",
+        "isExtraImport": true,
+        "detail": "app.auth.utils",
+        "documentation": {}
+    },
+    {
+        "label": "SECRET_KEY",
+        "importPath": "app.config",
+        "description": "app.config",
+        "isExtraImport": true,
+        "detail": "app.config",
+        "documentation": {}
+    },
+    {
+        "label": "ALGORITHM",
+        "importPath": "app.config",
+        "description": "app.config",
+        "isExtraImport": true,
+        "detail": "app.config",
+        "documentation": {}
+    },
+    {
+        "label": "ACCESS_TOKEN_EXPIRE_MINUTES",
+        "importPath": "app.config",
+        "description": "app.config",
+        "isExtraImport": true,
+        "detail": "app.config",
+        "documentation": {}
+    },
+    {
+        "label": "Settings",
+        "importPath": "app.config",
+        "description": "app.config",
+        "isExtraImport": true,
+        "detail": "app.config",
+        "documentation": {}
+    },
+    {
+        "label": "settings",
+        "importPath": "app.config",
+        "description": "app.config",
+        "isExtraImport": true,
+        "detail": "app.config",
+        "documentation": {}
+    },
+    {
+        "label": "DATABASE_URL",
+        "importPath": "app.config",
+        "description": "app.config",
+        "isExtraImport": true,
+        "detail": "app.config",
+        "documentation": {}
+    },
+    {
+        "label": "BoardBase",
+        "importPath": "app.boards.schemas",
+        "description": "app.boards.schemas",
+        "isExtraImport": true,
+        "detail": "app.boards.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "BoardOut",
+        "importPath": "app.boards.schemas",
+        "description": "app.boards.schemas",
+        "isExtraImport": true,
+        "detail": "app.boards.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "get_current_user",
+        "importPath": "app.auth.routes",
+        "description": "app.auth.routes",
+        "isExtraImport": true,
+        "detail": "app.auth.routes",
+        "documentation": {}
+    },
+    {
+        "label": "auth_router",
+        "importPath": "app.auth.routes",
+        "description": "app.auth.routes",
+        "isExtraImport": true,
+        "detail": "app.auth.routes",
         "documentation": {}
     },
     {
@@ -650,142 +1282,6 @@
         "documentation": {}
     },
     {
-        "label": "UserRegister",
-        "importPath": "app.auth.schemas",
-        "description": "app.auth.schemas",
-        "isExtraImport": true,
-        "detail": "app.auth.schemas",
-        "documentation": {}
-    },
-    {
-        "label": "UserLogin",
-        "importPath": "app.auth.schemas",
-        "description": "app.auth.schemas",
-        "isExtraImport": true,
-        "detail": "app.auth.schemas",
-        "documentation": {}
-    },
-    {
-        "label": "Token",
-        "importPath": "app.auth.schemas",
-        "description": "app.auth.schemas",
-        "isExtraImport": true,
-        "detail": "app.auth.schemas",
-        "documentation": {}
-    },
-    {
-        "label": "hash_password",
-        "importPath": "app.auth.utils",
-        "description": "app.auth.utils",
-        "isExtraImport": true,
-        "detail": "app.auth.utils",
-        "documentation": {}
-    },
-    {
-        "label": "verify_password",
-        "importPath": "app.auth.utils",
-        "description": "app.auth.utils",
-        "isExtraImport": true,
-        "detail": "app.auth.utils",
-        "documentation": {}
-    },
-    {
-        "label": "create_token",
-        "importPath": "app.auth.utils",
-        "description": "app.auth.utils",
-        "isExtraImport": true,
-        "detail": "app.auth.utils",
-        "documentation": {}
-    },
-    {
-        "label": "get_current_user",
-        "importPath": "app.auth.utils",
-        "description": "app.auth.utils",
-        "isExtraImport": true,
-        "detail": "app.auth.utils",
-        "documentation": {}
-    },
-    {
-        "label": "SECRET_KEY",
-        "importPath": "app.auth.utils",
-        "description": "app.auth.utils",
-        "isExtraImport": true,
-        "detail": "app.auth.utils",
-        "documentation": {}
-    },
-    {
-        "label": "ALGORITHM",
-        "importPath": "app.auth.utils",
-        "description": "app.auth.utils",
-        "isExtraImport": true,
-        "detail": "app.auth.utils",
-        "documentation": {}
-    },
-    {
-        "label": "get_db",
-        "importPath": "app.auth.utils",
-        "description": "app.auth.utils",
-        "isExtraImport": true,
-        "detail": "app.auth.utils",
-        "documentation": {}
-    },
-    {
-        "label": "get_current_user",
-        "importPath": "app.auth.utils",
-        "description": "app.auth.utils",
-        "isExtraImport": true,
-        "detail": "app.auth.utils",
-        "documentation": {}
-    },
-    {
-        "label": "Base",
-        "importPath": "app.database",
-        "description": "app.database",
-        "isExtraImport": true,
-        "detail": "app.database",
-        "documentation": {}
-    },
-    {
-        "label": "SessionLocal",
-        "importPath": "app.database",
-        "description": "app.database",
-        "isExtraImport": true,
-        "detail": "app.database",
-        "documentation": {}
-    },
-    {
-        "label": "Base",
-        "importPath": "app.database",
-        "description": "app.database",
-        "isExtraImport": true,
-        "detail": "app.database",
-        "documentation": {}
-    },
-    {
-        "label": "SessionLocal",
-        "importPath": "app.database",
-        "description": "app.database",
-        "isExtraImport": true,
-        "detail": "app.database",
-        "documentation": {}
-    },
-    {
-        "label": "engine",
-        "importPath": "app.database",
-        "description": "app.database",
-        "isExtraImport": true,
-        "detail": "app.database",
-        "documentation": {}
-    },
-    {
-        "label": "DATABASE_URL",
-        "importPath": "app.database",
-        "description": "app.database",
-        "isExtraImport": true,
-        "detail": "app.database",
-        "documentation": {}
-    },
-    {
         "label": "User",
         "importPath": "app.boards.models",
         "description": "app.boards.models",
@@ -883,19 +1379,20 @@
         "documentation": {}
     },
     {
-        "label": "Settings",
-        "importPath": "app.config",
-        "description": "app.config",
+        "label": "sync_playwright",
+        "importPath": "playwright.sync_api",
+        "description": "playwright.sync_api",
         "isExtraImport": true,
-        "detail": "app.config",
+        "detail": "playwright.sync_api",
         "documentation": {}
     },
     {
-        "label": "settings",
-        "importPath": "app.config",
-        "description": "app.config",
+        "label": "time",
+        "kind": 6,
         "isExtraImport": true,
-        "detail": "app.config",
+        "importPath": "time",
+        "description": "time",
+        "detail": "time",
         "documentation": {}
     },
     {
@@ -905,6 +1402,22 @@
         "importPath": "requests",
         "description": "requests",
         "detail": "requests",
+        "documentation": {}
+    },
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "boards_router",
+        "importPath": "app.boards.routes",
+        "description": "app.boards.routes",
+        "isExtraImport": true,
+        "detail": "app.boards.routes",
         "documentation": {}
     },
     {
@@ -993,7 +1506,7 @@
         "kind": 2,
         "importPath": "backend.app.auth.utils",
         "description": "backend.app.auth.utils",
-        "peekOfCode": "def create_token(data: dict):\n    \"\"\"\n    Genera un token JWT codificando los datos de usuario.\n    Args:\n        data (dict): Datos a incluir en el payload del token.\n    Returns:\n        str: Token JWT generado.\n    \"\"\"\n    to_encode = data.copy()\n    expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MIN)",
+        "peekOfCode": "def create_token(data: dict):\n    \"\"\"\n    Genera un token JWT codificando los datos de usuario.\n    Args:\n        data (dict): Datos a incluir en el payload del token.\n    Returns:\n        str: Token JWT generado.\n    \"\"\"\n    to_encode = data.copy()\n    expire = datetime.now(timezone.utc) + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MIN)",
         "detail": "backend.app.auth.utils",
         "documentation": {}
     },
@@ -1137,8 +1650,26 @@
         "kind": 5,
         "importPath": "backend.app.boards.routes",
         "description": "backend.app.boards.routes",
-        "peekOfCode": "router = APIRouter(prefix=\"/boards\", tags=[\"boards\"])\n@router.get(\"/\")\ndef get_boards(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):\n    \"\"\"\n    Obtiene todos los tableros pertenecientes al usuario autenticado.\n    Nota (importante):\n        Si el usuario NO tiene tableros (usuarios antiguos creados antes de la creación automática),\n        se crea automáticamente 1 tablero y sus 3 listas por defecto para evitar que el frontend\n        quede bloqueado.\n    \"\"\"",
+        "peekOfCode": "router = APIRouter(prefix=\"/boards\", tags=[\"boards\"])\n@router.get(\"/\", response_model=ListType[BoardOut])\ndef get_boards(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):\n    \"\"\"\n    Obtiene todos los tableros pertenecientes al usuario autenticado.\n    Nota (importante):\n        Si el usuario NO tiene tableros (usuarios antiguos creados antes de la creación automática),\n        se crea automáticamente 1 tablero y sus 3 listas por defecto para evitar que el frontend\n        quede bloqueado.\n    \"\"\"",
         "detail": "backend.app.boards.routes",
+        "documentation": {}
+    },
+    {
+        "label": "ListOut",
+        "kind": 6,
+        "importPath": "backend.app.boards.schemas",
+        "description": "backend.app.boards.schemas",
+        "peekOfCode": "class ListOut(BaseModel):\n    \"\"\"Schema para serializar una lista (columna de un tablero).\"\"\"\n    id: int\n    name: str\n    board_id: int\n    position: int\n    created_at: datetime\n    model_config = ConfigDict(from_attributes=True)\nclass BoardOut(BaseModel):\n    \"\"\"Schema para serializar un tablero.\"\"\"",
+        "detail": "backend.app.boards.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "BoardOut",
+        "kind": 6,
+        "importPath": "backend.app.boards.schemas",
+        "description": "backend.app.boards.schemas",
+        "peekOfCode": "class BoardOut(BaseModel):\n    \"\"\"Schema para serializar un tablero.\"\"\"\n    id: int\n    name: str\n    user_id: int\n    created_at: datetime\n    model_config = ConfigDict(from_attributes=True)",
+        "detail": "backend.app.boards.schemas",
         "documentation": {}
     },
     {
@@ -1146,7 +1677,7 @@
         "kind": 2,
         "importPath": "backend.app.cards.routes",
         "description": "backend.app.cards.routes",
-        "peekOfCode": "def verify_board_permission(board_id: int, user_id: int, db: Session):\n    board = db.query(Board).filter(Board.id == board_id).first()\n    if not board:\n        raise HTTPException(status_code=404, detail=\"Tablero no encontrado\")\n    if board.user_id != user_id:\n        raise HTTPException(status_code=403, detail=\"No tienes permiso para este tablero\")\n    return board\n@router.post(\"/\", response_model=CardOut)\ndef create_card(data: CardCreate,\n                db: Session = Depends(get_db),",
+        "peekOfCode": "def verify_board_permission(board_id: int, user_id: int, db: Session):\n    \"\"\"\n    Verifica que el tablero existe y pertenece al usuario.\n    \"\"\"\n    board = db.query(Board).filter(Board.id == board_id).first()\n    if not board:\n        raise HTTPException(status_code=404, detail=\"Tablero no encontrado\")\n    if board.user_id != user_id:\n        raise HTTPException(status_code=403, detail=\"No tienes permiso para este tablero\")\n    return board",
         "detail": "backend.app.cards.routes",
         "documentation": {}
     },
@@ -1155,7 +1686,7 @@
         "kind": 2,
         "importPath": "backend.app.cards.routes",
         "description": "backend.app.cards.routes",
-        "peekOfCode": "def create_card(data: CardCreate,\n                db: Session = Depends(get_db),\n                current_user: User = Depends(get_current_user)):\n    verify_board_permission(data.board_id, current_user.id, db)\n    new_card = Card(\n        board_id=data.board_id,\n        list_id=data.list_id,\n        title=data.title,\n        description=data.description,\n        due_date=data.due_date,",
+        "peekOfCode": "def create_card(\n    data: CardCreate,\n    db: Session = Depends(get_db),\n    current_user: User = Depends(get_current_user),\n):\n    \"\"\"\n    Crea una nueva tarjeta (card) en un tablero y lista especificados.\n    \"\"\"\n    verify_board_permission(data.board_id, current_user.id, db)\n    new_card = Card(",
         "detail": "backend.app.cards.routes",
         "documentation": {}
     },
@@ -1164,7 +1695,7 @@
         "kind": 2,
         "importPath": "backend.app.cards.routes",
         "description": "backend.app.cards.routes",
-        "peekOfCode": "def get_cards(board_id: int,\n            db: Session = Depends(get_db),\n            current_user: User = Depends(get_current_user)):\n    verify_board_permission(board_id, current_user.id, db)\n    return db.query(Card).filter(Card.board_id == board_id).all()\n@router.get(\"/{card_id}\", response_model=CardOut)\ndef get_card(card_id: int,\n            db: Session = Depends(get_db),\n            current_user: User = Depends(get_current_user)):\n    card = db.query(Card).filter(Card.id == card_id).first()",
+        "peekOfCode": "def get_cards(\n    board_id: int,\n    db: Session = Depends(get_db),\n    current_user: User = Depends(get_current_user),\n):\n    verify_board_permission(board_id, current_user.id, db)\n    return (\n        db.query(Card)\n        .filter(Card.board_id == board_id)\n        .order_by(Card.list_id, Card.position)",
         "detail": "backend.app.cards.routes",
         "documentation": {}
     },
@@ -1173,43 +1704,34 @@
         "kind": 2,
         "importPath": "backend.app.cards.routes",
         "description": "backend.app.cards.routes",
-        "peekOfCode": "def get_card(card_id: int,\n            db: Session = Depends(get_db),\n            current_user: User = Depends(get_current_user)):\n    card = db.query(Card).filter(Card.id == card_id).first()\n    if not card:\n        raise HTTPException(status_code=404, detail=\"Tarjeta no encontrada\")\n    verify_board_permission(card.board_id, current_user.id, db)\n    return card\n\"\"\"\n@router.patch(\"/{card_id}\", response_model=CardOut)",
+        "peekOfCode": "def get_card(\n    card_id: int,\n    db: Session = Depends(get_db),\n    current_user: User = Depends(get_current_user),\n):\n    \"\"\"\n    Obtiene una tarjeta por ID (si pertenece a un board del usuario).\n    \"\"\"\n    card = db.query(Card).filter(Card.id == card_id).first()\n    if not card:",
         "detail": "backend.app.cards.routes",
         "documentation": {}
     },
     {
-        "label": "update_card",
+        "label": "update_card_patch",
         "kind": 2,
         "importPath": "backend.app.cards.routes",
         "description": "backend.app.cards.routes",
-        "peekOfCode": "def update_card(card_id: int,\n                data: CardUpdate,\n                db: Session = Depends(get_db),\n                current_user: User = Depends(get_current_user)):\n    card = db.query(Card).filter(Card.id == card_id).first()\n    if not card:\n        raise HTTPException(status_code=404, detail=\"Tarjeta no encontrada\")\n    verify_board_permission(card.board_id, current_user.id, db)\n    update_data = data.model_dump(exclude_unset=True)\n    for key, value in update_data.items():",
+        "peekOfCode": "def update_card_patch(\n    card_id: int,\n    data: CardUpdate,\n    db: Session = Depends(get_db),\n    current_user: User = Depends(get_current_user),\n):\n    \"\"\"\n    Edita una tarjeta existente (PATCH).\n    - Solo aplica los campos que vienen en el body.\n    \"\"\"",
         "detail": "backend.app.cards.routes",
         "documentation": {}
     },
     {
-        "label": "update_card",
+        "label": "update_card_put",
         "kind": 2,
         "importPath": "backend.app.cards.routes",
         "description": "backend.app.cards.routes",
-        "peekOfCode": "def update_card(\n    card_id: int,\n    data: CardUpdate,\n    db: Session = Depends(get_db),\n    current_user: User = Depends(get_current_user),\n):\n    \"\"\"\n    Edita una tarjeta existente.\n    Reglas:\n    - La tarjeta debe existir.",
+        "peekOfCode": "def update_card_put(\n    card_id: int,\n    data: CardUpdate,\n    db: Session = Depends(get_db),\n    current_user: User = Depends(get_current_user),\n):\n    \"\"\"\n    Edita una tarjeta existente (PUT).\n    \"\"\"\n    card = db.query(Card).filter(Card.id == card_id).first()",
         "detail": "backend.app.cards.routes",
         "documentation": {}
     },
     {
-        "label": "list_cards",
+        "label": "move_card",
         "kind": 2,
         "importPath": "backend.app.cards.routes",
         "description": "backend.app.cards.routes",
-        "peekOfCode": "def list_cards(\n    board_id: int,\n    db: Session = Depends(get_db),\n    current_user: User = Depends(get_current_user),\n):\n    # seguridad: board existe y es del usuario\n    board = db.query(Board).filter(Board.id == board_id).first()\n    if not board:\n        raise HTTPException(status_code=404, detail=\"Tablero no encontrado\")\n    if board.user_id != current_user.id:",
-        "detail": "backend.app.cards.routes",
-        "documentation": {}
-    },
-    {
-        "label": "delete_card",
-        "kind": 2,
-        "importPath": "backend.app.cards.routes",
-        "description": "backend.app.cards.routes",
-        "peekOfCode": "def delete_card(card_id: int,\n                db: Session = Depends(get_db),\n                current_user: User = Depends(get_current_user)):\n    card = db.query(Card).filter(Card.id == card_id).first()\n    if not card:\n        raise HTTPException(status_code=404, detail=\"Tarjeta no encontrada\")\n    verify_board_permission(card.board_id, current_user.id, db)\n    db.delete(card)\n    db.commit()\n    return None",
+        "peekOfCode": "def move_card(\n    card_id: int,\n    data: CardMove,\n    db: Session = Depends(get_db),\n    current_user: User = Depends(get_current_user),\n):\n    \"\"\"\n    Mueve una tarjeta entre columnas o dentro de la misma columna (Drag & Drop).\n    El backend es la autoridad del orden:\n    - valida permisos",
         "detail": "backend.app.cards.routes",
         "documentation": {}
     },
@@ -1227,7 +1749,7 @@
         "kind": 5,
         "importPath": "backend.app.cards.routes",
         "description": "backend.app.cards.routes",
-        "peekOfCode": "router = APIRouter(prefix=\"/cards\", tags=[\"cards\"])\ndef verify_board_permission(board_id: int, user_id: int, db: Session):\n    board = db.query(Board).filter(Board.id == board_id).first()\n    if not board:\n        raise HTTPException(status_code=404, detail=\"Tablero no encontrado\")\n    if board.user_id != user_id:\n        raise HTTPException(status_code=403, detail=\"No tienes permiso para este tablero\")\n    return board\n@router.post(\"/\", response_model=CardOut)\ndef create_card(data: CardCreate,",
+        "peekOfCode": "router = APIRouter(prefix=\"/cards\", tags=[\"cards\"])\n\"\"\"Módulo de endpoints para la gestión de 'cards' (tarjetas).\nContiene rutas para crear, listar, obtener, actualizar y eliminar tarjetas.\nCada endpoint valida que el tablero (board) pertenezca al usuario autenticado\nantes de realizar operaciones que afecten a los recursos.\n\"\"\"\ndef verify_board_permission(board_id: int, user_id: int, db: Session):\n    \"\"\"\n    Verifica que el tablero existe y pertenece al usuario.\n    \"\"\"",
         "detail": "backend.app.cards.routes",
         "documentation": {}
     },
@@ -1250,6 +1772,15 @@
         "documentation": {}
     },
     {
+        "label": "CardMove",
+        "kind": 6,
+        "importPath": "backend.app.cards.schemas",
+        "description": "backend.app.cards.schemas",
+        "peekOfCode": "class CardMove(BaseModel):\n    \"\"\"\n    Esquema para mover/reordenar una tarjeta (Semana 3 Drag & Drop).\n    Campos:\n    - list_id (int): columna destino.\n    - order (int): nueva posición dentro de la columna destino (>= 0).\n    \"\"\"\n    list_id:int\n    order: int = Field(..., ge=0, description=\"Posición destino (>= 0)\")\nclass CardOut(BaseModel):",
+        "detail": "backend.app.cards.schemas",
+        "documentation": {}
+    },
+    {
         "label": "CardOut",
         "kind": 6,
         "importPath": "backend.app.cards.schemas",
@@ -1263,7 +1794,7 @@
         "kind": 6,
         "importPath": "backend.app.config",
         "description": "backend.app.config",
-        "peekOfCode": "class Settings(BaseSettings):\n    # Database\n    DATABASE_URL: str = \"sqlite:///./test.db\"\n    # JWT\n    SECRET_KEY: str = \"your-secret-key-here\"\n    ALGORITHM: str = \"HS256\"\n    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30\n    class Config:\n        env_file = \".env\" if os.getenv(\"TESTING\") != \"1\" else None\nsettings = Settings()",
+        "peekOfCode": "class Settings(BaseSettings):\n    # Database\n    DATABASE_URL: str = \"sqlite:///./test.db\"\n    # JWT\n    SECRET_KEY: str = \"your-secret-key-here\"\n    ALGORITHM: str = \"HS256\"\n    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30\n    model_config = ConfigDict(\n        env_file=\".env\" if os.getenv(\"TESTING\") != \"1\" else None\n    )",
         "detail": "backend.app.config",
         "documentation": {}
     },
@@ -1281,7 +1812,7 @@
         "kind": 5,
         "importPath": "backend.app.database",
         "description": "backend.app.database",
-        "peekOfCode": "DATABASE_URL = os.getenv(\n    \"DATABASE_URL\",\n    \"postgresql://postgres:niki2025@localhost:5432/neocare_db\"\n)\n# Crea el motor de conexión con SQLAlchemy\nengine = create_engine(\n    DATABASE_URL,\n    future=True,\n    echo=True  # Muestra las consultas SQL generadas (útil para desarrollo y depuración)\n)",
+        "peekOfCode": "DATABASE_URL = os.getenv(\n    \"DATABASE_URL\",\n    \"postgresql://postgres:niki2025@localhost:5432/neocare_db\"\n)\n# Crea el motor de conexión con SQLAlchemy\nengine = create_engine(\n    DATABASE_URL,\n    future=True,\n    echo=True,  # Muestra las consultas SQL generadas (útil para desarrollo y depuración)\n    connect_args={\"client_encoding\": \"utf8\"}",
         "detail": "backend.app.database",
         "documentation": {}
     },
@@ -1290,7 +1821,7 @@
         "kind": 5,
         "importPath": "backend.app.database",
         "description": "backend.app.database",
-        "peekOfCode": "engine = create_engine(\n    DATABASE_URL,\n    future=True,\n    echo=True  # Muestra las consultas SQL generadas (útil para desarrollo y depuración)\n)\n# Genera la clase de sesión para interactuar con la base de datos\nSessionLocal = sessionmaker(\n    autocommit=False,           # Las transacciones no se confirman automáticamente\n    autoflush=False,            # No se realiza autoflush en los cambios\n    bind=engine                 # No se realiza autoflush en los cambios",
+        "peekOfCode": "engine = create_engine(\n    DATABASE_URL,\n    future=True,\n    echo=True,  # Muestra las consultas SQL generadas (útil para desarrollo y depuración)\n    connect_args={\"client_encoding\": \"utf8\"}\n)\n# Genera la clase de sesión para interactuar con la base de datos\nSessionLocal = sessionmaker(\n    autocommit=False,           # Las transacciones no se confirman automáticamente\n    autoflush=False,            # No se realiza autoflush en los cambios",
         "detail": "backend.app.database",
         "documentation": {}
     },
@@ -1328,6 +1859,186 @@
         "description": "backend.app.main",
         "peekOfCode": "app = FastAPI(title=\"NeoCare API\")\n# CORS (para que el frontend pueda llamar al backend)\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[\"*\"],  # ¡En producción, define los dominios permitidos!\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],\n)\n# Registra las rutas",
         "detail": "backend.app.main",
+        "documentation": {}
+    },
+    {
+        "label": "register",
+        "kind": 2,
+        "importPath": "backend.auth.routes",
+        "description": "backend.auth.routes",
+        "peekOfCode": "def register(user: UserRegister, db: Session = Depends(get_db)):\n    exists = db.query(models.User).filter(\n        (models.User.username == user.username) |\n        (models.User.email == user.email)\n    ).first()\n    if exists:\n        raise HTTPException(status_code=400, detail=\"Usuario o email ya registrado\")\n    hashed = hash_password(user.password)\n    new_user = models.User(\n        username=user.username,",
+        "detail": "backend.auth.routes",
+        "documentation": {}
+    },
+    {
+        "label": "login",
+        "kind": 2,
+        "importPath": "backend.auth.routes",
+        "description": "backend.auth.routes",
+        "peekOfCode": "def login(credentials: UserLogin, db: Session = Depends(get_db)):\n    user = db.query(models.User).filter(models.User.username == credentials.username).first()\n    if not user or not verify_password(credentials.password, user.hashed_password):\n        raise HTTPException(status_code=401, detail=\"Credenciales incorrectas\")\n    token = create_token({\"sub\": user.username})\n    return {\"access_token\": token, \"token_type\": \"bearer\"}\n# ---------- GET CURRENT USER ----------\ndef get_current_user(db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):\n    payload = verify_token(token)\n    if not payload:",
+        "detail": "backend.auth.routes",
+        "documentation": {}
+    },
+    {
+        "label": "get_current_user",
+        "kind": 2,
+        "importPath": "backend.auth.routes",
+        "description": "backend.auth.routes",
+        "peekOfCode": "def get_current_user(db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):\n    payload = verify_token(token)\n    if not payload:\n        raise HTTPException(status_code=401, detail=\"Token inválido\")\n    username = payload.get(\"sub\")\n    user = db.query(models.User).filter(models.User.username == username).first()\n    if not user:\n        raise HTTPException(status_code=404, detail=\"Usuario no encontrado\")\n    return user",
+        "detail": "backend.auth.routes",
+        "documentation": {}
+    },
+    {
+        "label": "oauth2_scheme",
+        "kind": 5,
+        "importPath": "backend.auth.routes",
+        "description": "backend.auth.routes",
+        "peekOfCode": "oauth2_scheme = OAuth2PasswordBearer(tokenUrl=\"/auth/login\")\nauth_router = APIRouter()\n# ---------- REGISTER ----------\n@auth_router.post(\"/register\", response_model=UserOut)\ndef register(user: UserRegister, db: Session = Depends(get_db)):\n    exists = db.query(models.User).filter(\n        (models.User.username == user.username) |\n        (models.User.email == user.email)\n    ).first()\n    if exists:",
+        "detail": "backend.auth.routes",
+        "documentation": {}
+    },
+    {
+        "label": "auth_router",
+        "kind": 5,
+        "importPath": "backend.auth.routes",
+        "description": "backend.auth.routes",
+        "peekOfCode": "auth_router = APIRouter()\n# ---------- REGISTER ----------\n@auth_router.post(\"/register\", response_model=UserOut)\ndef register(user: UserRegister, db: Session = Depends(get_db)):\n    exists = db.query(models.User).filter(\n        (models.User.username == user.username) |\n        (models.User.email == user.email)\n    ).first()\n    if exists:\n        raise HTTPException(status_code=400, detail=\"Usuario o email ya registrado\")",
+        "detail": "backend.auth.routes",
+        "documentation": {}
+    },
+    {
+        "label": "UserRegister",
+        "kind": 6,
+        "importPath": "backend.auth.schemas",
+        "description": "backend.auth.schemas",
+        "peekOfCode": "class UserRegister(BaseModel):\n    username: str\n    email: EmailStr\n    password: str\nclass UserLogin(BaseModel):\n    username: str\n    password: str\nclass UserOut(BaseModel):\n    id: int\n    username: str",
+        "detail": "backend.auth.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "UserLogin",
+        "kind": 6,
+        "importPath": "backend.auth.schemas",
+        "description": "backend.auth.schemas",
+        "peekOfCode": "class UserLogin(BaseModel):\n    username: str\n    password: str\nclass UserOut(BaseModel):\n    id: int\n    username: str\n    email: EmailStr\n    class Config:\n        orm_mode = True\nclass Token(BaseModel):",
+        "detail": "backend.auth.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "UserOut",
+        "kind": 6,
+        "importPath": "backend.auth.schemas",
+        "description": "backend.auth.schemas",
+        "peekOfCode": "class UserOut(BaseModel):\n    id: int\n    username: str\n    email: EmailStr\n    class Config:\n        orm_mode = True\nclass Token(BaseModel):\n    access_token: str\n    token_type: str",
+        "detail": "backend.auth.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "Token",
+        "kind": 6,
+        "importPath": "backend.auth.schemas",
+        "description": "backend.auth.schemas",
+        "peekOfCode": "class Token(BaseModel):\n    access_token: str\n    token_type: str",
+        "detail": "backend.auth.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "hash_password",
+        "kind": 2,
+        "importPath": "backend.auth.utils",
+        "description": "backend.auth.utils",
+        "peekOfCode": "def hash_password(password: str):\n    return pwd_context.hash(password)\ndef verify_password(plain, hashed):\n    return pwd_context.verify(plain, hashed)\ndef create_token(data: dict):\n    to_encode = data.copy()\n    expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)\n    to_encode.update({\"exp\": expire})\n    return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)\ndef verify_token(token: str):",
+        "detail": "backend.auth.utils",
+        "documentation": {}
+    },
+    {
+        "label": "verify_password",
+        "kind": 2,
+        "importPath": "backend.auth.utils",
+        "description": "backend.auth.utils",
+        "peekOfCode": "def verify_password(plain, hashed):\n    return pwd_context.verify(plain, hashed)\ndef create_token(data: dict):\n    to_encode = data.copy()\n    expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)\n    to_encode.update({\"exp\": expire})\n    return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)\ndef verify_token(token: str):\n    try:\n        return jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])",
+        "detail": "backend.auth.utils",
+        "documentation": {}
+    },
+    {
+        "label": "create_token",
+        "kind": 2,
+        "importPath": "backend.auth.utils",
+        "description": "backend.auth.utils",
+        "peekOfCode": "def create_token(data: dict):\n    to_encode = data.copy()\n    expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)\n    to_encode.update({\"exp\": expire})\n    return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)\ndef verify_token(token: str):\n    try:\n        return jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])\n    except JWTError:\n        return None",
+        "detail": "backend.auth.utils",
+        "documentation": {}
+    },
+    {
+        "label": "verify_token",
+        "kind": 2,
+        "importPath": "backend.auth.utils",
+        "description": "backend.auth.utils",
+        "peekOfCode": "def verify_token(token: str):\n    try:\n        return jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])\n    except JWTError:\n        return None",
+        "detail": "backend.auth.utils",
+        "documentation": {}
+    },
+    {
+        "label": "pwd_context",
+        "kind": 5,
+        "importPath": "backend.auth.utils",
+        "description": "backend.auth.utils",
+        "peekOfCode": "pwd_context = CryptContext(schemes=[\"bcrypt\"], deprecated=\"auto\")\ndef hash_password(password: str):\n    return pwd_context.hash(password)\ndef verify_password(plain, hashed):\n    return pwd_context.verify(plain, hashed)\ndef create_token(data: dict):\n    to_encode = data.copy()\n    expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)\n    to_encode.update({\"exp\": expire})\n    return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)",
+        "detail": "backend.auth.utils",
+        "documentation": {}
+    },
+    {
+        "label": "create_board",
+        "kind": 2,
+        "importPath": "backend.boards.routes",
+        "description": "backend.boards.routes",
+        "peekOfCode": "def create_board(board: BoardBase, db: Session = Depends(get_db), user=Depends(get_current_user)):\n    new_board = models.Board(title=board.title, owner_id=user.id)\n    db.add(new_board)\n    db.commit()\n    db.refresh(new_board)\n    return new_board\n@boards_router.get(\"/\", response_model=list[BoardOut])\ndef get_user_boards(db: Session = Depends(get_db), user=Depends(get_current_user)):\n    return db.query(models.Board).filter(models.Board.owner_id == user.id).all()\n@boards_router.delete(\"/{board_id}\")",
+        "detail": "backend.boards.routes",
+        "documentation": {}
+    },
+    {
+        "label": "get_user_boards",
+        "kind": 2,
+        "importPath": "backend.boards.routes",
+        "description": "backend.boards.routes",
+        "peekOfCode": "def get_user_boards(db: Session = Depends(get_db), user=Depends(get_current_user)):\n    return db.query(models.Board).filter(models.Board.owner_id == user.id).all()\n@boards_router.delete(\"/{board_id}\")\ndef delete_board(board_id: int, db: Session = Depends(get_db), user=Depends(get_current_user)):\n    board = db.query(models.Board).filter(\n        models.Board.id == board_id,\n        models.Board.owner_id == user.id\n    ).first()\n    if not board:\n        raise HTTPException(status_code=404, detail=\"Board no encontrado\")",
+        "detail": "backend.boards.routes",
+        "documentation": {}
+    },
+    {
+        "label": "delete_board",
+        "kind": 2,
+        "importPath": "backend.boards.routes",
+        "description": "backend.boards.routes",
+        "peekOfCode": "def delete_board(board_id: int, db: Session = Depends(get_db), user=Depends(get_current_user)):\n    board = db.query(models.Board).filter(\n        models.Board.id == board_id,\n        models.Board.owner_id == user.id\n    ).first()\n    if not board:\n        raise HTTPException(status_code=404, detail=\"Board no encontrado\")\n    db.delete(board)\n    db.commit()\n    return {\"message\": \"Board eliminado\"}",
+        "detail": "backend.boards.routes",
+        "documentation": {}
+    },
+    {
+        "label": "boards_router",
+        "kind": 5,
+        "importPath": "backend.boards.routes",
+        "description": "backend.boards.routes",
+        "peekOfCode": "boards_router = APIRouter()\n@boards_router.post(\"/\", response_model=BoardOut)\ndef create_board(board: BoardBase, db: Session = Depends(get_db), user=Depends(get_current_user)):\n    new_board = models.Board(title=board.title, owner_id=user.id)\n    db.add(new_board)\n    db.commit()\n    db.refresh(new_board)\n    return new_board\n@boards_router.get(\"/\", response_model=list[BoardOut])\ndef get_user_boards(db: Session = Depends(get_db), user=Depends(get_current_user)):",
+        "detail": "backend.boards.routes",
+        "documentation": {}
+    },
+    {
+        "label": "BoardBase",
+        "kind": 6,
+        "importPath": "backend.boards.schemas",
+        "description": "backend.boards.schemas",
+        "peekOfCode": "class BoardBase(BaseModel):\n    title: str\nclass BoardOut(BoardBase):\n    id: int\n    owner_id: int\n    class Config:\n        orm_mode = True",
+        "detail": "backend.boards.schemas",
+        "documentation": {}
+    },
+    {
+        "label": "BoardOut",
+        "kind": 6,
+        "importPath": "backend.boards.schemas",
+        "description": "backend.boards.schemas",
+        "peekOfCode": "class BoardOut(BoardBase):\n    id: int\n    owner_id: int\n    class Config:\n        orm_mode = True",
+        "detail": "backend.boards.schemas",
         "documentation": {}
     },
     {
@@ -1632,7 +2343,7 @@
         "kind": 2,
         "importPath": "backend.tests.cards.test_cards",
         "description": "backend.tests.cards.test_cards",
-        "peekOfCode": "def crear_board_y_lista(user):\n    \"\"\"\n    Crea directamente en la base de datos un Board y una List asociados a `user`.\n    Este helper no usa la API, sino que inserta registros via ORM para preparar\n    el estado necesario en las pruebas.\n    Args:\n        user (User): instancia ORM del usuario propietario del board.\n    Returns:\n        tuple(Board, List): las instancias ORM del tablero y de la lista creada.\n    Side effects:",
+        "peekOfCode": "def crear_board_y_lista(user):\n    \"\"\"\n    Crea directamente en la base de datos un Board y una List asociados a `user`.\n    Este helper no usa la API, sino que inserta registros via ORM para preparar\n    el estado necesario en las pruebas.\n    Args:\n        user (User): instancia ORM del usuario propietario del board.\n    Returns:\n        tuple(int, int): los IDs del tablero y de la lista creada.\n    Side effects:",
         "detail": "backend.tests.cards.test_cards",
         "documentation": {}
     },
@@ -1641,7 +2352,16 @@
         "kind": 2,
         "importPath": "backend.tests.cards.test_cards",
         "description": "backend.tests.cards.test_cards",
-        "peekOfCode": "def crear_tarjeta_via_api(board, lista, headers):\n    \"\"\"\n    Crea una tarjeta llamando a POST /cards/ y devuelve el JSON de respuesta.\n    Args:\n        board (Board): instancia ORM del tablero donde crear la tarjeta.\n        lista (List): instancia ORM de la lista donde colocar la tarjeta.\n        headers (dict): cabeceras HTTP a enviar (por ejemplo Authorization).\n    Returns:\n        dict: JSON parseado devuelto por la API que representa la tarjeta creada.\n    Asserts:",
+        "peekOfCode": "def crear_tarjeta_via_api(board_id, list_id, headers):\n    \"\"\"\n    Crea una tarjeta llamando a POST /cards/ y devuelve el JSON de respuesta.\n    Args:\n        board_id (int): ID del tablero donde crear la tarjeta.\n        list_id (int): ID de la lista donde colocar la tarjeta.\n        headers (dict): cabeceras HTTP a enviar (por ejemplo Authorization).\n    Returns:\n        dict: JSON parseado devuelto por la API que representa la tarjeta creada.\n    Asserts:",
+        "detail": "backend.tests.cards.test_cards",
+        "documentation": {}
+    },
+    {
+        "label": "mover_tarjeta_via_api",
+        "kind": 2,
+        "importPath": "backend.tests.cards.test_cards",
+        "description": "backend.tests.cards.test_cards",
+        "peekOfCode": "def mover_tarjeta_via_api(card_id, list_id, order, headers):\n    \"\"\"\n    Mueve una tarjeta usando PATCH /cards/{id}/move.\n    Args:\n        card_id (int): ID de la tarjeta a mover.\n        list_id (int): ID de la lista destino.\n        order (int): nueva posición.\n        headers (dict): cabeceras HTTP con Authorization.\n    Returns:\n        dict: JSON devuelto por la API.",
         "detail": "backend.tests.cards.test_cards",
         "documentation": {}
     },
@@ -1659,7 +2379,7 @@
         "kind": 2,
         "importPath": "backend.tests.cards.test_cards",
         "description": "backend.tests.cards.test_cards",
-        "peekOfCode": "def test_crear_tarjeta_titulo_vacio():\n    \"\"\"\n    Validación: intentar crear una tarjeta con título vacío debe fallar.\n    Verifica que Pydantic / validación del endpoint rechaza título vacío con 422.\n    \"\"\"\n    user, token = crear_usuario_y_token()\n    board, lista = crear_board_y_lista(user)\n    headers = {\"Authorization\": f\"Bearer {token}\"}\n    payload = {\n        \"title\": \"\",  # título vacío",
+        "peekOfCode": "def test_crear_tarjeta_titulo_vacio():\n    \"\"\"\n    Validación: intentar crear una tarjeta con título vacío debe fallar.\n    Verifica que Pydantic / validación del endpoint rechaza título vacío con 422.\n    \"\"\"\n    user, token = crear_usuario_y_token()\n    board_id, list_id = crear_board_y_lista(user)\n    headers = {\"Authorization\": f\"Bearer {token}\"}\n    payload = {\n        \"title\": \"\",  # título vacío",
         "detail": "backend.tests.cards.test_cards",
         "documentation": {}
     },
@@ -1668,7 +2388,7 @@
         "kind": 2,
         "importPath": "backend.tests.cards.test_cards",
         "description": "backend.tests.cards.test_cards",
-        "peekOfCode": "def test_crear_tarjeta_fecha_invalida():\n    \"\"\"\n    Validación: intentar crear una tarjeta con una fecha inválida debe fallar.\n    Se espera un 422 porque Pydantic no puede parsear la fecha proporcionada.\n    \"\"\"\n    user, token = crear_usuario_y_token()\n    board, lista = crear_board_y_lista(user)\n    headers = {\"Authorization\": f\"Bearer {token}\"}\n    payload = {\n        \"title\": \"Fecha mala\",",
+        "peekOfCode": "def test_crear_tarjeta_fecha_invalida():\n    \"\"\"\n    Validación: intentar crear una tarjeta con una fecha inválida debe fallar.\n    Se espera un 422 porque Pydantic no puede parsear la fecha proporcionada.\n    \"\"\"\n    user, token = crear_usuario_y_token()\n    board_id, list_id = crear_board_y_lista(user)\n    headers = {\"Authorization\": f\"Bearer {token}\"}\n    payload = {\n        \"title\": \"Fecha mala\",",
         "detail": "backend.tests.cards.test_cards",
         "documentation": {}
     },
@@ -1718,6 +2438,42 @@
         "documentation": {}
     },
     {
+        "label": "test_mover_tarjeta_misma_lista",
+        "kind": 2,
+        "importPath": "backend.tests.cards.test_cards",
+        "description": "backend.tests.cards.test_cards",
+        "peekOfCode": "def test_mover_tarjeta_misma_lista():\n    user, token = crear_usuario_y_token()\n    board_id, list_id = crear_board_y_lista(user)\n    headers = {\"Authorization\": f\"Bearer {token}\"}\n    # Crear 3 tarjetas\n    c1 = crear_tarjeta_via_api(board_id, list_id, headers)\n    c2 = crear_tarjeta_via_api(board_id, list_id, headers)\n    c3 = crear_tarjeta_via_api(board_id, list_id, headers)\n    # Mover la primera al final\n    mover_tarjeta_via_api(c1[\"id\"], list_id, 2, headers)",
+        "detail": "backend.tests.cards.test_cards",
+        "documentation": {}
+    },
+    {
+        "label": "test_mover_tarjeta_a_otra_lista",
+        "kind": 2,
+        "importPath": "backend.tests.cards.test_cards",
+        "description": "backend.tests.cards.test_cards",
+        "peekOfCode": "def test_mover_tarjeta_a_otra_lista():\n    user, token = crear_usuario_y_token()\n    board_id, list_a = crear_board_y_lista(user)\n    # Crear segunda lista\n    db = SessionLocal()\n    list_b = List(name=\"En progreso\", board_id=board_id, position=2)\n    db.add(list_b)\n    db.commit()\n    db.refresh(list_b)\n    db.close()",
+        "detail": "backend.tests.cards.test_cards",
+        "documentation": {}
+    },
+    {
+        "label": "test_mover_tarjeta_sin_token",
+        "kind": 2,
+        "importPath": "backend.tests.cards.test_cards",
+        "description": "backend.tests.cards.test_cards",
+        "peekOfCode": "def test_mover_tarjeta_sin_token():\n    resp = client.patch(\n        \"/cards/1/move\",\n        json={\"list_id\": 1, \"order\": 0},\n    )\n    assert resp.status_code == 401\n#CODIGO SEMANA 3\ndef test_mover_tarjeta_order_negativo():\n    user, token = crear_usuario_y_token()\n    board_id, list_id = crear_board_y_lista(user)",
+        "detail": "backend.tests.cards.test_cards",
+        "documentation": {}
+    },
+    {
+        "label": "test_mover_tarjeta_order_negativo",
+        "kind": 2,
+        "importPath": "backend.tests.cards.test_cards",
+        "description": "backend.tests.cards.test_cards",
+        "peekOfCode": "def test_mover_tarjeta_order_negativo():\n    user, token = crear_usuario_y_token()\n    board_id, list_id = crear_board_y_lista(user)\n    headers = {\"Authorization\": f\"Bearer {token}\"}\n    card = crear_tarjeta_via_api(board_id, list_id, headers)\n    resp = client.patch(\n        f\"/cards/{card['id']}/move\",\n        json={\"list_id\": list_id, \"order\": -1},\n        headers=headers,\n    )",
+        "detail": "backend.tests.cards.test_cards",
+        "documentation": {}
+    },
+    {
         "label": "client",
         "kind": 5,
         "importPath": "backend.tests.cards.test_cards",
@@ -1727,47 +2483,155 @@
         "documentation": {}
     },
     {
-        "label": "test_login_exitoso",
+        "label": "browser",
+        "kind": 2,
+        "importPath": "backend.tests.e2e.conftest",
+        "description": "backend.tests.e2e.conftest",
+        "peekOfCode": "def browser():\n    \"\"\"Crea una instancia del browser para toda la sesión.\"\"\"\n    with sync_playwright() as p:\n        browser = p.chromium.launch(headless=True)\n        yield browser\n        browser.close()\n@pytest.fixture(scope=\"function\")\ndef page(browser):\n    \"\"\"Crea una nueva página para cada test.\"\"\"\n    context = browser.new_context()",
+        "detail": "backend.tests.e2e.conftest",
+        "documentation": {}
+    },
+    {
+        "label": "page",
+        "kind": 2,
+        "importPath": "backend.tests.e2e.conftest",
+        "description": "backend.tests.e2e.conftest",
+        "peekOfCode": "def page(browser):\n    \"\"\"Crea una nueva página para cada test.\"\"\"\n    context = browser.new_context()\n    page = context.new_page()\n    yield page\n    context.close()",
+        "detail": "backend.tests.e2e.conftest",
+        "documentation": {}
+    },
+    {
+        "label": "test_user",
         "kind": 2,
         "importPath": "backend.tests.e2e.test_e2e",
         "description": "backend.tests.e2e.test_e2e",
-        "peekOfCode": "def test_login_exitoso(page):\n    \"\"\"Verifica que un usuario con credenciales válidas pueda iniciar sesión.\n    Flujo de la prueba:\n    1. Navega a la página de login.\n    2. Rellena los campos de email y contraseña con credenciales válidas.\n    3. Envía el formulario de login.\n    4. Espera a que la aplicación redirija a la ruta de tableros (/boards).\n    Aserciones/condiciones:\n    - Se espera una redirección a una URL que contenga '/boards'.\n    - Hay una comprobación comentada que valida la presencia del texto \"Bienvenido\" en el contenido de la página;",
+        "peekOfCode": "def test_user():\n    \"\"\"Genera un usuario único para toda la sesión.\"\"\"\n    unique = uuid.uuid4().hex[:8]\n    email = f\"e2e_{unique}@example.com\"\n    password = \"Password123!\"\n    token = _ensure_user(email, password)\n    return {\"email\": email, \"password\": password, \"token\": token}\n# ========================\n# TESTS DE BOARDS (GET)\n# ========================",
         "detail": "backend.tests.e2e.test_e2e",
         "documentation": {}
     },
     {
-        "label": "test_login_fallido",
+        "label": "test_api_get_boards",
         "kind": 2,
         "importPath": "backend.tests.e2e.test_e2e",
         "description": "backend.tests.e2e.test_e2e",
-        "peekOfCode": "def test_login_fallido(page):\n    \"\"\"Verifica que el sistema muestra un mensaje de error cuando las credenciales son incorrectas.\n    Flujo de la prueba:\n    1. Navega a la página de login.\n    2. Rellena los campos de email y contraseña con credenciales incorrectas.\n    3. Envía el formulario de login.\n    4. Espera a que aparezca un selector con el mensaje de error esperado.\n    Aserciones/condiciones:\n    - Se espera que el selector de texto con el mensaje de error esté presente:\n    \"No se ha podido iniciar sesión (API no disponible o credenciales incorrectas)\".",
+        "peekOfCode": "def test_api_get_boards(test_user):\n    \"\"\"GET /boards/ - Obtiene los tableros del usuario\"\"\"\n    headers = {\"Authorization\": f\"Bearer {test_user['token']}\"}\n    res = requests.get(f\"{BACKEND_URL}/boards/\", headers=headers, timeout=10)\n    assert res.status_code == 200, f\"Error al obtener boards: {res.text}\"\n    boards = res.json()\n    assert isinstance(boards, list), \"La respuesta debe ser una lista\"\n    assert len(boards) > 0, \"Debe haber al menos 1 board\"\n    # Guardar board_id para usar en otros tests\n    test_user[\"board_id\"] = boards[0][\"id\"]",
         "detail": "backend.tests.e2e.test_e2e",
         "documentation": {}
     },
     {
-        "label": "test_dashboard_protegido",
+        "label": "test_api_get_lists",
         "kind": 2,
         "importPath": "backend.tests.e2e.test_e2e",
         "description": "backend.tests.e2e.test_e2e",
-        "peekOfCode": "def test_dashboard_protegido(page):\n    \"\"\"Verifica que la ruta /dashboard está protegida y redirige a /login si no hay token.\n    Flujo de la prueba:\n    1. Intenta navegar directamente a /dashboard sin establecer token en localStorage.\n    2. Espera la redirección a la página de login.\n    Aserciones/condiciones:\n    - La URL final contiene '/login', lo que indica que el acceso fue denegado y se pidió autenticación.\n    \"\"\"\n    page.goto(f\"{BASE_URL}/dashboard\")\n    page.wait_for_url(\"**/login\")",
+        "peekOfCode": "def test_api_get_lists(test_user):\n    \"\"\"GET /boards/{board_id}/lists/ - Obtiene las listas del tablero\"\"\"\n    board_id = test_user.get(\"board_id\", 1)  # Usar el board del test anterior\n    headers = {\"Authorization\": f\"Bearer {test_user['token']}\"}\n    res = requests.get(f\"{BACKEND_URL}/boards/{board_id}/lists/\", headers=headers, timeout=10)\n    assert res.status_code == 200, f\"Error al obtener lists: {res.text}\"\n    lists = res.json()\n    assert isinstance(lists, list), \"La respuesta debe ser una lista\"\n    assert len(lists) >= 3, \"Debe haber al menos 3 listas (Por hacer, En curso, Hecho)\"\n    # Guardar list_id para tests de cards",
         "detail": "backend.tests.e2e.test_e2e",
         "documentation": {}
     },
     {
-        "label": "test_dashboard_con_token",
+        "label": "test_api_create_card",
         "kind": 2,
         "importPath": "backend.tests.e2e.test_e2e",
         "description": "backend.tests.e2e.test_e2e",
-        "peekOfCode": "def test_dashboard_con_token(page):\n    \"\"\"Verifica que al establecer un token en localStorage se puede acceder a /dashboard.\n    Flujo de la prueba:\n    1. Navega a la página de login (para obtener el mismo origen y poder manipular localStorage).\n    2. Inserta un token simulado en window.localStorage.\n    3. Navega a /dashboard.\n    4. Espera la redirección/permiso de acceso a la ruta de dashboard.\n    Aserciones/condiciones:\n    - La URL final contiene '/dashboard', indicando acceso correcto con token presente.\n    - El token usado es un placeholder; si la aplicación valida el token en el backend, puede ser necesario mockear la respuesta de la API.",
+        "peekOfCode": "def test_api_create_card(test_user):\n    \"\"\"POST /cards/ - Crear una nueva tarjeta\"\"\"\n    board_id = test_user.get(\"board_id\", 1)\n    list_id = test_user.get(\"list_id\", 1)\n    headers = {\"Authorization\": f\"Bearer {test_user['token']}\"}\n    payload = {\n        \"title\": f\"Tarjeta E2E {int(time.time())}\",\n        \"description\": \"Descripción de prueba E2E\",\n        \"due_date\": \"2025-12-31\",\n        \"board_id\": board_id,",
         "detail": "backend.tests.e2e.test_e2e",
         "documentation": {}
     },
     {
-        "label": "BASE_URL",
+        "label": "test_api_list_cards",
+        "kind": 2,
+        "importPath": "backend.tests.e2e.test_e2e",
+        "description": "backend.tests.e2e.test_e2e",
+        "peekOfCode": "def test_api_list_cards(test_user):\n    \"\"\"GET /cards/?board_id={board_id} - Listar tarjetas del tablero\"\"\"\n    board_id = test_user.get(\"board_id\", 1)\n    headers = {\"Authorization\": f\"Bearer {test_user['token']}\"}\n    res = requests.get(f\"{BACKEND_URL}/cards/?board_id={board_id}\", headers=headers, timeout=10)\n    assert res.status_code == 200, f\"Error al listar cards: {res.text}\"\n    cards = res.json()\n    assert isinstance(cards, list), \"La respuesta debe ser una lista\"\n    assert len(cards) > 0, \"Debe haber al menos 1 tarjeta\"\n    print(f\"✅ Cards listadas: {len(cards)} tarjetas\")",
+        "detail": "backend.tests.e2e.test_e2e",
+        "documentation": {}
+    },
+    {
+        "label": "test_api_get_card_detail",
+        "kind": 2,
+        "importPath": "backend.tests.e2e.test_e2e",
+        "description": "backend.tests.e2e.test_e2e",
+        "peekOfCode": "def test_api_get_card_detail(test_user):\n    \"\"\"GET /cards/{card_id} - Obtener detalle de una tarjeta\"\"\"\n    card_id = test_user.get(\"card_id\")\n    headers = {\"Authorization\": f\"Bearer {test_user['token']}\"}\n    res = requests.get(f\"{BACKEND_URL}/cards/{card_id}\", headers=headers, timeout=10)\n    assert res.status_code == 200, f\"Error al obtener card: {res.text}\"\n    card = res.json()\n    assert card[\"id\"] == card_id, \"El ID debe coincidir\"\n    print(f\"✅ Card detalle obtenida: {card['title']}\")\ndef test_api_update_card_patch(test_user):",
+        "detail": "backend.tests.e2e.test_e2e",
+        "documentation": {}
+    },
+    {
+        "label": "test_api_update_card_patch",
+        "kind": 2,
+        "importPath": "backend.tests.e2e.test_e2e",
+        "description": "backend.tests.e2e.test_e2e",
+        "peekOfCode": "def test_api_update_card_patch(test_user):\n    \"\"\"PATCH /cards/{card_id} - Actualizar parcialmente una tarjeta\"\"\"\n    card_id = test_user.get(\"card_id\")\n    headers = {\"Authorization\": f\"Bearer {test_user['token']}\"}\n    payload = {\"title\": \"Tarjeta Actualizada PATCH\"}\n    res = requests.patch(f\"{BACKEND_URL}/cards/{card_id}\", json=payload, headers=headers, timeout=10)\n    assert res.status_code == 200, f\"Error al actualizar card (PATCH): {res.text}\"\n    card = res.json()\n    assert card[\"title\"] == payload[\"title\"], \"El título debe estar actualizado\"\n    print(f\"✅ Card actualizada (PATCH): {card['title']}\")",
+        "detail": "backend.tests.e2e.test_e2e",
+        "documentation": {}
+    },
+    {
+        "label": "test_api_update_card_put",
+        "kind": 2,
+        "importPath": "backend.tests.e2e.test_e2e",
+        "description": "backend.tests.e2e.test_e2e",
+        "peekOfCode": "def test_api_update_card_put(test_user):\n    \"\"\"PUT /cards/{card_id} - Actualizar completamente una tarjeta\"\"\"\n    card_id = test_user.get(\"card_id\")\n    board_id = test_user.get(\"board_id\", 1)\n    list_id = test_user.get(\"list_id\", 1)\n    headers = {\"Authorization\": f\"Bearer {test_user['token']}\"}\n    payload = {\n        \"title\": \"Tarjeta Actualizada PUT\",\n        \"description\": \"Nueva descripción completa\",\n        \"due_date\": \"2025-12-25\",",
+        "detail": "backend.tests.e2e.test_e2e",
+        "documentation": {}
+    },
+    {
+        "label": "test_api_move_card",
+        "kind": 2,
+        "importPath": "backend.tests.e2e.test_e2e",
+        "description": "backend.tests.e2e.test_e2e",
+        "peekOfCode": "def test_api_move_card(test_user):\n    \"\"\"PATCH /cards/{card_id}/move - Mover tarjeta a otra posición\"\"\"\n    card_id = test_user.get(\"card_id\")\n    list_id = test_user.get(\"list_id\", 1)\n    headers = {\"Authorization\": f\"Bearer {test_user['token']}\"}\n    payload = {\"list_id\": list_id, \"order\": 0}\n    res = requests.patch(f\"{BACKEND_URL}/cards/{card_id}/move\", json=payload, headers=headers, timeout=10)\n    assert res.status_code == 200, f\"Error al mover card: {res.text}\"\n    print(f\"✅ Card movida correctamente\")\ndef test_api_delete_card(test_user):",
+        "detail": "backend.tests.e2e.test_e2e",
+        "documentation": {}
+    },
+    {
+        "label": "test_api_delete_card",
+        "kind": 2,
+        "importPath": "backend.tests.e2e.test_e2e",
+        "description": "backend.tests.e2e.test_e2e",
+        "peekOfCode": "def test_api_delete_card(test_user):\n    \"\"\"DELETE /cards/{card_id} - Eliminar una tarjeta\"\"\"\n    card_id = test_user.get(\"card_id\")\n    headers = {\"Authorization\": f\"Bearer {test_user['token']}\"}\n    res = requests.delete(f\"{BACKEND_URL}/cards/{card_id}\", headers=headers, timeout=10)\n    assert res.status_code == 204, f\"Error al eliminar card: {res.text}\"\n    # Verificar que ya no existe\n    get_res = requests.get(f\"{BACKEND_URL}/cards/{card_id}\", headers=headers, timeout=10)\n    assert get_res.status_code == 404, \"La tarjeta debería estar eliminada\"\n    print(f\"✅ Card eliminada correctamente\")",
+        "detail": "backend.tests.e2e.test_e2e",
+        "documentation": {}
+    },
+    {
+        "label": "ui_login",
+        "kind": 2,
+        "importPath": "backend.tests.e2e.test_e2e",
+        "description": "backend.tests.e2e.test_e2e",
+        "peekOfCode": "def ui_login(page, email: str, password: str):\n    \"\"\"Realiza login vía UI\"\"\"\n    page.goto(f\"{FRONTEND_URL}/login\")\n    page.fill(\"input[type=email]\", email)\n    page.fill(\"input[type=password]\", password)\n    page.click(\"button[type=submit]\")\n    page.wait_for_url(\"**/boards\")\ndef test_ui_login_exitoso(page, test_user):\n    \"\"\"Login correcto muestra el tablero\"\"\"\n    ui_login(page, test_user[\"email\"], test_user[\"password\"])",
+        "detail": "backend.tests.e2e.test_e2e",
+        "documentation": {}
+    },
+    {
+        "label": "test_ui_login_exitoso",
+        "kind": 2,
+        "importPath": "backend.tests.e2e.test_e2e",
+        "description": "backend.tests.e2e.test_e2e",
+        "peekOfCode": "def test_ui_login_exitoso(page, test_user):\n    \"\"\"Login correcto muestra el tablero\"\"\"\n    ui_login(page, test_user[\"email\"], test_user[\"password\"])\n    page.wait_for_selector(\"text=Por hacer\")\n    page.wait_for_selector(\"text=En curso\")\n    page.wait_for_selector(\"text=Hecho\")\n    print(\"✅ UI: Login exitoso y tablero cargado\")\ndef test_ui_login_fallido(page):\n    \"\"\"Login con credenciales inválidas muestra error\"\"\"\n    page.goto(f\"{FRONTEND_URL}/login\")",
+        "detail": "backend.tests.e2e.test_e2e",
+        "documentation": {}
+    },
+    {
+        "label": "test_ui_login_fallido",
+        "kind": 2,
+        "importPath": "backend.tests.e2e.test_e2e",
+        "description": "backend.tests.e2e.test_e2e",
+        "peekOfCode": "def test_ui_login_fallido(page):\n    \"\"\"Login con credenciales inválidas muestra error\"\"\"\n    page.goto(f\"{FRONTEND_URL}/login\")\n    page.fill(\"input[type=email]\", \"wrong@example.com\")\n    page.fill(\"input[type=password]\", \"badpass\")\n    page.click(\"button[type=submit]\")\n    page.wait_for_selector(\"text=No se ha podido iniciar sesión\")\n    print(\"✅ UI: Login fallido muestra error\")",
+        "detail": "backend.tests.e2e.test_e2e",
+        "documentation": {}
+    },
+    {
+        "label": "FRONTEND_URL",
         "kind": 5,
         "importPath": "backend.tests.e2e.test_e2e",
         "description": "backend.tests.e2e.test_e2e",
-        "peekOfCode": "BASE_URL = \"http://localhost:5173/\"\n\"\"\"\nPruebas E2E de autenticación y protección de rutas usando Playwright + pytest.\nEste módulo contiene pruebas que verifican:\n- Inicio de sesión exitoso y redirección al listado de tableros (/boards).\n- Manejo de inicio de sesión fallido con mensaje de error visible.\n- Protección de la ruta /dashboard para usuarios no autenticados.\n- Acceso a /dashboard cuando existe un token simulado en localStorage.\nNotas:\n- Estas pruebas asumen que la aplicación frontend está disponible en BASE_URL.",
+        "peekOfCode": "FRONTEND_URL = os.getenv(\"FRONTEND_URL\", \"http://localhost:5173\")\nBACKEND_URL = os.getenv(\"BACKEND_URL\", \"http://127.0.0.1:8000\")\ndef _ensure_user(email: str, password: str, name: str = \"E2E User\"):\n    \"\"\"Crea un usuario de prueba vía API.\"\"\"\n    payload = {\"email\": email, \"password\": password, \"name\": name}\n    res = requests.post(f\"{BACKEND_URL}/auth/register\", json=payload, timeout=10)\n    if res.status_code in [200, 201]:\n        return res.json().get(\"access_token\")\n    if res.status_code == 400 and \"Email ya registrado\" in res.text:\n        # Login si ya existe",
+        "detail": "backend.tests.e2e.test_e2e",
+        "documentation": {}
+    },
+    {
+        "label": "BACKEND_URL",
+        "kind": 5,
+        "importPath": "backend.tests.e2e.test_e2e",
+        "description": "backend.tests.e2e.test_e2e",
+        "peekOfCode": "BACKEND_URL = os.getenv(\"BACKEND_URL\", \"http://127.0.0.1:8000\")\ndef _ensure_user(email: str, password: str, name: str = \"E2E User\"):\n    \"\"\"Crea un usuario de prueba vía API.\"\"\"\n    payload = {\"email\": email, \"password\": password, \"name\": name}\n    res = requests.post(f\"{BACKEND_URL}/auth/register\", json=payload, timeout=10)\n    if res.status_code in [200, 201]:\n        return res.json().get(\"access_token\")\n    if res.status_code == 400 and \"Email ya registrado\" in res.text:\n        # Login si ya existe\n        login_res = requests.post(f\"{BACKEND_URL}/auth/login\", json={\"email\": email, \"password\": password}, timeout=10)",
         "detail": "backend.tests.e2e.test_e2e",
         "documentation": {}
     },
@@ -1841,6 +2705,114 @@
         "description": "backend.tests.test_main",
         "peekOfCode": "client = TestClient(app)\n\"\"\"Pruebas básicas de los endpoints expuestos por la aplicación principal (app.main).\nEste módulo contiene tests ligeros que verifican:\n- El endpoint raíz (GET /) responde correctamente con el estado esperado.\n- Que el router de autenticación está registrado en la aplicación (comprobado mediante\nuna petición a la ruta base de auth que debería devolver 404 o 405 si no hay un GET definido).\nEstas pruebas usan TestClient de FastAPI para realizar peticiones HTTP en memoria.\n\"\"\"\n# ----------------------------\n# Test GET /",
         "detail": "backend.tests.test_main",
+        "documentation": {}
+    },
+    {
+        "label": "DATABASE_URL",
+        "kind": 5,
+        "importPath": "backend.config",
+        "description": "backend.config",
+        "peekOfCode": "DATABASE_URL = os.getenv(\"DATABASE_URL\")\nSECRET_KEY = os.getenv(\"SECRET_KEY\", \"supersecret-jwt-key\")\nALGORITHM = \"HS256\"\nACCESS_TOKEN_EXPIRE_MINUTES = 60",
+        "detail": "backend.config",
+        "documentation": {}
+    },
+    {
+        "label": "SECRET_KEY",
+        "kind": 5,
+        "importPath": "backend.config",
+        "description": "backend.config",
+        "peekOfCode": "SECRET_KEY = os.getenv(\"SECRET_KEY\", \"supersecret-jwt-key\")\nALGORITHM = \"HS256\"\nACCESS_TOKEN_EXPIRE_MINUTES = 60",
+        "detail": "backend.config",
+        "documentation": {}
+    },
+    {
+        "label": "ALGORITHM",
+        "kind": 5,
+        "importPath": "backend.config",
+        "description": "backend.config",
+        "peekOfCode": "ALGORITHM = \"HS256\"\nACCESS_TOKEN_EXPIRE_MINUTES = 60",
+        "detail": "backend.config",
+        "documentation": {}
+    },
+    {
+        "label": "ACCESS_TOKEN_EXPIRE_MINUTES",
+        "kind": 5,
+        "importPath": "backend.config",
+        "description": "backend.config",
+        "peekOfCode": "ACCESS_TOKEN_EXPIRE_MINUTES = 60",
+        "detail": "backend.config",
+        "documentation": {}
+    },
+    {
+        "label": "get_db",
+        "kind": 2,
+        "importPath": "backend.database",
+        "description": "backend.database",
+        "peekOfCode": "def get_db():\n    db = SessionLocal()\n    try:\n        yield db\n    finally:\n        db.close()",
+        "detail": "backend.database",
+        "documentation": {}
+    },
+    {
+        "label": "engine",
+        "kind": 5,
+        "importPath": "backend.database",
+        "description": "backend.database",
+        "peekOfCode": "engine = create_engine(DATABASE_URL)\nSessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)\nBase = declarative_base()\ndef get_db():\n    db = SessionLocal()\n    try:\n        yield db\n    finally:\n        db.close()",
+        "detail": "backend.database",
+        "documentation": {}
+    },
+    {
+        "label": "SessionLocal",
+        "kind": 5,
+        "importPath": "backend.database",
+        "description": "backend.database",
+        "peekOfCode": "SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)\nBase = declarative_base()\ndef get_db():\n    db = SessionLocal()\n    try:\n        yield db\n    finally:\n        db.close()",
+        "detail": "backend.database",
+        "documentation": {}
+    },
+    {
+        "label": "Base",
+        "kind": 5,
+        "importPath": "backend.database",
+        "description": "backend.database",
+        "peekOfCode": "Base = declarative_base()\ndef get_db():\n    db = SessionLocal()\n    try:\n        yield db\n    finally:\n        db.close()",
+        "detail": "backend.database",
+        "documentation": {}
+    },
+    {
+        "label": "root",
+        "kind": 2,
+        "importPath": "backend.main",
+        "description": "backend.main",
+        "peekOfCode": "def root():\n    return {\"message\": \"API funcionando 🚀\"}\n# Rutas\napp.include_router(auth_router, prefix=\"/auth\", tags=[\"Auth\"])\napp.include_router(boards_router, prefix=\"/boards\", tags=[\"Boards\"])",
+        "detail": "backend.main",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "backend.main",
+        "description": "backend.main",
+        "peekOfCode": "app = FastAPI(title=\"Backend con JWT y Boards\")\n@app.get(\"/\")\ndef root():\n    return {\"message\": \"API funcionando 🚀\"}\n# Rutas\napp.include_router(auth_router, prefix=\"/auth\", tags=[\"Auth\"])\napp.include_router(boards_router, prefix=\"/boards\", tags=[\"Boards\"])",
+        "detail": "backend.main",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "kind": 6,
+        "importPath": "backend.models",
+        "description": "backend.models",
+        "peekOfCode": "class User(Base):\n    __tablename__ = \"users\"\n    id = Column(Integer, primary_key=True, index=True)\n    username = Column(String, unique=True, nullable=False, index=True)\n    email = Column(String, unique=True, nullable=False, index=True)\n    hashed_password = Column(String, nullable=False)\n    boards = relationship(\"Board\", back_populates=\"owner\")\nclass Board(Base):\n    __tablename__ = \"boards\"\n    id = Column(Integer, primary_key=True, index=True)",
+        "detail": "backend.models",
+        "documentation": {}
+    },
+    {
+        "label": "Board",
+        "kind": 6,
+        "importPath": "backend.models",
+        "description": "backend.models",
+        "peekOfCode": "class Board(Base):\n    __tablename__ = \"boards\"\n    id = Column(Integer, primary_key=True, index=True)\n    title = Column(String, nullable=False)\n    owner_id = Column(Integer, ForeignKey(\"users.id\"))\n    owner = relationship(\"User\", back_populates=\"boards\")",
+        "detail": "backend.models",
         "documentation": {}
     },
     {
