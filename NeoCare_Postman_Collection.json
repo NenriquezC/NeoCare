@@ -1,0 +1,616 @@
+{
+  "info": {
+    "_postman_id": "neocare-api-v3-2025",
+    "name": "NeoCare API - Completo 2025",
+    "description": "Colección completa con TODOS los endpoints del backend NeoCare actualizado. Incluye: Auth, Boards, Lists y Cards (CRUD completo + Move).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "🔐 AUTENTICACIÓN",
+      "item": [
+        {
+          "name": "Registro de usuario",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const timestamp = Date.now();",
+                  "const randomId = Math.random().toString(36).substring(2, 8);",
+                  "pm.environment.set('user_email', `user_${timestamp}_${randomId}@test.com`);",
+                  "pm.environment.set('user_password', 'password123');",
+                  "pm.environment.set('user_name', `Usuario Test ${timestamp}`);"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200 || pm.response.code === 201) {",
+                  "    const data = pm.response.json();",
+                  "    pm.environment.set('access_token', data.access_token);",
+                  "    pm.test('✅ Usuario registrado exitosamente', () => {",
+                  "        pm.expect(data).to.have.property('access_token');",
+                  "    });",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{user_email}}\",\n  \"password\": \"{{user_password}}\",\n  \"name\": \"{{user_name}}\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/auth/register",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["auth", "register"]
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const data = pm.response.json();",
+                  "    pm.environment.set('access_token', data.access_token);",
+                  "    pm.test('✅ Login exitoso', () => {",
+                  "        pm.expect(data).to.have.property('access_token');",
+                  "    });",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{user_email}}\",\n  \"password\": \"{{user_password}}\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/auth/login",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["auth", "login"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "📋 TABLEROS (BOARDS)",
+      "item": [
+        {
+          "name": "GET - Obtener todos los tableros",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const boards = pm.response.json();",
+                  "    if (boards.length > 0) {",
+                  "        pm.environment.set('board_id', boards[0].id);",
+                  "        console.log('Board ID guardado:', boards[0].id);",
+                  "    }",
+                  "    pm.test('✅ Tableros obtenidos', () => {",
+                  "        pm.expect(boards).to.be.an('array');",
+                  "    });",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{access_token}}"}
+            ],
+            "url": {
+              "raw": "http://localhost:8000/boards/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["boards", ""]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "📝 LISTAS (LISTS)",
+      "item": [
+        {
+          "name": "GET - Obtener listas de un tablero",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const lists = pm.response.json();",
+                  "    if (lists.length > 0) {",
+                  "        pm.environment.set('list_id', lists[0].id);",
+                  "        console.log('List ID guardado:', lists[0].id);",
+                  "    }",
+                  "    pm.test('✅ Listas obtenidas', () => {",
+                  "        pm.expect(lists).to.be.an('array');",
+                  "    });",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{access_token}}"}
+            ],
+            "url": {
+              "raw": "http://localhost:8000/boards/{{board_id}}/lists/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["boards", "{{board_id}}", "lists", ""]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🎯 TARJETAS (CARDS)",
+      "item": [
+        {
+          "name": "POST - Crear tarjeta",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "pm.environment.set('card_title', 'Tarea automática #' + Date.now());"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const card = pm.response.json();",
+                  "    pm.environment.set('card_id', card.id);",
+                  "    pm.test('✅ Tarjeta creada', () => {",
+                  "        pm.expect(card).to.have.property('id');",
+                  "        pm.expect(card.title).to.equal(pm.environment.get('card_title'));",
+                  "    });",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{access_token}}"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"{{card_title}}\",\n  \"description\": \"Descripción de la tarjeta creada automáticamente\",\n  \"due_date\": \"2025-12-31\",\n  \"board_id\": {{board_id}},\n  \"list_id\": {{list_id}}\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/cards/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["cards", ""]
+            }
+          }
+        },
+        {
+          "name": "GET - Listar todas las tarjetas (por board)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('✅ Tarjetas listadas', () => {",
+                  "    pm.expect(pm.response.code).to.equal(200);",
+                  "    pm.expect(pm.response.json()).to.be.an('array');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{access_token}}"}
+            ],
+            "url": {
+              "raw": "http://localhost:8000/cards/?board_id={{board_id}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["cards", ""],
+              "query": [{"key": "board_id", "value": "{{board_id}}"}]
+            }
+          }
+        },
+        {
+          "name": "GET - Ver detalle de una tarjeta",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('✅ Detalle de tarjeta obtenido', () => {",
+                  "    pm.expect(pm.response.code).to.equal(200);",
+                  "    pm.expect(pm.response.json()).to.have.property('id');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{access_token}}"}
+            ],
+            "url": {
+              "raw": "http://localhost:8000/cards/{{card_id}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["cards", "{{card_id}}"]
+            }
+          }
+        },
+        {
+          "name": "PATCH - Actualizar tarjeta (parcial)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('✅ Tarjeta actualizada (PATCH)', () => {",
+                  "    pm.expect(pm.response.code).to.equal(200);",
+                  "    pm.expect(pm.response.json().title).to.equal('Título Actualizado PATCH');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{access_token}}"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Título Actualizado PATCH\",\n  \"description\": \"Descripción actualizada mediante PATCH\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/cards/{{card_id}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["cards", "{{card_id}}"]
+            }
+          }
+        },
+        {
+          "name": "PUT - Actualizar tarjeta (completo)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('✅ Tarjeta actualizada (PUT)', () => {",
+                  "    pm.expect(pm.response.code).to.equal(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{access_token}}"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Título Completo PUT\",\n  \"description\": \"Descripción completa actualizada con PUT\",\n  \"due_date\": \"2025-12-25\",\n  \"board_id\": {{board_id}},\n  \"list_id\": {{list_id}}\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/cards/{{card_id}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["cards", "{{card_id}}"]
+            }
+          }
+        },
+        {
+          "name": "PATCH - Mover tarjeta a otra lista",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('✅ Tarjeta movida', () => {",
+                  "    pm.expect(pm.response.code).to.equal(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{access_token}}"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"list_id\": {{list_id}},\n  \"order\": 0\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/cards/{{card_id}}/move",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["cards", "{{card_id}}", "move"]
+            },
+            "description": "Endpoint para mover una tarjeta a otra lista o cambiar su posición"
+          }
+        },
+        {
+          "name": "DELETE - Eliminar tarjeta",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('✅ Tarjeta eliminada', () => {",
+                  "    pm.expect(pm.response.code).to.equal(204);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{access_token}}"}
+            ],
+            "url": {
+              "raw": "http://localhost:8000/cards/{{card_id}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["cards", "{{card_id}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🔄 FLUJO AUTOMÁTICO COMPLETO",
+      "item": [
+        {
+          "name": "1. Registro",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const ts = Date.now();",
+                  "pm.environment.set('auto_email', `auto_${ts}@test.com`);",
+                  "pm.environment.set('auto_pass', 'password123');",
+                  "pm.environment.set('auto_name', `Usuario Auto ${ts}`);"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200 || pm.response.code === 201) {",
+                  "    pm.environment.set('auto_token', pm.response.json().access_token);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{auto_email}}\",\n  \"password\": \"{{auto_pass}}\",\n  \"name\": \"{{auto_name}}\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/auth/register",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["auth", "register"]
+            }
+          }
+        },
+        {
+          "name": "2. Obtener Boards",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200 && pm.response.json().length > 0) {",
+                  "    pm.environment.set('auto_board_id', pm.response.json()[0].id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{auto_token}}"}],
+            "url": {
+              "raw": "http://localhost:8000/boards/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["boards", ""]
+            }
+          }
+        },
+        {
+          "name": "3. Obtener Lists",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200 && pm.response.json().length > 0) {",
+                  "    pm.environment.set('auto_list_id', pm.response.json()[0].id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{auto_token}}"}],
+            "url": {
+              "raw": "http://localhost:8000/boards/{{auto_board_id}}/lists/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["boards", "{{auto_board_id}}", "lists", ""]
+            }
+          }
+        },
+        {
+          "name": "4. Crear Card",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": ["pm.environment.set('auto_card_title', 'Auto Card ' + Date.now());"]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    pm.environment.set('auto_card_id', pm.response.json().id);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{auto_token}}"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"{{auto_card_title}}\",\n  \"description\": \"Tarjeta del flujo automático\",\n  \"due_date\": \"2025-12-31\",\n  \"board_id\": {{auto_board_id}},\n  \"list_id\": {{auto_list_id}}\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/cards/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["cards", ""]
+            }
+          }
+        },
+        {
+          "name": "5. Listar Cards",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{auto_token}}"}],
+            "url": {
+              "raw": "http://localhost:8000/cards/?board_id={{auto_board_id}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["cards", ""],
+              "query": [{"key": "board_id", "value": "{{auto_board_id}}"}]
+            }
+          }
+        },
+        {
+          "name": "6. Ver Card creada",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{auto_token}}"}],
+            "url": {
+              "raw": "http://localhost:8000/cards/{{auto_card_id}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["cards", "{{auto_card_id}}"]
+            }
+          }
+        },
+        {
+          "name": "7. Actualizar Card (PATCH)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{auto_token}}"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Card Actualizada Automáticamente\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/cards/{{auto_card_id}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["cards", "{{auto_card_id}}"]
+            }
+          }
+        },
+        {
+          "name": "8. Eliminar Card",
+          "request": {
+            "method": "DELETE",
+            "header": [{"key": "Authorization", "value": "Bearer {{auto_token}}"}],
+            "url": {
+              "raw": "http://localhost:8000/cards/{{auto_card_id}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["cards", "{{auto_card_id}}"]
+            }
+          }
+        }
+      ],
+      "description": "Ejecuta este flujo en orden usando 'Run Collection' para probar todo el sistema automáticamente."
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+"""
+Archivo principal de arranque del backend NeoCare.
+
+Inicializa el servidor FastAPI, configura la política CORS para permitir llamadas
+desde el frontend, incluye las rutas de autenticación y expone el endpoint raíz
+de verificación de estado.
+"""
+from fastapi import FastAPI  # Importa la clase FastAPI que se usa para crear la aplicación web/servidor.
+from fastapi.middleware.cors import CORSMiddleware
+
+from .auth.routes import router as auth_router  # importa las rutas de auth
+from .boards.routes import router as boards_router
+from .cards.routes import router as cards_router  # ✅ agrega cards aquí, arriba, como los demás
+
+# Inicializa la aplicación FastAPI con título personalizado
+app = FastAPI(title="NeoCare API")
+
+# CORS (para que el frontend pueda llamar al backend)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # ¡En producción, define los dominios permitidos!
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Registra las rutas
+app.include_router(auth_router)
+app.include_router(boards_router)
+app.include_router(cards_router)  # ✅ incluye cards aquí también (en orden)
+
+@app.get("/")
+def root():
+    """
+    Endpoint raíz (health check).
+
+    Permite verificar si el backend de NeoCare está operativo.
+    """
+    return {"status": "NeoCare Backend Running"}

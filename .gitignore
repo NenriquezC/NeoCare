@@ -1,0 +1,35 @@
+# Frontend Vite
+frontend_t/node_modules/
+frontend_t/.vite/
+
+# Cache de Vite (frontend)
+frontend_t/.vite/
+
+# IDE settings
+.vscode
+
+# backend
+.env
+*.pyc
+backend/__pycache__/
+backend/.venv/
+venv/
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+
+# Node/React
+node_modules/
+dist/
+build/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
