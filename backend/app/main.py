@@ -11,6 +11,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from .auth.routes import router as auth_router  # importa las rutas de auth
 from .boards.routes import router as boards_router
 from .cards.routes import router as cards_router  # ✅ agrega cards aquí, arriba, como los demás
+from .worklogs.routes import router as worklogs_router
 
 # Inicializa la aplicación FastAPI con título personalizado
 app = FastAPI(title="NeoCare API")
@@ -28,6 +29,7 @@ app.add_middleware(
 app.include_router(auth_router)
 app.include_router(boards_router)
 app.include_router(cards_router)  # ✅ incluye cards aquí también (en orden)
+app.include_router(worklogs_router)
 
 @app.get("/")
 def root():

@@ -192,6 +192,7 @@ class TimeEntry(Base):
         hours (Numeric): Horas trabajadas.
         note (Text): Notas adicionales.
         created_at (datetime): Fecha del registro.
+        updated_at (datetime): Fecha de última actualización.
 
     Relaciones:
         user: Usuario asociado.
@@ -206,6 +207,8 @@ class TimeEntry(Base):
     hours = Column(Numeric(5, 2), nullable=False)
     note = Column(Text, nullable=True)
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), nullable=False)
+    updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc), nullable=False)
+
 
     # Relaciones
     user = relationship("User", back_populates="time_entries")
