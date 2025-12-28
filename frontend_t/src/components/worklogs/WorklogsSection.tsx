@@ -164,147 +164,209 @@ async function remove(w: Worklog) {
     }
 }
 
+ // ========================
+  // RENDER
+  // ========================
 return (
-    <section style={{ marginTop: 16, paddingTop: 16, borderTop: "1px solid rgba(0,0,0,0.15)" }}>
-    <h4 style={{ margin: "0 0 8px 0" }}>Horas trabajadas</h4>
+  <section style={{ marginTop: 24 }}>
+    {/* Título sección */}
+    <h4 style={{ marginBottom: 12, fontWeight: 800, color: "#0f172a" }}>
+      Horas trabajadas
+    </h4>
 
-    {loading ? (
-        <div style={{ fontSize: 14 }}>Cargando horas…</div>
-    ) : null}
+    {loading && <div style={{ fontSize: 14 }}>Cargando horas…</div>}
 
-    {error ? (
-        <div style={{ marginTop: 8, marginBottom: 8, color: "#7f1d1d" }}>
+    {error && (
+      <div style={{ marginBottom: 8, color: "#7f1d1d", fontWeight: 600 }}>
         {error}
-        </div>
-    ) : null}
+      </div>
+    )}
 
-      {/* Formulario crear */}
-    <form onSubmit={handleCreate} style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+    {/* === CONTENEDOR ESTILO "EDITAR TARJETA" === */}
+    <div
+      style={{
+        background: "#e8f2ff",
+        padding: 16,
+        borderRadius: 12,
+        border: "1px solid #bfdbfe",
+      }}
+    >
+      {/* Inputs */}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
         <div>
-        <label style={{ display: "block", fontSize: 12, fontWeight: 700 }}>Fecha</label>
-        <input
+          <label style={{ fontSize: 13, fontWeight: 700 }}>Fecha</label>
+          <input
             type="date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
-            style={{ width: "100%", padding: 8, borderRadius: 6, border: "1px solid #93c5fd" }}
-        />
+            style={{
+              width: "100%",
+              padding: 10,
+              borderRadius: 8,
+              border: "1px solid #93c5fd",
+            }}
+          />
         </div>
 
         <div>
-        <label style={{ display: "block", fontSize: 12, fontWeight: 700 }}>Horas</label>
-        <input
+          <label style={{ fontSize: 13, fontWeight: 700 }}>Horas</label>
+          <input
             inputMode="decimal"
             value={hours}
             onChange={(e) => setHours(e.target.value)}
-            style={{ width: "100%", padding: 8, borderRadius: 6, border: "1px solid #93c5fd" }}
-        />
-        <div style={{ fontSize: 12, opacity: 0.75 }}>Ej: 0.5, 1, 2.25</div>
+            style={{
+              width: "100%",
+              padding: 10,
+              borderRadius: 8,
+              border: "1px solid #93c5fd",
+            }}
+          />
+          <div style={{ fontSize: 12, opacity: 0.75 }}>
+            Ej: 0.5, 1, 2.25
+          </div>
         </div>
 
         <div style={{ gridColumn: "1 / -1" }}>
-        <label style={{ display: "block", fontSize: 12, fontWeight: 700 }}>
+          <label style={{ fontSize: 13, fontWeight: 700 }}>
             Nota <span style={{ fontWeight: 400 }}>(máx 200)</span>
-        </label>
-        <input
+          </label>
+          <input
             value={note}
             maxLength={200}
             onChange={(e) => setNote(e.target.value)}
-            style={{ width: "100%", padding: 8, borderRadius: 6, border: "1px solid #93c5fd" }}
-        />
+            style={{
+              width: "100%",
+              padding: 10,
+              borderRadius: 8,
+              border: "1px solid #93c5fd",
+            }}
+          />
         </div>
+      </div>
 
-        <div style={{ gridColumn: "1 / -1", display: "flex", gap: 8 }}>
+      {/* Acciones */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 10,
+          marginTop: 14,
+        }}
+      >
         <button
-            type="submit"
-            disabled={saving}
-            style={{ padding: "8px 12px", borderRadius: 6, border: "none", background: "#10b981", color: "white" }}
+          type="button"
+          onClick={handleCreate}
+          disabled={saving}
+          style={{
+            background: "#22c55e",
+            color: "white",
+            fontWeight: 700,
+            padding: "8px 14px",
+            borderRadius: 8,
+            border: "none",
+          }}
         >
-            {saving ? "Guardando…" : "Añadir horas"}
+          {saving ? "Guardando…" : "Añadir horas"}
         </button>
 
         <button
-            type="button"
-            onClick={load}
-            disabled={saving}
-            style={{ padding: "8px 12px", borderRadius: 6, border: "none", background: "#334155", color: "white" }}
+          type="button"
+          onClick={load}
+          disabled={saving}
+          style={{
+            background: "#334155",
+            color: "white",
+            fontWeight: 700,
+            padding: "8px 14px",
+            borderRadius: 8,
+            border: "none",
+          }}
         >
-            Actualizar lista
+          Actualizar lista
         </button>
 
         <div style={{ marginLeft: "auto", fontWeight: 800 }}>
-            Total tarjeta: {totalHours.toFixed(2)} h
+          Total tarjeta: {totalHours.toFixed(2)} h
         </div>
-        </div>
-    </form>
+      </div>
+    </div>
 
-      {/* Listado */}
-    <div style={{ marginTop: 12 }}>
-        {items.length === 0 ? (
-        <div style={{ fontSize: 14, opacity: 0.8 }}>(Sin registros aún)</div>
-        ) : (
+    {/* === LISTADO === */}
+    <div style={{ marginTop: 16 }}>
+      {items.length === 0 ? (
+        <div style={{ fontSize: 14, opacity: 0.8 }}>
+          (Sin registros aún)
+        </div>
+      ) : (
         <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-            {items.map((w) => (
+          {items.map((w) => (
             <div
-                key={w.id}
-                style={{
-                background: "rgba(255,255,255,0.75)",
-                border: "1px solid rgba(147,197,253,0.9)",
+              key={w.id}
+              style={{
+                background: "#f0f7ff",
                 borderRadius: 10,
-                padding: 10,
-                }}
+                padding: 12,
+                border: "1px solid #c7ddff",
+              }}
             >
-                <div style={{ display: "flex", justifyContent: "space-between", gap: 8 }}>
-                <div style={{ fontWeight: 800 }}>
-                    {w.date} — {hoursToNumber(w.hours).toFixed(2)} h
-                </div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <strong>
+                  {w.date} — {hoursToNumber(w.hours).toFixed(2)} h
+                </strong>
 
-                {canEdit(w) ? (
-                    <div style={{ display: "flex", gap: 8 }}>
+                {canEdit(w) && (
+                  <div style={{ display: "flex", gap: 8 }}>
                     {editingId === w.id ? (
-                        <>
-                        <button type="button" onClick={() => saveEdit(w)} disabled={saving}>
-                            Guardar
-                        </button>
-                        <button type="button" onClick={cancelEdit} disabled={saving}>
-                            Cancelar
-                        </button>
-                        </>
+                      <>
+                        <button onClick={() => saveEdit(w)}>Guardar</button>
+                        <button onClick={cancelEdit}>Cancelar</button>
+                      </>
                     ) : (
-                        <>
-                        <button type="button" onClick={() => startEdit(w)} disabled={saving}>
-                            Editar
-                        </button>
-                        <button type="button" onClick={() => remove(w)} disabled={saving}>
-                            Eliminar
-                        </button>
-                        </>
+                      <>
+                        <button onClick={() => startEdit(w)}>Editar</button>
+                        <button onClick={() => remove(w)}>Eliminar</button>
+                      </>
                     )}
-                    </div>
-                ) : null}
-                </div>
+                  </div>
+                )}
+              </div>
 
-                {editingId === w.id ? (
-                <div style={{ marginTop: 8, display: "grid", gridTemplateColumns: "1fr 2fr", gap: 8 }}>
-                    <input
+              {editingId === w.id ? (
+                <div
+                  style={{
+                    marginTop: 8,
+                    display: "grid",
+                    gridTemplateColumns: "1fr 2fr",
+                    gap: 8,
+                  }}
+                >
+                  <input
                     value={editHours}
                     onChange={(e) => setEditHours(e.target.value)}
-                    style={{ padding: 8, borderRadius: 6, border: "1px solid #93c5fd" }}
-                    />
-                    <input
+                  />
+                  <input
                     value={editNote}
                     maxLength={200}
                     onChange={(e) => setEditNote(e.target.value)}
-                    style={{ padding: 8, borderRadius: 6, border: "1px solid #93c5fd" }}
-                    />
+                  />
                 </div>
-                ) : (
-                w.note ? <div style={{ marginTop: 6, opacity: 0.85 }}>{w.note}</div> : null
-                )}
+              ) : (
+                w.note && (
+                  <div style={{ marginTop: 6, opacity: 0.85 }}>
+                    {w.note}
+                  </div>
+                )
+              )}
             </div>
-            ))}
+          ))}
         </div>
-        )}
+      )}
     </div>
-    </section>
-);
-}
+  </section>
+);}

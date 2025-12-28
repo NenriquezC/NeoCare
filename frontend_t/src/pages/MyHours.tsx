@@ -23,7 +23,11 @@ export default function MyHours() {
     setError(null);
     try {
       const data = await listMyWorklogsByWeek(week);
-      setItems(data);
+
+      
+    // 👇 el backend devuelve un objeto con `entries`
+        setItems(Array.isArray(data.entries) ? data.entries : []);
+        
     } catch (e) {
       setError(e instanceof Error ? e.message : "Error cargando mis horas");
     } finally {

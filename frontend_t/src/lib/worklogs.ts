@@ -35,20 +35,25 @@ export interface WorklogUpdatePayload {
  */
 const ENDPOINTS = {
   // Lista worklogs de una tarjeta
-    listByCard: (cardId: number) => `/cards/${cardId}/time-entries`,
+  //  listByCard: (cardId: number) => `/cards/${cardId}/time-entries`,
   // Crear worklog
-    create: () => `/time-entries`,
+  //  create: () => `/time-entries`,
   // Editar / borrar worklog
-    update: (id: number) => `/time-entries/${id}`,
-    remove: (id: number) => `/time-entries/${id}`,
+  //  update: (id: number) => `/time-entries/${id}`,
+  //  remove: (id: number) => `/time-entries/${id}`,
+  // Semana 4 — Worklogs reales (backend prefix="/worklogs")
+  listByCard: (cardId: number) => `/worklogs/card/${cardId}`,
+  create: () => `/worklogs`,
+  update: (id: number) => `/worklogs/${id}`,
+  remove: (id: number) => `/worklogs/${id}`,
+
+
+
 
   // “Mis horas” por semana
   // Ej: /time-entries/me?week=2025-W52
   //myWeek: (week: string) => `/time-entries/me?week=${encodeURIComponent(week)}`,
     myWeek: (week: string) => `/worklogs/me/week?week=${encodeURIComponent(week)}`,
-
-
-
 
   // Obtener mi usuario (para saber si puedo editar/borrar)
     me: () => `/users/me`,
@@ -84,13 +89,22 @@ export async function createWorklog(payload: WorklogCreatePayload): Promise<Work
     return res.json();
 }
 
+//export async function updateWorklog(id: number, payload: WorklogUpdatePayload): Promise<Worklog> {
+//    const res = await apiFetch(ENDPOINTS.update(id), {
+//        method: "PATCH",
+//        body: JSON.stringify(payload),
+//    });
+//    await readJsonOrTextError(res);
+//    return res.json();
+//}
+
 export async function updateWorklog(id: number, payload: WorklogUpdatePayload): Promise<Worklog> {
-    const res = await apiFetch(ENDPOINTS.update(id), {
-        method: "PATCH",
-        body: JSON.stringify(payload),
-    });
-    await readJsonOrTextError(res);
-    return res.json();
+  const res = await apiFetch(ENDPOINTS.update(id), {
+    method: "PUT", // ✅ antes estaba PATCH
+    body: JSON.stringify(payload),
+  });
+  await readJsonOrTextError(res);
+  return res.json();
 }
 
 export async function deleteWorklog(id: number): Promise<void> {
@@ -98,13 +112,19 @@ export async function deleteWorklog(id: number): Promise<void> {
     await readJsonOrTextError(res);
 }
 
-export async function listMyWorklogsByWeek(week: string): Promise<Worklog[]> {
-    const res = await apiFetch(ENDPOINTS.myWeek(week), { method: "GET" });
-    await readJsonOrTextError(res);
-    const data = await res.json().catch(() => []);
-    return Array.isArray(data) ? data : [];
-}
+export type MyHoursWeekSummary = {
+  week: string;
+  total_hours: number | string;
+  by_day: Array<{ date: string; total_hours: number | string }>;
+  entries: Worklog[];
+};
 
+export async function listMyWorklogsByWeek(week: string): Promise<MyHoursWeekSummary> {
+  const res = await apiFetch(ENDPOINTS.myWeek(week), { method: "GET" });
+  await readJsonOrTextError(res);
+  const data = await res.json().catch(() => null);
+  return (data ?? { week, total_hours: 0, by_day: [], entries: [] }) as MyHoursWeekSummary;
+}
 /**
  * Utilidad: convertir hours a number aunque venga como string/Decimal.
  */

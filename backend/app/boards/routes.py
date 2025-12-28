@@ -10,7 +10,7 @@ from typing import List as ListType
 
 from ..auth.utils import get_current_user, get_db
 from ..boards.models import User
-from .models import Board, List
+from .models import Board, List, BoardMember   # ✅ FIX: importar BoardMember
 from .schemas import BoardOut, ListOut
 
 router = APIRouter(prefix="/boards", tags=["boards"])
@@ -39,6 +39,14 @@ def get_boards(db: Session = Depends(get_db), current_user: User = Depends(get_c
         db.add(default_board)
         db.commit()
         db.refresh(default_board)
+
+        # ✅ FIX CRÍTICO: registrar al creador como miembro del board
+        membership = BoardMember(
+            board_id=default_board.id,
+            user_id=current_user.id,
+        )
+        db.add(membership)
+        db.commit()
 
         default_lists = [
             List(name="Por hacer", board_id=default_board.id, position=0),
@@ -94,11 +102,3 @@ def get_board_lists(
         lists = default_lists
 
     return lists
-
-
-# CAMBIOS REALIZADOS Y POR QUÉ:
-# 1) get_boards(): si el usuario no tiene boards, se crea automáticamente:
-#    - 1 board "Tablero principal"
-#    - 3 listas con position 0/1/2
-#    Esto elimina el error del frontend: "No hay tablero disponible para tu usuario".
-# 2) Se mantiene tu fix para aceptar /lists y /lists/ y evitar el 307 redirect.
