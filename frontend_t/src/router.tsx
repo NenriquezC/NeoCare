@@ -9,6 +9,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/Login";
 import Boards from "./pages/Boards";
 import ProtectedRoute from "./components/ProtectedRoute";
+import MyHours from "./pages/MyHours"; //SEMANA 4
 
 /**
  * AppRouter
@@ -32,6 +33,17 @@ export const AppRouter: React.FC = () => {
           </ProtectedRoute>
         }
       />
+
+      {/*NUEVA RUTA SEMANA 4 */}
+      <Route
+        path="/my-hours"
+        element={
+          <ProtectedRoute>
+            <MyHours />
+          </ProtectedRoute>
+        }
+      />  
+
       <Route path="*" element={<Navigate to="/login" replace />} />
     </Routes>
   );

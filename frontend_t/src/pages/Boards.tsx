@@ -15,6 +15,7 @@ import {
 } from "@dnd-kit/core";
 import { SortableContext, useSortable, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import WorklogsSection from "../components/worklogs/WorklogsSection"; //semana_4
 
 const Boards: React.FC = () => {
   const navigate = useNavigate();
@@ -363,7 +364,7 @@ const Boards: React.FC = () => {
 
     // Optimistic UI: actualizar localmente primero
     const oldCards = [...cards];
-    
+
     // Calcular el nuevo orden
     const cardsInTargetList = cards.filter((c) => c.list_id === targetListId);
     const newPosition = cardsInTargetList.length;
@@ -446,6 +447,23 @@ const Boards: React.FC = () => {
               }}
             >
               + Nueva tarjeta
+            </button>
+
+            <button
+              onClick={() => navigate("/my-hours")}
+              style={{
+                padding: "0.5rem 1rem",
+                background: "linear-gradient(135deg, #0c4a6e 0%, #1e40af 100%)",
+                border: "none",
+                borderRadius: "0.5rem",
+                color: "white",
+                cursor: "pointer",
+                textShadow: "1px 1px 2px rgba(0, 0, 0, 0.5)",
+                fontWeight: "600",
+                boxShadow: "0 4px 6px rgba(0, 0, 0, 0.2)",
+              }}
+            >
+              Mis horas
             </button>
 
             <button
@@ -622,6 +640,11 @@ const Boards: React.FC = () => {
                   )}
                 </div>
 
+                {/* SEMANA 4: Horas trabajadas dentro del modal (solo al editar) */}
+                {editingCard?.id ? (
+                  <WorklogsSection cardId={editingCard.id} />
+                ) : null}
+
                 <div style={{ marginTop: 10, fontSize: 12, color: "#94a3b8" }}>
                   board_id: {selectedBoardId ?? "—"} | list_id: {selectedListId ?? "—"}
                   {editingCard?.id ? ` | editing_card_id: ${editingCard.id}` : ""}
@@ -788,6 +811,9 @@ function DroppableColumn({
         >
           + Nueva
         </button>
+
+        
+
       </div>
 
       <div
