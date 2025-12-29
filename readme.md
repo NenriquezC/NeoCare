@@ -338,3 +338,212 @@ Testing como parte del contrato del sistema
 🔜 Integración frontend
 
 🔜 CI/CD
+######3##############################################################################################################################
+# 🏥 NeoCare — Gestión de Proyectos y Registro de Horas
+
+Aplicación web tipo **Kanban profesional** para la gestión de proyectos y el registro de horas trabajadas por usuario.
+
+El proyecto está desarrollado con una **arquitectura moderna full-stack**, separando frontend, backend y base de datos, y se ha construido de forma incremental por **semanas**, siguiendo objetivos claros y verificables.
+
+---
+
+## 🧰 Stack Tecnológico
+
+**Backend**
+- Python
+- FastAPI
+- SQLAlchemy
+- PostgreSQL
+- JWT (JSON Web Tokens)
+
+**Frontend**
+- React
+- Vite
+- TypeScript
+
+**Otros**
+- Git / GitHub
+- Pytest (testing)
+- JWT para autenticación segura
+
+---
+
+## 🧱 Arquitectura General
+- Frontend: SPA (Single Page Application)
+- Backend: API REST
+- Autenticación: Stateless mediante JWT
+- Base de datos: Relacional
+
+---
+
+# 📅 Desarrollo por Semanas
+
+---
+
+## ✅ Semana 1 — Fundamentos y Autenticación
+
+### 🎯 Objetivo
+Crear la base del sistema: usuarios, autenticación y comunicación segura entre frontend y backend.
+
+### Backend
+- Registro de usuarios
+- Login con validación de credenciales
+- Hash de contraseñas
+- Generación de tokens JWT
+- Protección de rutas privadas
+- Conexión a PostgreSQL
+- Estructura modular del proyecto
+
+**Archivos principales**
+backend/app/
+├── main.py
+├── config.py
+├── database.py
+├── auth/
+│ ├── routes.py
+│ ├── schemas.py
+│ ├── utils.py
+
+### Frontend
+- Pantalla de login
+- Envío de credenciales al backend
+- Almacenamiento del JWT
+- Redirección tras login
+- Bloqueo de acceso sin token
+
+### Testing
+- Verificación de login end-to-end
+- Comprobación de acceso restringido sin JWT
+- Flujo completo frontend ↔ backend probado en local
+
+---
+
+## ✅ Semana 2 — Tableros y Tarjetas (Kanban)
+
+### 🎯 Objetivo
+Implementar la funcionalidad central del producto: gestión de tableros, listas y tarjetas.
+
+### Backend
+- Crear tableros
+- Crear listas dentro de un tablero
+- Crear, editar y listar tarjetas
+- Validación de permisos por usuario
+- Respuestas HTTP claras (403 / 404)
+
+**Estructura**
+backend/app/
+├── boards/
+│ ├── models.py
+│ ├── routes.py
+│ ├── schemas.py
+├── cards/
+│ ├── models.py
+│ ├── routes.py
+│ ├── schemas.py
+
+
+### Frontend
+- Visualización del tablero
+- Listas como columnas
+- Tarjetas movibles
+- Edición sin recargar la página
+- Sincronización con el backend
+
+### Testing
+- Crear tarjeta con datos válidos
+- Fallos controlados (título vacío, fecha inválida)
+- Edición correcta
+- Validación de orden y permisos
+
+---
+
+## ✅ Semana 3 — Control de Versiones y Calidad
+
+### 🎯 Objetivo
+Trabajar con un flujo real de desarrollo profesional usando Git y testing consciente.
+
+### Git & Workflow
+- Uso de ramas (`master`, `semana_3`)
+- Diferencia entre working tree, staging y commit
+- Pull y push correctos
+- Resolución de conflictos
+- Sincronización con cambios de colaboradores
+
+### Testing
+- Tests con `pytest`
+- Pruebas manuales con frontend real
+- Validación de seguridad JWT
+- Pruebas sin depender de Postman o Playwright
+
+> Enfoque: entender **qué se prueba, por qué y qué garantiza**.
+
+---
+
+## ✅ Semana 4 — Registro de Horas (Worklogs)
+
+### 🎯 Objetivo
+Implementar el sistema de registro de horas trabajadas por tarjeta y por usuario.
+
+### Backend
+- Añadir horas a una tarjeta
+- Listar horas por tarjeta
+- Editar horas (solo autor)
+- Eliminar horas (solo autor)
+- Consultar “Mis horas” por semana
+
+**Endpoints principales**
+POST /worklogs
+GET /worklogs/card/{card_id}
+GET /worklogs/me/week?week=YYYY-WW
+PUT /worklogs/{id}
+DELETE /worklogs/{id}
+
+yaml
+Copiar código
+
+> El backend devuelve los datos envueltos en un objeto `{ "entries": [...] }`,
+lo que requiere que el frontend consuma correctamente la respuesta.
+
+### Frontend
+- Formulario de horas dentro de la tarjeta
+- Listado inmediato tras añadir horas
+- Vista “Mis horas”
+- Filtro por semana
+- Actualización sin recargar
+
+### Testing
+- Persistencia correcta en base de datos
+- Seguridad por usuario
+- Consulta semanal funcional
+- Identificación y corrección de bugs reales sin tocar backend innecesariamente
+
+---
+
+## 🏁 Estado Actual del Proyecto
+
+Al finalizar la semana 4, NeoCare cuenta con:
+
+- Autenticación segura con JWT
+- Gestión completa de tableros, listas y tarjetas
+- Registro de horas por tarjeta
+- Consulta de horas personales por semana
+- Arquitectura backend/frontend separada
+- Testing funcional y de seguridad
+- Flujo Git profesional
+
+---
+
+## 🚀 Próximos Pasos
+
+- Mejora de UX/UI
+- Dashboard con estadísticas
+- Optimización de consultas
+- Testing E2E (Playwright)
+- Dockerización y despliegue
+
+---
+
+## 👤 Autor
+
+Proyecto desarrollado como ejercicio práctico de arquitectura full-stack,
+seguridad, testing y control de versiones en un entorno realista.
