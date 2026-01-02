@@ -189,6 +189,37 @@ class Card(Base):
     responsible = relationship("User",foreign_keys=[responsible_id],back_populates="responsible_cards",)
     created_by = relationship("User",foreign_keys=[created_by_id],back_populates="created_cards")
     time_entries = relationship("TimeEntry",back_populates="card",cascade="all, delete-orphan",passive_deletes=True,)
+    labels = relationship("Label", back_populates="card", cascade="all, delete-orphan")
+    subtasks = relationship("Subtask", back_populates="card", cascade="all, delete-orphan")
+
+
+class Label(Base):
+    """
+    Modelo para etiquetas (Labels) de una tarjeta.
+    """
+    __tablename__ = "labels"
+
+    id = Column(Integer, primary_key=True, index=True)
+    card_id = Column(Integer, ForeignKey("cards.id", ondelete="CASCADE"), nullable=False)
+    name = Column(String(50), nullable=False)
+    color = Column(String(20), nullable=True)  # Hex code or name
+
+    card = relationship("Card", back_populates="labels")
+
+
+class Subtask(Base):
+    """
+    Modelo para subtareas (Checklist) de una tarjeta.
+    """
+    __tablename__ = "subtasks"
+
+    id = Column(Integer, primary_key=True, index=True)
+    card_id = Column(Integer, ForeignKey("cards.id", ondelete="CASCADE"), nullable=False)
+    title = Column(String(200), nullable=False)
+    completed = Column(Boolean, default=False, nullable=False)
+    position = Column(Integer, default=0)
+
+    card = relationship("Card", back_populates="subtasks")
 
 
 class TimeEntry(Base):

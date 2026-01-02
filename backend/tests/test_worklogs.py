@@ -12,7 +12,10 @@ client = TestClient(app)
 
 # Mock data
 fake_user = User(id=1, email="test@example.com", name="Test User")
+fake_board = MagicMock()
+fake_board.user_id = 1
 fake_card = Card(id=10, board_id=1, title="Test Card")
+fake_card.board = fake_board
 fake_membership = BoardMember(id=1, board_id=1, user_id=1)
 fake_worklog = TimeEntry(
     id=100,

@@ -72,7 +72,37 @@ class CardMove(BaseModel):
     order: int = Field(..., ge=0, description="Posición destino (>= 0)")
 
 
+# --- Extras: Labels & Subtasks ---
 
+class LabelBase(BaseModel):
+    name: str = Field(..., min_length=1, max_length=50)
+    color: Optional[str] = Field(None, max_length=20)
+
+class LabelCreate(LabelBase):
+    pass
+
+class LabelOut(LabelBase):
+    id: int
+    card_id: int
+    model_config = ConfigDict(from_attributes=True)
+
+class SubtaskBase(BaseModel):
+    title: str = Field(..., min_length=1, max_length=200)
+    completed: bool = False
+
+class SubtaskCreate(SubtaskBase):
+    pass
+
+class SubtaskUpdate(BaseModel):
+    title: Optional[str] = None
+    completed: Optional[bool] = None
+    position: Optional[int] = None
+
+class SubtaskOut(SubtaskBase):
+    id: int
+    card_id: int
+    position: int
+    model_config = ConfigDict(from_attributes=True)
 
 
 class CardOut(BaseModel):
@@ -108,5 +138,7 @@ class CardOut(BaseModel):
     created_at: datetime
     updated_at: datetime
     archived: bool
+    labels: list[LabelOut] = []
+    subtasks: list[SubtaskOut] = []
 
     model_config = ConfigDict(from_attributes=True)

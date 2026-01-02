@@ -1,8 +1,8 @@
 {
   "info": {
     "_postman_id": "neocare-api-v4-2026",
-    "name": "NeoCare API - Completo 2026 (Semana 4)",
-    "description": "Colección completa con TODOS los endpoints del backend NeoCare. Incluye: Auth, Boards, Lists, Cards y el nuevo módulo de Worklogs (Semana 4).",
+    "name": "NeoCare API - Completo 2026 (Semana 5 + Extras)",
+    "description": "Colección completa con TODOS los endpoints del backend NeoCare. Incluye: Auth, Boards, Lists, Cards, Worklogs (Semana 4), Informes (Semana 5) y Extras (Labels, Subtasks, Search).",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
@@ -631,6 +631,160 @@
               "host": ["localhost"],
               "port": "8000",
               "path": ["cards", "{{auto_card_id}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "📊 INFORMES (REPORTS)",
+      "item": [
+        {
+          "name": "Resumen Semanal (Optimizado)",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{auto_token}}"}],
+            "url": {
+              "raw": "http://localhost:8000/reports/summary?week=2026-W01",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["reports", "summary"],
+              "query": [{"key": "week", "value": "2026-W01"}]
+            }
+          }
+        },
+        {
+          "name": "Horas por Usuario",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{auto_token}}"}],
+            "url": {
+              "raw": "http://localhost:8000/reports/hours-by-user?board_id={{auto_board_id}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["reports", "hours-by-user"],
+              "query": [{"key": "board_id", "value": "{{auto_board_id}}"}]
+            }
+          }
+        },
+        {
+          "name": "Horas por Card",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{auto_token}}"}],
+            "url": {
+              "raw": "http://localhost:8000/reports/hours-by-card?board_id={{auto_board_id}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["reports", "hours-by-card"],
+              "query": [{"key": "board_id", "value": "{{auto_board_id}}"}]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "✨ EXTRAS (LABELS, SUBTASKS, SEARCH)",
+      "item": [
+        {
+          "name": "Búsqueda de Cards",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{auto_token}}"}],
+            "url": {
+              "raw": "http://localhost:8000/cards/?board_id={{auto_board_id}}&search=test",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["cards", ""],
+              "query": [
+                {"key": "board_id", "value": "{{auto_board_id}}"},
+                {"key": "search", "value": "test"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Filtrar por Responsable",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{auto_token}}"}],
+            "url": {
+              "raw": "http://localhost:8000/cards/?board_id={{auto_board_id}}&responsible_id=1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["cards", ""],
+              "query": [
+                {"key": "board_id", "value": "{{auto_board_id}}"},
+                {"key": "responsible_id", "value": "1"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Añadir Etiqueta (Label)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{auto_token}}"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Urgente\",\n  \"color\": \"#FF0000\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/cards/{{auto_card_id}}/labels",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["cards", "{{auto_card_id}}", "labels"]
+            }
+          }
+        },
+        {
+          "name": "Añadir Subtarea (Subtask)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{auto_token}}"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Subtarea de prueba\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/cards/{{auto_card_id}}/subtasks",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["cards", "{{auto_card_id}}", "subtasks"]
+            }
+          }
+        },
+        {
+          "name": "Actualizar Subtarea (Completar)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{auto_token}}"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"completed\": true\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/cards/subtasks/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["cards", "subtasks", "1"]
             }
           }
         }

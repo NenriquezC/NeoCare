@@ -2,10 +2,12 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from datetime import datetime, timezone
 
-from .schemas import CardCreate, CardUpdate, CardOut, CardMove  # modificacion semana 3
+from .schemas import (
+    CardCreate, CardUpdate, CardOut, CardMove,
+    LabelCreate, LabelOut, SubtaskCreate, SubtaskUpdate, SubtaskOut
+)
 from ..auth.utils import get_current_user, get_db
-# ✅ CAMBIO 1: Importamos List para poder validar "lista destino" correctamente
-from ..boards.models import Card, Board, List, User
+from ..boards.models import Card, Board, List, User, Label, Subtask
 
 router = APIRouter(prefix="/cards", tags=["cards"])
 
@@ -63,17 +65,22 @@ def create_card(
 @router.get("/", response_model=list[CardOut])
 def get_cards(
     board_id: int,
+    search: str = None,
+    responsible_id: int = None,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
     verify_board_permission(board_id, current_user.id, db)
 
-    return (
-        db.query(Card)
-        .filter(Card.board_id == board_id)
-        .order_by(Card.list_id, Card.position)
-        .all()
-    )
+    query = db.query(Card).filter(Card.board_id == board_id)
+
+    if search:
+        query = query.filter(Card.title.ilike(f"%{search}%"))
+    
+    if responsible_id:
+        query = query.filter(Card.responsible_id == responsible_id)
+
+    return query.order_by(Card.list_id, Card.position).all()
 
 
 # ============================ GET /cards/{card_id} ======================================
@@ -292,5 +299,111 @@ def delete_card(
     verify_board_permission(card.board_id, current_user.id, db)
 
     db.delete(card)
+    db.commit()
+    return None
+
+
+# ======================= LABELS ==============================================
+
+@router.post("/{card_id}/labels", response_model=LabelOut)
+def add_label(
+    card_id: int,
+    data: LabelCreate,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    card = db.query(Card).filter(Card.id == card_id).first()
+    if not card:
+        raise HTTPException(status_code=404, detail="Tarjeta no encontrada")
+    
+    verify_board_permission(card.board_id, current_user.id, db)
+
+    new_label = Label(card_id=card_id, name=data.name, color=data.color)
+    db.add(new_label)
+    db.commit()
+    db.refresh(new_label)
+    return new_label
+
+@router.delete("/labels/{label_id}", status_code=status.HTTP_204_NO_CONTENT)
+def remove_label(
+    label_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    label = db.query(Label).filter(Label.id == label_id).first()
+    if not label:
+        raise HTTPException(status_code=404, detail="Etiqueta no encontrada")
+    
+    card = db.query(Card).filter(Card.id == label.card_id).first()
+    verify_board_permission(card.board_id, current_user.id, db)
+
+    db.delete(label)
+    db.commit()
+    return None
+
+
+# ======================= SUBTASKS ==============================================
+
+@router.post("/{card_id}/subtasks", response_model=SubtaskOut)
+def add_subtask(
+    card_id: int,
+    data: SubtaskCreate,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    card = db.query(Card).filter(Card.id == card_id).first()
+    if not card:
+        raise HTTPException(status_code=404, detail="Tarjeta no encontrada")
+    
+    verify_board_permission(card.board_id, current_user.id, db)
+
+    # Get max position
+    max_pos = db.query(Subtask).filter(Subtask.card_id == card_id).count()
+
+    new_subtask = Subtask(card_id=card_id, title=data.title, position=max_pos)
+    db.add(new_subtask)
+    db.commit()
+    db.refresh(new_subtask)
+    return new_subtask
+
+@router.patch("/subtasks/{subtask_id}", response_model=SubtaskOut)
+def update_subtask(
+    subtask_id: int,
+    data: SubtaskUpdate,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    subtask = db.query(Subtask).filter(Subtask.id == subtask_id).first()
+    if not subtask:
+        raise HTTPException(status_code=404, detail="Subtarea no encontrada")
+    
+    card = db.query(Card).filter(Card.id == subtask.card_id).first()
+    verify_board_permission(card.board_id, current_user.id, db)
+
+    if data.title is not None:
+        subtask.title = data.title
+    if data.completed is not None:
+        subtask.completed = data.completed
+    if data.position is not None:
+        subtask.position = data.position
+
+    db.commit()
+    db.refresh(subtask)
+    return subtask
+
+@router.delete("/subtasks/{subtask_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_subtask(
+    subtask_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    subtask = db.query(Subtask).filter(Subtask.id == subtask_id).first()
+    if not subtask:
+        raise HTTPException(status_code=404, detail="Subtarea no encontrada")
+    
+    card = db.query(Card).filter(Card.id == subtask.card_id).first()
+    verify_board_permission(card.board_id, current_user.id, db)
+
+    db.delete(subtask)
     db.commit()
     return None
