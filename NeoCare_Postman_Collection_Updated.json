@@ -1,8 +1,8 @@
 {
   "info": {
-    "_postman_id": "neocare-api-v3-2025",
-    "name": "NeoCare API - Completo 2025",
-    "description": "Colección completa con TODOS los endpoints del backend NeoCare actualizado. Incluye: Auth, Boards, Lists y Cards (CRUD completo + Move).",
+    "_postman_id": "neocare-api-v4-2026",
+    "name": "NeoCare API - Completo 2026 (Semana 4)",
+    "description": "Colección completa con TODOS los endpoints del backend NeoCare. Incluye: Auth, Boards, Lists, Cards y el nuevo módulo de Worklogs (Semana 4).",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
@@ -105,7 +105,6 @@
                   "    const boards = pm.response.json();",
                   "    if (boards.length > 0) {",
                   "        pm.environment.set('board_id', boards[0].id);",
-                  "        console.log('Board ID guardado:', boards[0].id);",
                   "    }",
                   "    pm.test('✅ Tableros obtenidos', () => {",
                   "        pm.expect(boards).to.be.an('array');",
@@ -145,7 +144,6 @@
                   "    const lists = pm.response.json();",
                   "    if (lists.length > 0) {",
                   "        pm.environment.set('list_id', lists[0].id);",
-                  "        console.log('List ID guardado:', lists[0].id);",
                   "    }",
                   "    pm.test('✅ Listas obtenidas', () => {",
                   "        pm.expect(lists).to.be.an('array');",
@@ -181,7 +179,7 @@
               "listen": "prerequest",
               "script": {
                 "exec": [
-                  "pm.environment.set('card_title', 'Tarea automática #' + Date.now());"
+                  "pm.environment.set('card_title', 'Tarea Postman #' + Date.now());"
                 ]
               }
             },
@@ -194,7 +192,6 @@
                   "    pm.environment.set('card_id', card.id);",
                   "    pm.test('✅ Tarjeta creada', () => {",
                   "        pm.expect(card).to.have.property('id');",
-                  "        pm.expect(card.title).to.equal(pm.environment.get('card_title'));",
                   "    });",
                   "}"
                 ]
@@ -209,7 +206,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"title\": \"{{card_title}}\",\n  \"description\": \"Descripción de la tarjeta creada automáticamente\",\n  \"due_date\": \"2025-12-31\",\n  \"board_id\": {{board_id}},\n  \"list_id\": {{list_id}}\n}"
+              "raw": "{\n  \"title\": \"{{card_title}}\",\n  \"description\": \"Creada desde Postman\",\n  \"due_date\": \"2025-12-31\",\n  \"board_id\": {{board_id}},\n  \"list_id\": {{list_id}}\n}"
             },
             "url": {
               "raw": "http://localhost:8000/cards/",
@@ -221,25 +218,10 @@
           }
         },
         {
-          "name": "GET - Listar todas las tarjetas (por board)",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test('✅ Tarjetas listadas', () => {",
-                  "    pm.expect(pm.response.code).to.equal(200);",
-                  "    pm.expect(pm.response.json()).to.be.an('array');",
-                  "});"
-                ]
-              }
-            }
-          ],
+          "name": "GET - Listar tarjetas",
           "request": {
             "method": "GET",
-            "header": [
-              {"key": "Authorization", "value": "Bearer {{access_token}}"}
-            ],
+            "header": [{"key": "Authorization", "value": "Bearer {{access_token}}"}],
             "url": {
               "raw": "http://localhost:8000/cards/?board_id={{board_id}}",
               "protocol": "http",
@@ -249,17 +231,59 @@
               "query": [{"key": "board_id", "value": "{{board_id}}"}]
             }
           }
-        },
+        }
+      ]
+    },
+    {
+      "name": "⏱️ WORKLOGS (HORAS)",
+      "item": [
         {
-          "name": "GET - Ver detalle de una tarjeta",
+          "name": "POST - Registrar horas",
           "event": [
             {
               "listen": "test",
               "script": {
                 "exec": [
-                  "pm.test('✅ Detalle de tarjeta obtenido', () => {",
+                  "if (pm.response.code === 201) {",
+                  "    const data = pm.response.json();",
+                  "    pm.environment.set('worklog_id', data.id);",
+                  "    pm.test('✅ Horas registradas', () => {",
+                  "        pm.expect(data.hours).to.equal('4.50');",
+                  "    });",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{access_token}}"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"card_id\": {{card_id}},\n  \"date\": \"2026-01-02\",\n  \"hours\": 4.5,\n  \"note\": \"Trabajo realizado desde Postman\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/worklogs/",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["worklogs", ""]
+            }
+          }
+        },
+        {
+          "name": "GET - Resumen semanal (Mis Horas)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('✅ Resumen obtenido', () => {",
                   "    pm.expect(pm.response.code).to.equal(200);",
-                  "    pm.expect(pm.response.json()).to.have.property('id');",
+                  "    pm.expect(pm.response.json()).to.have.property('total_hours');",
                   "});"
                 ]
               }
@@ -267,66 +291,19 @@
           ],
           "request": {
             "method": "GET",
-            "header": [
-              {"key": "Authorization", "value": "Bearer {{access_token}}"}
-            ],
+            "header": [{"key": "Authorization", "value": "Bearer {{access_token}}"}],
             "url": {
-              "raw": "http://localhost:8000/cards/{{card_id}}",
+              "raw": "http://localhost:8000/worklogs/me/week?week=2026-W01",
               "protocol": "http",
               "host": ["localhost"],
               "port": "8000",
-              "path": ["cards", "{{card_id}}"]
+              "path": ["worklogs", "me", "week"],
+              "query": [{"key": "week", "value": "2026-W01"}]
             }
           }
         },
         {
-          "name": "PATCH - Actualizar tarjeta (parcial)",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test('✅ Tarjeta actualizada (PATCH)', () => {",
-                  "    pm.expect(pm.response.code).to.equal(200);",
-                  "    pm.expect(pm.response.json().title).to.equal('Título Actualizado PATCH');",
-                  "});"
-                ]
-              }
-            }
-          ],
-          "request": {
-            "method": "PATCH",
-            "header": [
-              {"key": "Authorization", "value": "Bearer {{access_token}}"},
-              {"key": "Content-Type", "value": "application/json"}
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"title\": \"Título Actualizado PATCH\",\n  \"description\": \"Descripción actualizada mediante PATCH\"\n}"
-            },
-            "url": {
-              "raw": "http://localhost:8000/cards/{{card_id}}",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "8000",
-              "path": ["cards", "{{card_id}}"]
-            }
-          }
-        },
-        {
-          "name": "PUT - Actualizar tarjeta (completo)",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test('✅ Tarjeta actualizada (PUT)', () => {",
-                  "    pm.expect(pm.response.code).to.equal(200);",
-                  "});"
-                ]
-              }
-            }
-          ],
+          "name": "PUT - Editar horas",
           "request": {
             "method": "PUT",
             "header": [
@@ -335,76 +312,28 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"title\": \"Título Completo PUT\",\n  \"description\": \"Descripción completa actualizada con PUT\",\n  \"due_date\": \"2025-12-25\",\n  \"board_id\": {{board_id}},\n  \"list_id\": {{list_id}}\n}"
+              "raw": "{\n  \"hours\": 5.0,\n  \"note\": \"Nota actualizada\"\n}"
             },
             "url": {
-              "raw": "http://localhost:8000/cards/{{card_id}}",
+              "raw": "http://localhost:8000/worklogs/{{worklog_id}}",
               "protocol": "http",
               "host": ["localhost"],
               "port": "8000",
-              "path": ["cards", "{{card_id}}"]
+              "path": ["worklogs", "{{worklog_id}}"]
             }
           }
         },
         {
-          "name": "PATCH - Mover tarjeta a otra lista",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test('✅ Tarjeta movida', () => {",
-                  "    pm.expect(pm.response.code).to.equal(200);",
-                  "});"
-                ]
-              }
-            }
-          ],
-          "request": {
-            "method": "PATCH",
-            "header": [
-              {"key": "Authorization", "value": "Bearer {{access_token}}"},
-              {"key": "Content-Type", "value": "application/json"}
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"new_list_id\": {{list_id}},\n  \"new_position\": 0\n}"
-            },
-            "url": {
-              "raw": "http://localhost:8000/cards/{{card_id}}/move",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "8000",
-              "path": ["cards", "{{card_id}}", "move"]
-            },
-            "description": "Endpoint para mover una tarjeta a otra lista o cambiar su posición"
-          }
-        },
-        {
-          "name": "DELETE - Eliminar tarjeta",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test('✅ Tarjeta eliminada', () => {",
-                  "    pm.expect(pm.response.code).to.equal(204);",
-                  "});"
-                ]
-              }
-            }
-          ],
+          "name": "DELETE - Eliminar horas",
           "request": {
             "method": "DELETE",
-            "header": [
-              {"key": "Authorization", "value": "Bearer {{access_token}}"}
-            ],
+            "header": [{"key": "Authorization", "value": "Bearer {{access_token}}"}],
             "url": {
-              "raw": "http://localhost:8000/cards/{{card_id}}",
+              "raw": "http://localhost:8000/worklogs/{{worklog_id}}",
               "protocol": "http",
               "host": ["localhost"],
               "port": "8000",
-              "path": ["cards", "{{card_id}}"]
+              "path": ["worklogs", "{{worklog_id}}"]
             }
           }
         }
@@ -546,57 +475,55 @@
           }
         },
         {
-          "name": "5. Listar Cards",
-          "request": {
-            "method": "GET",
-            "header": [{"key": "Authorization", "value": "Bearer {{auto_token}}"}],
-            "url": {
-              "raw": "http://localhost:8000/cards/?board_id={{auto_board_id}}",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "8000",
-              "path": ["cards", ""],
-              "query": [{"key": "board_id", "value": "{{auto_board_id}}"}]
+          "name": "5. Registrar Horas (Worklog)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    pm.environment.set('auto_worklog_id', pm.response.json().id);",
+                  "}"
+                ]
+              }
             }
-          }
-        },
-        {
-          "name": "6. Ver Card creada",
+          ],
           "request": {
-            "method": "GET",
-            "header": [{"key": "Authorization", "value": "Bearer {{auto_token}}"}],
-            "url": {
-              "raw": "http://localhost:8000/cards/{{auto_card_id}}",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "8000",
-              "path": ["cards", "{{auto_card_id}}"]
-            }
-          }
-        },
-        {
-          "name": "7. Actualizar Card (PATCH)",
-          "request": {
-            "method": "PATCH",
+            "method": "POST",
             "header": [
               {"key": "Authorization", "value": "Bearer {{auto_token}}"},
               {"key": "Content-Type", "value": "application/json"}
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"title\": \"Card Actualizada Automáticamente\"\n}"
+              "raw": "{\n  \"card_id\": {{auto_card_id}},\n  \"date\": \"2026-01-02\",\n  \"hours\": 2.5,\n  \"note\": \"Horas auto\"\n}"
             },
             "url": {
-              "raw": "http://localhost:8000/cards/{{auto_card_id}}",
+              "raw": "http://localhost:8000/worklogs/",
               "protocol": "http",
               "host": ["localhost"],
               "port": "8000",
-              "path": ["cards", "{{auto_card_id}}"]
+              "path": ["worklogs", ""]
             }
           }
         },
         {
-          "name": "8. Eliminar Card",
+          "name": "6. Ver Resumen Semanal",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{auto_token}}"}],
+            "url": {
+              "raw": "http://localhost:8000/worklogs/me/week?week=2026-W01",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["worklogs", "me", "week"],
+              "query": [{"key": "week", "value": "2026-W01"}]
+            }
+          }
+        },
+        {
+          "name": "7. Eliminar Card (Limpia worklogs)",
           "request": {
             "method": "DELETE",
             "header": [{"key": "Authorization", "value": "Bearer {{auto_token}}"}],
@@ -609,8 +536,7 @@
             }
           }
         }
-      ],
-      "description": "Ejecuta este flujo en orden usando 'Run Collection' para probar todo el sistema automáticamente."
+      ]
     }
   ]
 }

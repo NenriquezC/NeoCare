@@ -1,6 +1,7 @@
 import os
 import time
 import uuid
+from datetime import date
 
 import pytest
 import requests
@@ -197,6 +198,56 @@ def test_api_delete_card(test_user):
 
 
 # ========================
+# TESTS DE WORKLOGS (API)
+# ========================
+
+def test_api_create_worklog(test_user):
+    """POST /worklogs/ - Registrar horas en una tarjeta"""
+    # Necesitamos una tarjeta para registrar horas
+    headers = {"Authorization": f"Bearer {test_user['token']}"}
+    
+    # 1. Obtener el tablero por defecto (el backend lo crea automáticamente al hacer GET /boards/)
+    boards_res = requests.get(f"{BACKEND_URL}/boards/", headers=headers)
+    boards = boards_res.json()
+    assert len(boards) > 0, "No se encontraron tableros"
+    board_id = boards[0]["id"]
+    
+    # 2. Obtener las listas del tablero
+    lists_res = requests.get(f"{BACKEND_URL}/boards/{board_id}/lists/", headers=headers)
+    lists = lists_res.json()
+    assert len(lists) > 0, "No se encontraron listas"
+    list_id = lists[0]["id"]
+
+    # 3. Crear una tarjeta temporal
+    card_payload = {
+        "title": "Tarjeta para Worklog E2E",
+        "board_id": board_id,
+        "list_id": list_id
+    }
+    card_res = requests.post(f"{BACKEND_URL}/cards/", json=card_payload, headers=headers)
+    assert card_res.status_code == 200, f"Error al crear tarjeta: {card_res.text}"
+    card_id = card_res.json()["id"]
+    
+    # 4. Registrar horas
+    worklog_payload = {
+        "card_id": card_id,
+        "date": date.today().isoformat(),
+        "hours": 4.5,
+        "note": "Registro E2E"
+    }
+    res = requests.post(f"{BACKEND_URL}/worklogs/", json=worklog_payload, headers=headers)
+    
+    # Si falla con 403, imprimimos el detalle para depurar
+    if res.status_code != 201:
+        print(f"DEBUG: Error 403 en worklog. UserID del token: {test_user['email']}")
+        print(f"DEBUG: CardID: {card_id}, BoardID: {board_id}")
+        print(f"DEBUG: Response: {res.text}")
+        
+    assert res.status_code == 201
+    print(f"✅ Worklog creado vía API: 4.5h")
+
+
+# ========================
 # TESTS UI (Playwright)
 # ========================
 
@@ -216,6 +267,20 @@ def test_ui_login_exitoso(page, test_user):
     page.wait_for_selector("text=En curso")
     page.wait_for_selector("text=Hecho")
     print("✅ UI: Login exitoso y tablero cargado")
+
+
+def test_ui_worklogs_page(page, test_user):
+    """Navegar a Mis Horas y ver registros"""
+    ui_login(page, test_user["email"], test_user["password"])
+    
+    # Click en el enlace de Mis Horas (ajustar selector según tu sidebar)
+    page.click("text=Mis horas")
+    page.wait_for_url("**/my-hours")
+    
+    # Verificar que aparece el título y al menos el registro que creamos por API
+    page.wait_for_selector("text=Mis horas")
+    page.wait_for_selector("text=4.50") # Las horas se formatean a 2 decimales
+    print("✅ UI: Página de Mis Horas cargada con datos")
 
 
 def test_ui_login_fallido(page):

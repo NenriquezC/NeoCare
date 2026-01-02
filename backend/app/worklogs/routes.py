@@ -47,7 +47,7 @@ def create_worklog(
     if not card:
         raise HTTPException(status_code=404, detail="Tarjeta no encontrada")
 
-    # Verificar que el usuario pertenece al board de la tarjeta
+    # Verificar que el usuario pertenece al board de la tarjeta o es el dueño
     membership = (
         db.query(BoardMember)
         .filter(
@@ -57,7 +57,10 @@ def create_worklog(
         .first()
     )
 
-    if not membership:
+    # Si no hay membresía, verificamos si es el dueño del tablero
+    is_owner = card.board.user_id == current_user.id
+
+    if not membership and not is_owner:
         raise HTTPException(
             status_code=403,
             detail="No tienes acceso a esta tarjeta",

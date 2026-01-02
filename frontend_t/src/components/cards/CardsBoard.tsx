@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import WorklogManager from "./WorklogManager";
+import { apiFetch } from "../../lib/api";
 
 // ---------------------- Tipos ----------------------
 
@@ -19,8 +21,6 @@ interface CardsBoardProps {
 
 // ---------------------- Constantes ----------------------
 
-const BASE_URL = "http://localhost:8000";
-
 const LISTS: CardListID[] = [1, 2, 3];
 
 const LIST_LABEL: Record<CardListID, string> = {
@@ -38,6 +38,7 @@ export default function CardsBoard({ boardId }: CardsBoardProps) {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [tokenMissing, setTokenMissing] = useState(false);
+  const [currentUserId, setCurrentUserId] = useState<number | null>(null);
 
   const [showModal, setShowModal] = useState(false);
   const [editingCard, setEditingCard] = useState<Card | null>(null);
@@ -64,7 +65,20 @@ export default function CardsBoard({ boardId }: CardsBoardProps) {
 
   useEffect(() => {
     fetchCards();
+    fetchCurrentUser();
   }, [boardId]);
+
+  async function fetchCurrentUser() {
+    try {
+      const res = await apiFetch("/auth/me");
+      if (res.ok) {
+        const data = await res.json();
+        setCurrentUserId(data.id);
+      }
+    } catch (err) {
+      console.error("Error fetching current user", err);
+    }
+  }
 
   async function fetchCards() {
     setLoading(true);
@@ -80,11 +94,8 @@ export default function CardsBoard({ boardId }: CardsBoardProps) {
     setTokenMissing(false);
 
     try {
-      const res = await fetch(
-        `${BASE_URL}/cards?board_id=${encodeURIComponent(boardId)}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
+      const res = await apiFetch(
+        `/cards?board_id=${encodeURIComponent(boardId)}`
       );
 
       if (!res.ok) throw new Error("Error al obtener tarjetas");
@@ -170,17 +181,13 @@ export default function CardsBoard({ boardId }: CardsBoardProps) {
 
     try {
       const url = editingCard
-        ? `${BASE_URL}/cards/${editingCard.id}`
-        : `${BASE_URL}/cards`;
+        ? `/cards/${editingCard.id}`
+        : `/cards`;
 
       const method = editingCard ? "PATCH" : "POST";
 
-      const res = await fetch(url, {
+      const res = await apiFetch(url, {
         method,
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
         body: JSON.stringify(payload),
       });
 
@@ -447,6 +454,16 @@ export default function CardsBoard({ boardId }: CardsBoardProps) {
                 <p className="text-red-600 text-sm mt-2">{error}</p>
               )}
             </form>
+
+            {/* GESTIÓN DE WORKLOGS (Solo si estamos editando una tarjeta existente) */}
+            {editingCard && (
+              <div className="p-4 border-t bg-gray-50/50">
+                <WorklogManager 
+                  cardId={editingCard.id} 
+                  currentUserId={currentUserId} 
+                />
+              </div>
+            )}
           </div>
         </div>
       )}

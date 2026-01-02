@@ -8,10 +8,16 @@ from fastapi import APIRouter, Depends, HTTPException, status   # 👈 IMPORTANT
 from sqlalchemy.orm import Session
 
 from ..boards.models import User, Board, List
-from ..auth.schemas import UserRegister, UserLogin, Token
-from ..auth.utils import hash_password, verify_password, create_token, get_db
+from ..auth.schemas import UserRegister, UserLogin, Token, UserOut
+from ..auth.utils import hash_password, verify_password, create_token, get_db, get_current_user
 
 router = APIRouter(prefix="/auth", tags=["auth"])
+
+
+@router.get("/me", response_model=UserOut)
+def get_me(current_user: User = Depends(get_current_user)):
+    """Retorna los datos del usuario autenticado."""
+    return current_user
 
 
 @router.post("/register", response_model=Token)
