@@ -340,7 +340,105 @@
       ]
     },
     {
-      "name": "🔄 FLUJO AUTOMÁTICO COMPLETO",
+      "name": "� INFORMES (REPORTS)",
+      "item": [
+        {
+          "name": "GET - Resumen de tablero (Semanal)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/report/{{board_id}}/summary?week=2026-W01",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "report",
+                "{{board_id}}",
+                "summary"
+              ],
+              "query": [
+                {
+                  "key": "week",
+                  "value": "2026-W01"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET - Horas por usuario (Semanal)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/report/{{board_id}}/hours-by-user?week=2026-W01",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "report",
+                "{{board_id}}",
+                "hours-by-user"
+              ],
+              "query": [
+                {
+                  "key": "week",
+                  "value": "2026-W01"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET - Horas por tarjeta (Semanal)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/report/{{board_id}}/hours-by-card?week=2026-W01",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "report",
+                "{{board_id}}",
+                "hours-by-card"
+              ],
+              "query": [
+                {
+                  "key": "week",
+                  "value": "2026-W01"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "�🔄 FLUJO AUTOMÁTICO COMPLETO",
       "item": [
         {
           "name": "1. Registro",

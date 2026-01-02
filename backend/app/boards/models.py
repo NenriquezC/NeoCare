@@ -163,7 +163,7 @@ class Card(Base):
     created_by_id = Column(Integer,ForeignKey("users.id"),nullable=False,)
 
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), nullable=False)
-    updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), nullable=False)
+    updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc), nullable=False)
     completed_at = Column(DateTime, nullable=True)
 
     position = Column(Integer, nullable=False, default=0)
