@@ -12,6 +12,7 @@ import MyHours from "./pages/MyHours"; // SEMANA 4
 
 import ProtectedRoute from "./components/ProtectedRoute";
 import AppLayout from "./components/layout/AppLayout";
+import ReportPage from "./pages/ReportPage"; //semana 5
 
 /**
  * AppRouter
@@ -55,6 +56,18 @@ export const AppRouter: React.FC = () => {
           <ProtectedRoute>
             <AppLayout>
               <MyHours />
+            </AppLayout>
+          </ProtectedRoute>
+        }
+      />
+
+      {/* NUEVA RUTA SEMANA 5 */}
+      <Route
+        path="/report/:boardId"
+        element={
+          <ProtectedRoute>
+            <AppLayout>
+              <ReportPage />
             </AppLayout>
           </ProtectedRoute>
         }
