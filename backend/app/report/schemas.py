@@ -51,6 +51,7 @@ class WeeklySummaryResponse(BaseModel):
     - nuevas
     - vencidas
     """
+    week: str
     completed: SummaryBlock
     new: SummaryBlock
     overdue: SummaryBlock

@@ -79,12 +79,15 @@ def register(user: UserRegister, db: Session = Depends(get_db)):
         db.add_all(default_lists)
         db.commit()
 
-    except Exception:
-        # ✅ Cambio: si algo falla en medio, no dejamos la BD “a medias”
+    except Exception as e:
+        # ✅ Cambio: si algo falla en medio, no dejamos la BD "a medias"
         db.rollback()
+        import traceback
+        print(f"ERROR EN REGISTRO: {str(e)}")
+        print(traceback.format_exc())
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Error interno creando usuario/tablero por defecto",
+            detail=f"Error interno creando usuario/tablero por defecto: {str(e)}",
         )
 
     # 4) Genera el JWT para el usuario recién creado

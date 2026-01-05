@@ -30,11 +30,7 @@ app.include_router(auth_router)
 app.include_router(boards_router)
 app.include_router(cards_router)  # ✅ incluye cards aquí también (en orden)
 app.include_router(worklogs_router)  # ✅ Semana 4: incluye worklogs
-app.include_router(
-    report_router,
-    prefix="/boards",
-    tags=["report"]
-)
+app.include_router(report_router)
 
 @app.get("/")
 def root():

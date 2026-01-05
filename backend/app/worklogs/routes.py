@@ -12,13 +12,13 @@ Implementa:
 from datetime import date, timedelta
 from typing import List
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Query
 from sqlalchemy.orm import Session
 from sqlalchemy import func
 
 from ..auth.utils import get_current_user
 from ..auth.utils import get_db, get_current_user
-from ..boards.models import TimeEntry, Card, BoardMember
+from ..boards.models import TimeEntry, Card, BoardMember, Board
 from .schemas import (
     WorklogCreate,
     WorklogUpdate,
@@ -98,16 +98,22 @@ def list_worklogs_by_card(
     if not card:
         raise HTTPException(status_code=404, detail="Tarjeta no encontrada")
 
-    membership = (
+    # Verificar que el usuario es owner o miembro del board
+    board = db.query(Board).filter(Board.id == card.board_id).first()
+    if not board:
+        raise HTTPException(status_code=404, detail="Tablero no encontrado")
+    
+    is_owner = board.user_id == current_user.id
+    is_member = (
         db.query(BoardMember)
         .filter(
             BoardMember.board_id == card.board_id,
             BoardMember.user_id == current_user.id,
         )
         .first()
-    )
+    ) is not None
 
-    if not membership:
+    if not is_owner and not is_member:
         raise HTTPException(status_code=403, detail="Acceso denegado")
 
     return (
@@ -181,18 +187,25 @@ def delete_worklog(
 # ---------------------------------------------------------------------
 @router.get("/me/week", response_model=MyHoursWeekSummary)
 def my_hours_week(
-    week: str,
+    week: str = Query(None, description="Semana en formato YYYY-WW (opcional, por defecto semana actual)"),
     db: Session = Depends(get_db),
     current_user=Depends(get_current_user),
 ):
     """
     Ver horas del usuario por semana (YYYY-WW).
+    Si no se especifica semana, usa la semana actual.
     """
+    
+    # Si no se proporciona semana, calcular la semana actual
+    if not week:
+        today = date.today()
+        iso_cal = today.isocalendar()
+        week = f"{iso_cal[0]}-W{iso_cal[1]:02d}"
 
     try:
         year, week_num = map(int, week.split("-W"))
     except ValueError:
-        raise HTTPException(status_code=400, detail="Formato de semana inválido")
+        raise HTTPException(status_code=400, detail="Formato de semana inválido (usa YYYY-WXX)")
 
     first_day = date.fromisocalendar(year, week_num, 1)
     last_day = first_day + timedelta(days=6)

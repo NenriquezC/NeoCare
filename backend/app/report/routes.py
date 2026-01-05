@@ -19,8 +19,7 @@ from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
 from sqlalchemy import func
 
-from ..database import SessionLocal
-from ..auth.utils import get_current_user
+from ..auth.utils import get_current_user, get_db
 from ..boards.models import Card, List, TimeEntry, User
 from .services import get_week_date_range, verify_board_access
 from .schemas import WeeklySummaryResponse, SummaryBlock, CardSummaryItem
@@ -29,20 +28,6 @@ router = APIRouter(
     prefix="/report",
     tags=["Report"]
 )
-
-
-def get_db():
-    """
-    Dependencia para obtener una sesión de base de datos.
-
-    Yields:
-        Session: Sesión activa de SQLAlchemy.
-    """
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
 
 @router.get(
@@ -146,6 +131,7 @@ def get_weekly_summary(
 
     # 5️⃣ Construir respuesta tipada
     return WeeklySummaryResponse(
+        week=week,
         completed=SummaryBlock(
             count=len(completed_items),
             items=completed_items

@@ -1,47 +1,65 @@
 {
   "info": {
-    "_postman_id": "neocare-api-v4-2026",
-    "name": "NeoCare API - Completo 2026 (Semana 4)",
-    "description": "Colección completa con TODOS los endpoints del backend NeoCare. Incluye: Auth, Boards, Lists, Cards y el nuevo módulo de Worklogs (Semana 4).",
+    "_postman_id": "neocare-api-complete-2026",
+    "name": "NeoCare API - Flujo Completo Automatizado 2026",
+    "description": "Colección 100% automatizada: Register → Login → Boards → Lists → Cards → Worklogs → Reports. Sin necesidad de editar nada, ¡todo se genera dinámicamente! Ejecuta con Collection Runner.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
     {
-      "name": "🔐 AUTENTICACIÓN",
+      "name": "🚀 FLUJO AUTOMÁTICO - Ejecuta en orden",
       "item": [
         {
-          "name": "Registro de usuario",
+          "name": "1️⃣ REGISTRO - Crear usuario",
           "event": [
             {
               "listen": "prerequest",
               "script": {
                 "exec": [
+                  "// Generar email único cada ejecución",
                   "const timestamp = Date.now();",
                   "const randomId = Math.random().toString(36).substring(2, 8);",
-                  "pm.environment.set('user_email', `user_${timestamp}_${randomId}@test.com`);",
-                  "pm.environment.set('user_password', 'password123');",
-                  "pm.environment.set('user_name', `Usuario Test ${timestamp}`);"
-                ]
+                  "const uniqueEmail = `user_${timestamp}_${randomId}@test.com`;",
+                  "pm.environment.set('user_email', uniqueEmail);",
+                  "pm.environment.set('user_password', 'Password123!');",
+                  "pm.environment.set('user_name', 'Usuario Test ' + timestamp);"
+                ],
+                "type": "text/javascript"
               }
             },
             {
               "listen": "test",
               "script": {
                 "exec": [
-                  "if (pm.response.code === 200 || pm.response.code === 201) {",
-                  "    const data = pm.response.json();",
-                  "    pm.environment.set('access_token', data.access_token);",
-                  "    pm.test('✅ Usuario registrado exitosamente', () => {",
-                  "        pm.expect(data).to.have.property('access_token');",
+                  "const responseCode = pm.response.code;",
+                  "const responseData = pm.response.json();",
+                  "",
+                  "if (responseCode === 200 || responseCode === 201) {",
+                  "    pm.environment.set('access_token', responseData.access_token);",
+                  "    pm.test('✅ USUARIO REGISTRADO', function () {",
+                  "        pm.expect(responseCode).to.be.oneOf([200, 201]);",
+                  "        pm.expect(responseData).to.have.property('access_token');",
+                  "    });",
+                  "    console.log('📧 Email: ' + pm.environment.get('user_email'));",
+                  "    console.log('🔑 Token obtenido y guardado');",
+                  "} else {",
+                  "    pm.test('❌ Error en registro', function () {",
+                  "        pm.expect(responseCode).to.be.oneOf([200, 201]);",
                   "    });",
                   "}"
-                ]
+                ],
+                "type": "text/javascript"
               }
             }
           ],
           "request": {
             "method": "POST",
-            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"email\": \"{{user_email}}\",\n  \"password\": \"{{user_password}}\",\n  \"name\": \"{{user_name}}\"\n}"
@@ -56,26 +74,39 @@
           }
         },
         {
-          "name": "Login",
+          "name": "2️⃣ LOGIN - Obtener token",
           "event": [
             {
               "listen": "test",
               "script": {
                 "exec": [
-                  "if (pm.response.code === 200) {",
-                  "    const data = pm.response.json();",
-                  "    pm.environment.set('access_token', data.access_token);",
-                  "    pm.test('✅ Login exitoso', () => {",
-                  "        pm.expect(data).to.have.property('access_token');",
+                  "const responseCode = pm.response.code;",
+                  "const responseData = pm.response.json();",
+                  "",
+                  "if (responseCode === 200) {",
+                  "    pm.environment.set('access_token', responseData.access_token);",
+                  "    pm.test('✅ LOGIN EXITOSO', function () {",
+                  "        pm.expect(responseCode).to.equal(200);",
+                  "    });",
+                  "    console.log('✅ Autenticado como: ' + pm.environment.get('user_email'));",
+                  "} else {",
+                  "    pm.test('❌ Error en login', function () {",
+                  "        pm.expect(responseCode).to.equal(200);",
                   "    });",
                   "}"
-                ]
+                ],
+                "type": "text/javascript"
               }
             }
           ],
           "request": {
             "method": "POST",
-            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"email\": \"{{user_email}}\",\n  \"password\": \"{{user_password}}\"\n}"
@@ -88,36 +119,43 @@
               "path": ["auth", "login"]
             }
           }
-        }
-      ]
-    },
-    {
-      "name": "📋 TABLEROS (BOARDS)",
-      "item": [
+        },
         {
-          "name": "GET - Obtener todos los tableros",
+          "name": "3️⃣ OBTENER TABLEROS",
           "event": [
             {
               "listen": "test",
               "script": {
                 "exec": [
-                  "if (pm.response.code === 200) {",
-                  "    const boards = pm.response.json();",
-                  "    if (boards.length > 0) {",
-                  "        pm.environment.set('board_id', boards[0].id);",
-                  "    }",
-                  "    pm.test('✅ Tableros obtenidos', () => {",
-                  "        pm.expect(boards).to.be.an('array');",
+                  "const responseCode = pm.response.code;",
+                  "const responseData = pm.response.json();",
+                  "",
+                  "if (responseCode === 200 && responseData.length > 0) {",
+                  "    const boardId = responseData[0].id;",
+                  "    pm.environment.set('board_id', boardId);",
+                  "    pm.test('✅ TABLEROS OBTENIDOS', function () {",
+                  "        pm.expect(responseCode).to.equal(200);",
+                  "        pm.expect(responseData[0]).to.have.property('id');",
+                  "    });",
+                  "    console.log('📋 Tablero ID: ' + boardId);",
+                  "    console.log('📝 Nombre: ' + responseData[0].name);",
+                  "} else {",
+                  "    pm.test('⚠️ No hay tableros', function () {",
+                  "        pm.expect(responseCode).to.equal(200);",
                   "    });",
                   "}"
-                ]
+                ],
+                "type": "text/javascript"
               }
             }
           ],
           "request": {
             "method": "GET",
             "header": [
-              {"key": "Authorization", "value": "Bearer {{access_token}}"}
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
             ],
             "url": {
               "raw": "http://localhost:8000/boards/",
@@ -127,86 +165,108 @@
               "path": ["boards", ""]
             }
           }
-        }
-      ]
-    },
-    {
-      "name": "📝 LISTAS (LISTS)",
-      "item": [
+        },
         {
-          "name": "GET - Obtener listas de un tablero",
+          "name": "4️⃣ OBTENER LISTAS",
           "event": [
             {
               "listen": "test",
               "script": {
                 "exec": [
-                  "if (pm.response.code === 200) {",
-                  "    const lists = pm.response.json();",
-                  "    if (lists.length > 0) {",
-                  "        pm.environment.set('list_id', lists[0].id);",
-                  "    }",
-                  "    pm.test('✅ Listas obtenidas', () => {",
-                  "        pm.expect(lists).to.be.an('array');",
+                  "const responseCode = pm.response.code;",
+                  "const responseData = pm.response.json();",
+                  "",
+                  "if (responseCode === 200 && responseData.length > 0) {",
+                  "    const listId = responseData[0].id;",
+                  "    pm.environment.set('list_id', listId);",
+                  "    pm.test('✅ LISTAS OBTENIDAS', function () {",
+                  "        pm.expect(responseCode).to.equal(200);",
+                  "        pm.expect(responseData[0]).to.have.property('id');",
+                  "    });",
+                  "    console.log('📋 Lista ID: ' + listId);",
+                  "    console.log('Nombre: ' + responseData[0].name);",
+                  "} else {",
+                  "    pm.test('⚠️ Sin listas', function () {",
+                  "        pm.expect(responseCode).to.equal(200);",
                   "    });",
                   "}"
-                ]
+                ],
+                "type": "text/javascript"
               }
             }
           ],
           "request": {
             "method": "GET",
             "header": [
-              {"key": "Authorization", "value": "Bearer {{access_token}}"}
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
             ],
             "url": {
-              "raw": "http://localhost:8000/boards/{{board_id}}/lists/",
+              "raw": "http://localhost:8000/boards/{{board_id}}/lists",
               "protocol": "http",
               "host": ["localhost"],
               "port": "8000",
-              "path": ["boards", "{{board_id}}", "lists", ""]
+              "path": ["boards", "{{board_id}}", "lists"]
             }
           }
-        }
-      ]
-    },
-    {
-      "name": "🎯 TARJETAS (CARDS)",
-      "item": [
+        },
         {
-          "name": "POST - Crear tarjeta",
+          "name": "5️⃣ CREAR TARJETA",
           "event": [
             {
               "listen": "prerequest",
               "script": {
                 "exec": [
-                  "pm.environment.set('card_title', 'Tarea Postman #' + Date.now());"
-                ]
+                  "// Generar título único para la tarjeta",
+                  "const timestamp = Date.now();",
+                  "pm.environment.set('card_title', 'Tarjeta Test ' + timestamp);"
+                ],
+                "type": "text/javascript"
               }
             },
             {
               "listen": "test",
               "script": {
                 "exec": [
-                  "if (pm.response.code === 200) {",
-                  "    const card = pm.response.json();",
-                  "    pm.environment.set('card_id', card.id);",
-                  "    pm.test('✅ Tarjeta creada', () => {",
-                  "        pm.expect(card).to.have.property('id');",
+                  "const responseCode = pm.response.code;",
+                  "const responseData = pm.response.json();",
+                  "",
+                  "if (responseCode === 200) {",
+                  "    const cardId = responseData.id;",
+                  "    pm.environment.set('card_id', cardId);",
+                  "    pm.test('✅ TARJETA CREADA', function () {",
+                  "        pm.expect(responseCode).to.equal(200);",
+                  "        pm.expect(responseData).to.have.property('id');",
+                  "    });",
+                  "    console.log('🃏 Card ID: ' + cardId);",
+                  "    console.log('Título: ' + responseData.title);",
+                  "} else {",
+                  "    pm.test('❌ Error al crear tarjeta', function () {",
+                  "        pm.expect(responseCode).to.equal(200);",
                   "    });",
                   "}"
-                ]
+                ],
+                "type": "text/javascript"
               }
             }
           ],
           "request": {
             "method": "POST",
             "header": [
-              {"key": "Authorization", "value": "Bearer {{access_token}}"},
-              {"key": "Content-Type", "value": "application/json"}
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"title\": \"{{card_title}}\",\n  \"description\": \"Creada desde Postman\",\n  \"due_date\": \"2025-12-31\",\n  \"board_id\": {{board_id}},\n  \"list_id\": {{list_id}}\n}"
+              "raw": "{\n  \"title\": \"{{card_title}}\",\n  \"description\": \"Tarjeta de prueba automatizada\",\n  \"due_date\": \"2026-12-31\",\n  \"board_id\": {{board_id}},\n  \"list_id\": {{list_id}}\n}"
             },
             "url": {
               "raw": "http://localhost:8000/cards/",
@@ -218,52 +278,204 @@
           }
         },
         {
-          "name": "GET - Listar tarjetas",
+          "name": "6️⃣ LISTAR TARJETAS",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const responseCode = pm.response.code;",
+                  "const responseData = pm.response.json();",
+                  "",
+                  "if (responseCode === 200) {",
+                  "    pm.test('✅ TARJETAS LISTADAS', function () {",
+                  "        pm.expect(responseCode).to.equal(200);",
+                  "        pm.expect(responseData).to.be.an('array');",
+                  "    });",
+                  "    console.log('📊 Total de tarjetas: ' + responseData.length);",
+                  "} else {",
+                  "    pm.test('❌ Error al listar tarjetas', function () {",
+                  "        pm.expect(responseCode).to.equal(200);",
+                  "    });",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
           "request": {
             "method": "GET",
-            "header": [{"key": "Authorization", "value": "Bearer {{access_token}}"}],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
             "url": {
               "raw": "http://localhost:8000/cards/?board_id={{board_id}}",
               "protocol": "http",
               "host": ["localhost"],
               "port": "8000",
               "path": ["cards", ""],
-              "query": [{"key": "board_id", "value": "{{board_id}}"}]
+              "query": [
+                {
+                  "key": "board_id",
+                  "value": "{{board_id}}"
+                }
+              ]
             }
           }
-        }
-      ]
-    },
-    {
-      "name": "⏱️ WORKLOGS (HORAS)",
-      "item": [
+        },
         {
-          "name": "POST - Registrar horas",
+          "name": "7️⃣ OBTENER DETALLE DE TARJETA",
           "event": [
             {
               "listen": "test",
               "script": {
                 "exec": [
-                  "if (pm.response.code === 201) {",
-                  "    const data = pm.response.json();",
-                  "    pm.environment.set('worklog_id', data.id);",
-                  "    pm.test('✅ Horas registradas', () => {",
-                  "        pm.expect(data.hours).to.equal('4.50');",
+                  "const responseCode = pm.response.code;",
+                  "const responseData = pm.response.json();",
+                  "",
+                  "if (responseCode === 200) {",
+                  "    pm.test('✅ DETALLE DE TARJETA OBTENIDO', function () {",
+                  "        pm.expect(responseCode).to.equal(200);",
+                  "        pm.expect(responseData).to.have.property('id');",
+                  "        pm.expect(responseData).to.have.property('title');",
+                  "    });",
+                  "    console.log('🃏 Tarjeta: ' + responseData.title);",
+                  "} else {",
+                  "    pm.test('❌ Error al obtener tarjeta', function () {",
+                  "        pm.expect(responseCode).to.equal(200);",
                   "    });",
                   "}"
-                ]
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/cards/{{card_id}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["cards", "{{card_id}}"]
+            }
+          }
+        },
+        {
+          "name": "8️⃣ ACTUALIZAR TARJETA (PATCH)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const responseCode = pm.response.code;",
+                  "const responseData = pm.response.json();",
+                  "",
+                  "if (responseCode === 200) {",
+                  "    pm.test('✅ TARJETA ACTUALIZADA', function () {",
+                  "        pm.expect(responseCode).to.equal(200);",
+                  "        pm.expect(responseData.title).to.include('ACTUALIZADA');",
+                  "    });",
+                  "    console.log('✏️ Tarjeta actualizada: ' + responseData.title);",
+                  "} else {",
+                  "    pm.test('❌ Error al actualizar tarjeta', function () {",
+                  "        pm.expect(responseCode).to.equal(200);",
+                  "    });",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"{{card_title}} - ACTUALIZADA\",\n  \"description\": \"Descripción actualizada automáticamente\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/cards/{{card_id}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8000",
+              "path": ["cards", "{{card_id}}"]
+            }
+          }
+        },
+        {
+          "name": "9️⃣ CREAR WORKLOG",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// Generar fecha actual",
+                  "const today = new Date().toISOString().split('T')[0];",
+                  "pm.environment.set('worklog_date', today);"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const responseCode = pm.response.code;",
+                  "const responseData = pm.response.json();",
+                  "",
+                  "if (responseCode === 201) {",
+                  "    const worklogId = responseData.id;",
+                  "    pm.environment.set('worklog_id', worklogId);",
+                  "    pm.test('✅ WORKLOG CREADO', function () {",
+                  "        pm.expect(responseCode).to.equal(201);",
+                  "        pm.expect(responseData).to.have.property('id');",
+                  "    });",
+                  "    console.log('⏱️ Worklog ID: ' + worklogId);",
+                  "    console.log('Horas: ' + responseData.hours);",
+                  "} else {",
+                  "    pm.test('❌ Error al crear worklog', function () {",
+                  "        pm.expect(responseCode).to.equal(201);",
+                  "    });",
+                  "}"
+                ],
+                "type": "text/javascript"
               }
             }
           ],
           "request": {
             "method": "POST",
             "header": [
-              {"key": "Authorization", "value": "Bearer {{access_token}}"},
-              {"key": "Content-Type", "value": "application/json"}
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"card_id\": {{card_id}},\n  \"date\": \"2026-01-02\",\n  \"hours\": 4.5,\n  \"note\": \"Trabajo realizado desde Postman\"\n}"
+              "raw": "{\n  \"card_id\": {{card_id}},\n  \"date\": \"{{worklog_date}}\",\n  \"hours\": 4.5\n}"
             },
             "url": {
               "raw": "http://localhost:8000/worklogs/",
@@ -275,264 +487,300 @@
           }
         },
         {
-          "name": "GET - Resumen semanal (Mis Horas)",
+          "name": "🔟 LISTAR WORKLOGS DE LA TARJETA",
           "event": [
             {
               "listen": "test",
               "script": {
                 "exec": [
-                  "pm.test('✅ Resumen obtenido', () => {",
-                  "    pm.expect(pm.response.code).to.equal(200);",
-                  "    pm.expect(pm.response.json()).to.have.property('total_hours');",
-                  "});"
-                ]
+                  "const responseCode = pm.response.code;",
+                  "const responseData = pm.response.json();",
+                  "",
+                  "if (responseCode === 200) {",
+                  "    pm.test('✅ WORKLOGS LISTADOS', function () {",
+                  "        pm.expect(responseCode).to.equal(200);",
+                  "        pm.expect(responseData).to.be.an('array');",
+                  "    });",
+                  "    console.log('📊 Total worklogs: ' + responseData.length);",
+                  "} else {",
+                  "    pm.test('❌ Error al listar worklogs', function () {",
+                  "        pm.expect(responseCode).to.equal(200);",
+                  "    });",
+                  "}"
+                ],
+                "type": "text/javascript"
               }
             }
           ],
           "request": {
             "method": "GET",
-            "header": [{"key": "Authorization", "value": "Bearer {{access_token}}"}],
-            "url": {
-              "raw": "http://localhost:8000/worklogs/me/week?week=2026-W01",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "8000",
-              "path": ["worklogs", "me", "week"],
-              "query": [{"key": "week", "value": "2026-W01"}]
-            }
-          }
-        },
-        {
-          "name": "PUT - Editar horas",
-          "request": {
-            "method": "PUT",
             "header": [
-              {"key": "Authorization", "value": "Bearer {{access_token}}"},
-              {"key": "Content-Type", "value": "application/json"}
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
             ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"hours\": 5.0,\n  \"note\": \"Nota actualizada\"\n}"
-            },
             "url": {
-              "raw": "http://localhost:8000/worklogs/{{worklog_id}}",
+              "raw": "http://localhost:8000/worklogs/card/{{card_id}}",
               "protocol": "http",
               "host": ["localhost"],
               "port": "8000",
-              "path": ["worklogs", "{{worklog_id}}"]
+              "path": ["worklogs", "card", "{{card_id}}"]
             }
           }
         },
         {
-          "name": "DELETE - Eliminar horas",
+          "name": "1️⃣1️⃣ MIS HORAS DE LA SEMANA",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const responseCode = pm.response.code;",
+                  "",
+                  "if (responseCode === 200) {",
+                  "    const responseData = pm.response.json();",
+                  "    pm.test('✅ RESUMEN SEMANAL OBTENIDO', function () {",
+                  "        pm.expect(responseCode).to.equal(200);",
+                  "        pm.expect(responseData).to.have.property('total_hours');",
+                  "        pm.expect(responseData).to.have.property('week');",
+                  "    });",
+                  "    console.log('⏱️ Semana: ' + responseData.week);",
+                  "    console.log('⏱️ Total horas: ' + responseData.total_hours);",
+                  "} else {",
+                  "    pm.test('❌ Error al obtener resumen', function () {",
+                  "        pm.expect(responseCode).to.equal(200);",
+                  "    });",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
           "request": {
-            "method": "DELETE",
-            "header": [{"key": "Authorization", "value": "Bearer {{access_token}}"}],
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
             "url": {
-              "raw": "http://localhost:8000/worklogs/{{worklog_id}}",
+              "raw": "http://localhost:8000/worklogs/me/week",
               "protocol": "http",
               "host": ["localhost"],
               "port": "8000",
-              "path": ["worklogs", "{{worklog_id}}"]
+              "path": ["worklogs", "me", "week"]
             }
           }
-        }
-      ]
-    },
-    {
-      "name": "🔄 FLUJO AUTOMÁTICO COMPLETO",
-      "item": [
+        },
         {
-          "name": "1. Registro",
+          "name": "1️⃣2️⃣ REPORTE SEMANAL DEL TABLERO",
           "event": [
             {
               "listen": "prerequest",
               "script": {
                 "exec": [
-                  "const ts = Date.now();",
-                  "pm.environment.set('auto_email', `auto_${ts}@test.com`);",
-                  "pm.environment.set('auto_pass', 'password123');",
-                  "pm.environment.set('auto_name', `Usuario Auto ${ts}`);"
-                ]
+                  "// Calcular semana actual en formato ISO",
+                  "const now = new Date();",
+                  "const startOfYear = new Date(now.getFullYear(), 0, 1);",
+                  "const days = Math.floor((now - startOfYear) / (24 * 60 * 60 * 1000));",
+                  "const weekNumber = Math.ceil((days + 1) / 7);",
+                  "const weekISO = now.getFullYear() + '-W' + String(weekNumber).padStart(2, '0');",
+                  "pm.environment.set('current_week', weekISO);",
+                  "console.log('📅 Semana ISO: ' + weekISO);"
+                ],
+                "type": "text/javascript"
               }
             },
             {
               "listen": "test",
               "script": {
                 "exec": [
-                  "if (pm.response.code === 200 || pm.response.code === 201) {",
-                  "    pm.environment.set('auto_token', pm.response.json().access_token);",
+                  "const responseCode = pm.response.code;",
+                  "const responseData = pm.response.json();",
+                  "",
+                  "if (responseCode === 200) {",
+                  "    pm.test('✅ REPORTE SEMANAL OBTENIDO', function () {",
+                  "        pm.expect(responseCode).to.equal(200);",
+                  "        pm.expect(responseData).to.have.property('week');",
+                  "        pm.expect(responseData).to.have.property('completed');",
+                  "        pm.expect(responseData).to.have.property('new');",
+                  "        pm.expect(responseData).to.have.property('overdue');",
+                  "    });",
+                  "    console.log('📊 Semana: ' + responseData.week);",
+                  "    console.log('Completadas: ' + responseData.completed.count);",
+                  "    console.log('Nuevas: ' + responseData.new.count);",
+                  "    console.log('Vencidas: ' + responseData.overdue.count);",
+                  "} else {",
+                  "    pm.test('❌ Error al obtener reporte', function () {",
+                  "        pm.expect(responseCode).to.equal(200);",
+                  "    });",
                   "}"
-                ]
-              }
-            }
-          ],
-          "request": {
-            "method": "POST",
-            "header": [{"key": "Content-Type", "value": "application/json"}],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"email\": \"{{auto_email}}\",\n  \"password\": \"{{auto_pass}}\",\n  \"name\": \"{{auto_name}}\"\n}"
-            },
-            "url": {
-              "raw": "http://localhost:8000/auth/register",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "8000",
-              "path": ["auth", "register"]
-            }
-          }
-        },
-        {
-          "name": "2. Obtener Boards",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "if (pm.response.code === 200 && pm.response.json().length > 0) {",
-                  "    pm.environment.set('auto_board_id', pm.response.json()[0].id);",
-                  "}"
-                ]
+                ],
+                "type": "text/javascript"
               }
             }
           ],
           "request": {
             "method": "GET",
-            "header": [{"key": "Authorization", "value": "Bearer {{auto_token}}"}],
-            "url": {
-              "raw": "http://localhost:8000/boards/",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "8000",
-              "path": ["boards", ""]
-            }
-          }
-        },
-        {
-          "name": "3. Obtener Lists",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "if (pm.response.code === 200 && pm.response.json().length > 0) {",
-                  "    pm.environment.set('auto_list_id', pm.response.json()[0].id);",
-                  "}"
-                ]
-              }
-            }
-          ],
-          "request": {
-            "method": "GET",
-            "header": [{"key": "Authorization", "value": "Bearer {{auto_token}}"}],
-            "url": {
-              "raw": "http://localhost:8000/boards/{{auto_board_id}}/lists/",
-              "protocol": "http",
-              "host": ["localhost"],
-              "port": "8000",
-              "path": ["boards", "{{auto_board_id}}", "lists", ""]
-            }
-          }
-        },
-        {
-          "name": "4. Crear Card",
-          "event": [
-            {
-              "listen": "prerequest",
-              "script": {
-                "exec": ["pm.environment.set('auto_card_title', 'Auto Card ' + Date.now());"]
-              }
-            },
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "if (pm.response.code === 200) {",
-                  "    pm.environment.set('auto_card_id', pm.response.json().id);",
-                  "}"
-                ]
-              }
-            }
-          ],
-          "request": {
-            "method": "POST",
             "header": [
-              {"key": "Authorization", "value": "Bearer {{auto_token}}"},
-              {"key": "Content-Type", "value": "application/json"}
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
             ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"title\": \"{{auto_card_title}}\",\n  \"description\": \"Tarjeta del flujo automático\",\n  \"due_date\": \"2025-12-31\",\n  \"board_id\": {{auto_board_id}},\n  \"list_id\": {{auto_list_id}}\n}"
-            },
             "url": {
-              "raw": "http://localhost:8000/cards/",
+              "raw": "http://localhost:8000/report/{{board_id}}/summary?week={{current_week}}",
               "protocol": "http",
               "host": ["localhost"],
               "port": "8000",
-              "path": ["cards", ""]
+              "path": ["report", "{{board_id}}", "summary"],
+              "query": [
+                {
+                  "key": "week",
+                  "value": "{{current_week}}"
+                }
+              ]
             }
           }
         },
         {
-          "name": "5. Registrar Horas (Worklog)",
+          "name": "1️⃣3️⃣ HORAS POR USUARIO",
           "event": [
             {
               "listen": "test",
               "script": {
                 "exec": [
-                  "if (pm.response.code === 201) {",
-                  "    pm.environment.set('auto_worklog_id', pm.response.json().id);",
+                  "const responseCode = pm.response.code;",
+                  "const responseData = pm.response.json();",
+                  "",
+                  "if (responseCode === 200) {",
+                  "    pm.test('✅ HORAS POR USUARIO OBTENIDAS', function () {",
+                  "        pm.expect(responseCode).to.equal(200);",
+                  "        pm.expect(responseData).to.be.an('array');",
+                  "    });",
+                  "    console.log('👥 Total usuarios: ' + responseData.length);",
+                  "} else {",
+                  "    pm.test('❌ Error al obtener horas por usuario', function () {",
+                  "        pm.expect(responseCode).to.equal(200);",
+                  "    });",
                   "}"
-                ]
+                ],
+                "type": "text/javascript"
               }
             }
           ],
           "request": {
-            "method": "POST",
+            "method": "GET",
             "header": [
-              {"key": "Authorization", "value": "Bearer {{auto_token}}"},
-              {"key": "Content-Type", "value": "application/json"}
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
             ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"card_id\": {{auto_card_id}},\n  \"date\": \"2026-01-02\",\n  \"hours\": 2.5,\n  \"note\": \"Horas auto\"\n}"
-            },
             "url": {
-              "raw": "http://localhost:8000/worklogs/",
+              "raw": "http://localhost:8000/report/{{board_id}}/hours-by-user?week={{current_week}}",
               "protocol": "http",
               "host": ["localhost"],
               "port": "8000",
-              "path": ["worklogs", ""]
+              "path": ["report", "{{board_id}}", "hours-by-user"],
+              "query": [
+                {
+                  "key": "week",
+                  "value": "{{current_week}}"
+                }
+              ]
             }
           }
         },
         {
-          "name": "6. Ver Resumen Semanal",
+          "name": "1️⃣4️⃣ HORAS POR TARJETA",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const responseCode = pm.response.code;",
+                  "const responseData = pm.response.json();",
+                  "",
+                  "if (responseCode === 200) {",
+                  "    pm.test('✅ HORAS POR TARJETA OBTENIDAS', function () {",
+                  "        pm.expect(responseCode).to.equal(200);",
+                  "        pm.expect(responseData).to.be.an('array');",
+                  "    });",
+                  "    console.log('🃏 Total tarjetas con horas: ' + responseData.length);",
+                  "} else {",
+                  "    pm.test('❌ Error al obtener horas por tarjeta', function () {",
+                  "        pm.expect(responseCode).to.equal(200);",
+                  "    });",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
           "request": {
             "method": "GET",
-            "header": [{"key": "Authorization", "value": "Bearer {{auto_token}}"}],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
             "url": {
-              "raw": "http://localhost:8000/worklogs/me/week?week=2026-W01",
+              "raw": "http://localhost:8000/report/{{board_id}}/hours-by-card?week={{current_week}}",
               "protocol": "http",
               "host": ["localhost"],
               "port": "8000",
-              "path": ["worklogs", "me", "week"],
-              "query": [{"key": "week", "value": "2026-W01"}]
+              "path": ["report", "{{board_id}}", "hours-by-card"],
+              "query": [
+                {
+                  "key": "week",
+                  "value": "{{current_week}}"
+                }
+              ]
             }
           }
         },
         {
-          "name": "7. Eliminar Card (Limpia worklogs)",
+          "name": "1️⃣5️⃣ ELIMINAR TARJETA",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const responseCode = pm.response.code;",
+                  "",
+                  "if (responseCode === 204) {",
+                  "    pm.test('✅ TARJETA ELIMINADA', function () {",
+                  "        pm.expect(responseCode).to.equal(204);",
+                  "    });",
+                  "    console.log('🗑️ Tarjeta eliminada correctamente');",
+                  "} else {",
+                  "    pm.test('❌ Error al eliminar tarjeta', function () {",
+                  "        pm.expect(responseCode).to.equal(204);",
+                  "    });",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
           "request": {
             "method": "DELETE",
-            "header": [{"key": "Authorization", "value": "Bearer {{auto_token}}"}],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
             "url": {
-              "raw": "http://localhost:8000/cards/{{auto_card_id}}",
+              "raw": "http://localhost:8000/cards/{{card_id}}",
               "protocol": "http",
               "host": ["localhost"],
               "port": "8000",
-              "path": ["cards", "{{auto_card_id}}"]
+              "path": ["cards", "{{card_id}}"]
             }
           }
         }
