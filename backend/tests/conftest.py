@@ -23,7 +23,8 @@ from fastapi.testclient import TestClient
 
 from app.main import app
 from app.database import Base, engine as app_engine
-from app.boards.models import User, Board, List, Card, TimeEntry, BoardMember
+# IMPORTANTE: Importar TODOS los modelos para que SQLAlchemy los registre en Base.metadata
+from app.boards.models import User, Board, List, Card, TimeEntry, BoardMember, Label, Subtask
 
 
 # Usar el motor de la app que ya está configurado como SQLite (por TESTING=1)

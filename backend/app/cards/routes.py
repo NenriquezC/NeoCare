@@ -2,10 +2,12 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from datetime import datetime, timezone
 
-from .schemas import CardCreate, CardUpdate, CardOut, CardMove  # modificacion semana 3
+from .schemas import (
+    CardCreate, CardUpdate, CardOut, CardMove,
+    LabelCreate, LabelOut, SubtaskCreate, SubtaskUpdate, SubtaskOut
+)
 from ..auth.utils import get_current_user, get_db
-# ✅ CAMBIO 1: Importamos List para poder validar "lista destino" correctamente
-from ..boards.models import Card, Board, List, User, TimeEntry, CardLabel
+from ..boards.models import Card, Board, List, User, Label, Subtask
 
 router = APIRouter(prefix="/cards", tags=["cards"])
 
@@ -63,17 +65,58 @@ def create_card(
 @router.get("/", response_model=list[CardOut])
 def get_cards(
     board_id: int,
+    search: str = None,
+    responsible_id: int = None,
+    list_id: int = None,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
+    """
+    📋 SEMANA 6 - Obtiene tarjetas con búsqueda y filtrado avanzado
+    
+    Query Parameters:
+    - board_id (requerido): ID del tablero
+    - search (opcional): Busca en título y descripción (case-insensitive)
+    - responsible_id (opcional): Filtra por usuario responsable
+    - list_id (opcional): Filtra por lista específica
+    
+    Ejemplo Frontend:
+    ```javascript
+    // Buscar "urgente" en tablero 1
+    GET /cards?board_id=1&search=urgente
+    
+    // Filtrar por responsable
+    GET /cards?board_id=1&responsible_id=5
+    
+    // Combinar filtros
+    GET /cards?board_id=1&search=API&responsible_id=5&list_id=2
+    ```
+    
+    Response: Lista de CardOut con labels y subtasks incluidos
+    """
     verify_board_permission(board_id, current_user.id, db)
 
-    return (
-        db.query(Card)
-        .filter(Card.board_id == board_id)
-        .order_by(Card.list_id, Card.position)
-        .all()
-    )
+    # Construcción de query base
+    query = db.query(Card).filter(Card.board_id == board_id)
+
+    # 🔍 BÚSQUEDA: Filtra por título o descripción
+    if search:
+        search_pattern = f"%{search}%"
+        query = query.filter(
+            (Card.title.ilike(search_pattern)) | 
+            (Card.description.ilike(search_pattern))
+        )
+    
+    # 👤 FILTRO POR RESPONSABLE
+    if responsible_id:
+        query = query.filter(Card.responsible_id == responsible_id)
+    
+    # 📂 FILTRO POR LISTA
+    if list_id:
+        query = query.filter(Card.list_id == list_id)
+
+    # Ordenar por lista y posición
+    return query.order_by(Card.list_id, Card.position).all()
 
 
 # ============================ GET /cards/{card_id} ======================================
@@ -293,5 +336,392 @@ def delete_card(
 
     # Eliminar la tarjeta - SQLAlchemy manejará las relaciones con cascade
     db.delete(card)
+    db.commit()
+    return None
+
+
+# =====================================================================================
+# 🏷️ SEMANA 6 - LABELS (ETIQUETAS)
+# =====================================================================================
+"""
+Las etiquetas permiten categorizar y priorizar tarjetas con colores y nombres.
+
+CASOS DE USO:
+- Prioridad: "Urgente" (rojo), "Media" (amarillo), "Baja" (verde)
+- Categorías: "Bug" (rojo), "Feature" (azul), "QA" (púrpura)
+- Dependencias: "Bloqueado" (gris), "En revisión" (naranja)
+
+FLUJO FRONTEND:
+1. Usuario abre modal de edición de tarjeta
+2. Sección de labels muestra las actuales como chips con colores
+3. Botón "Añadir etiqueta" abre selector de colores predefinidos
+4. POST /cards/{card_id}/labels con {name, color}
+5. La etiqueta aparece inmediatamente en la tarjeta
+6. Click en X de la etiqueta → DELETE /cards/labels/{label_id}
+"""
+
+
+@router.post("/{card_id}/labels", response_model=LabelOut)
+def add_label(
+    card_id: int,
+    data: LabelCreate,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    """
+    🏷️ Añade una etiqueta a una tarjeta
+    
+    Body JSON:
+    {
+        "name": "Urgente",
+        "color": "#ef4444"  // Hex color o nombre
+    }
+    
+    Colores sugeridos para Frontend:
+    - Rojo: #ef4444 (urgente, bugs)
+    - Amarillo: #f59e0b (media prioridad)
+    - Verde: #10b981 (baja prioridad, completado)
+    - Azul: #3b82f6 (features, info)
+    - Púrpura: #8b5cf6 (QA, testing)
+    - Gris: #6b7280 (bloqueado, pausado)
+    
+    Ejemplo Frontend (React):
+    ```javascript
+    const addLabel = async (cardId, labelData) => {
+        const response = await fetch(`/cards/${cardId}/labels`, {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(labelData)
+        });
+        return response.json();
+    };
+    
+    // Uso
+    await addLabel(123, { name: "Urgente", color: "#ef4444" });
+    ```
+    
+    Response: LabelOut con id, card_id, name, color
+    """
+    # Verificar que la tarjeta existe y el usuario tiene permiso
+    card = db.query(Card).filter(Card.id == card_id).first()
+    if not card:
+        raise HTTPException(status_code=404, detail="Tarjeta no encontrada")
+    
+    verify_board_permission(card.board_id, current_user.id, db)
+
+    # Crear la etiqueta
+    new_label = Label(
+        card_id=card_id, 
+        name=data.name, 
+        color=data.color or "#6b7280"  # Color por defecto: gris
+    )
+    db.add(new_label)
+    db.commit()
+    db.refresh(new_label)
+    return new_label
+
+
+@router.get("/{card_id}/labels", response_model=list[LabelOut])
+def get_card_labels(
+    card_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    """
+    🏷️ Obtiene todas las etiquetas de una tarjeta
+    
+    Ejemplo Frontend:
+    ```javascript
+    const labels = await fetch(`/cards/${cardId}/labels`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+    }).then(r => r.json());
+    
+    // Renderizar
+    labels.map(label => (
+        <span style={{ backgroundColor: label.color }} 
+              className="px-2 py-1 rounded text-xs">
+            {label.name}
+        </span>
+    ))
+    ```
+    
+    Response: Array de LabelOut
+    """
+    card = db.query(Card).filter(Card.id == card_id).first()
+    if not card:
+        raise HTTPException(status_code=404, detail="Tarjeta no encontrada")
+    
+    verify_board_permission(card.board_id, current_user.id, db)
+    
+    return db.query(Label).filter(Label.card_id == card_id).all()
+
+
+@router.delete("/labels/{label_id}", status_code=status.HTTP_204_NO_CONTENT)
+def remove_label(
+    label_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    """
+    🏷️ Elimina una etiqueta por su ID
+    
+    Ejemplo Frontend:
+    ```javascript
+    const deleteLabel = async (labelId) => {
+        await fetch(`/cards/labels/${labelId}`, {
+            method: 'DELETE',
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+    };
+    ```
+    
+    Response: 204 No Content (éxito)
+    """
+    label = db.query(Label).filter(Label.id == label_id).first()
+    if not label:
+        raise HTTPException(status_code=404, detail="Etiqueta no encontrada")
+    
+    # Verificar permisos a través de la tarjeta
+    card = db.query(Card).filter(Card.id == label.card_id).first()
+    verify_board_permission(card.board_id, current_user.id, db)
+
+    db.delete(label)
+    db.commit()
+    return None
+
+
+# =====================================================================================
+# ✅ SEMANA 6 - SUBTASKS (CHECKLIST)
+# =====================================================================================
+"""
+Las subtasks permiten dividir una tarjeta en tareas más pequeñas con checklist.
+
+CASOS DE USO:
+- Desglosar una card compleja en pasos
+- Mostrar progreso visual (3/7 completadas)
+- Seguimiento de hitos dentro de una feature
+
+FLUJO FRONTEND:
+1. Usuario abre modal de tarjeta
+2. Sección "Checklist" muestra subtasks con checkboxes
+3. Barra de progreso: "✓ 3/7 completadas (43%)"
+4. Input para añadir nueva subtask → POST /cards/{card_id}/subtasks
+5. Click en checkbox → PATCH /subtasks/{id} con {completed: true}
+6. Botón eliminar → DELETE /subtasks/{id}
+"""
+
+
+@router.post("/{card_id}/subtasks", response_model=SubtaskOut)
+def add_subtask(
+    card_id: int,
+    data: SubtaskCreate,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    """
+    ✅ Añade una subtarea (item de checklist) a una tarjeta
+    
+    Body JSON:
+    {
+        "title": "Escribir documentación de API",
+        "completed": false  // Opcional, default false
+    }
+    
+    Ejemplo Frontend (React):
+    ```javascript
+    const addSubtask = async (cardId, title) => {
+        const response = await fetch(`/cards/${cardId}/subtasks`, {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ title, completed: false })
+        });
+        return response.json();
+    };
+    
+    // Uso
+    await addSubtask(123, "Implementar endpoint de búsqueda");
+    ```
+    
+    Response: SubtaskOut con id, card_id, title, completed, position
+    """
+    card = db.query(Card).filter(Card.id == card_id).first()
+    if not card:
+        raise HTTPException(status_code=404, detail="Tarjeta no encontrada")
+    
+    verify_board_permission(card.board_id, current_user.id, db)
+
+    # Calcular posición automática (al final de la lista)
+    max_pos = db.query(Subtask).filter(Subtask.card_id == card_id).count()
+
+    new_subtask = Subtask(
+        card_id=card_id, 
+        title=data.title,
+        completed=data.completed if hasattr(data, 'completed') else False,
+        position=max_pos
+    )
+    db.add(new_subtask)
+    db.commit()
+    db.refresh(new_subtask)
+    return new_subtask
+
+
+@router.get("/{card_id}/subtasks", response_model=list[SubtaskOut])
+def get_card_subtasks(
+    card_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    """
+    ✅ Obtiene todas las subtareas de una tarjeta
+    
+    Ejemplo Frontend con barra de progreso:
+    ```javascript
+    const subtasks = await fetch(`/cards/${cardId}/subtasks`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+    }).then(r => r.json());
+    
+    const completed = subtasks.filter(s => s.completed).length;
+    const total = subtasks.length;
+    const percentage = Math.round((completed / total) * 100);
+    
+    // Renderizar
+    <div>
+        <h3>Checklist: {completed}/{total} completadas</h3>
+        <div className="progress-bar">
+            <div style={{ width: `${percentage}%` }} />
+        </div>
+        {subtasks.map(st => (
+            <label key={st.id}>
+                <input type="checkbox" 
+                       checked={st.completed}
+                       onChange={() => toggleSubtask(st.id)} />
+                <span className={st.completed ? 'line-through' : ''}>
+                    {st.title}
+                </span>
+            </label>
+        ))}
+    </div>
+    ```
+    
+    Response: Array de SubtaskOut ordenado por position
+    """
+    card = db.query(Card).filter(Card.id == card_id).first()
+    if not card:
+        raise HTTPException(status_code=404, detail="Tarjeta no encontrada")
+    
+    verify_board_permission(card.board_id, current_user.id, db)
+    
+    return (
+        db.query(Subtask)
+        .filter(Subtask.card_id == card_id)
+        .order_by(Subtask.position)
+        .all()
+    )
+
+
+@router.patch("/subtasks/{subtask_id}", response_model=SubtaskOut)
+def update_subtask(
+    subtask_id: int,
+    data: SubtaskUpdate,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    """
+    ✅ Actualiza una subtarea (título, completado, posición)
+    
+    Body JSON (todos los campos opcionales):
+    {
+        "title": "Nuevo título",          // Opcional
+        "completed": true,                 // Opcional
+        "position": 2                      // Opcional (para reordenar)
+    }
+    
+    Ejemplo Frontend - Marcar como completada:
+    ```javascript
+    const toggleSubtask = async (subtaskId, currentCompleted) => {
+        await fetch(`/cards/subtasks/${subtaskId}`, {
+            method: 'PATCH',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ completed: !currentCompleted })
+        });
+    };
+    ```
+    
+    Ejemplo Frontend - Editar título:
+    ```javascript
+    const updateSubtaskTitle = async (subtaskId, newTitle) => {
+        await fetch(`/cards/subtasks/${subtaskId}`, {
+            method: 'PATCH',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ title: newTitle })
+        });
+    };
+    ```
+    
+    Response: SubtaskOut actualizado
+    """
+    subtask = db.query(Subtask).filter(Subtask.id == subtask_id).first()
+    if not subtask:
+        raise HTTPException(status_code=404, detail="Subtarea no encontrada")
+    
+    # Verificar permisos
+    card = db.query(Card).filter(Card.id == subtask.card_id).first()
+    verify_board_permission(card.board_id, current_user.id, db)
+
+    # Actualizar solo los campos que vienen en el body
+    if data.title is not None:
+        subtask.title = data.title
+    if data.completed is not None:
+        subtask.completed = data.completed
+    if data.position is not None:
+        subtask.position = data.position
+
+    db.commit()
+    db.refresh(subtask)
+    return subtask
+
+
+@router.delete("/subtasks/{subtask_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_subtask(
+    subtask_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    """
+    ✅ Elimina una subtarea
+    
+    Ejemplo Frontend:
+    ```javascript
+    const deleteSubtask = async (subtaskId) => {
+        await fetch(`/cards/subtasks/${subtaskId}`, {
+            method: 'DELETE',
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+    };
+    ```
+    
+    Response: 204 No Content (éxito)
+    """
+    subtask = db.query(Subtask).filter(Subtask.id == subtask_id).first()
+    if not subtask:
+        raise HTTPException(status_code=404, detail="Subtarea no encontrada")
+    
+    # Verificar permisos
+    card = db.query(Card).filter(Card.id == subtask.card_id).first()
+    verify_board_permission(card.board_id, current_user.id, db)
+
+    db.delete(subtask)
     db.commit()
     return None

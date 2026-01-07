@@ -91,7 +91,7 @@ class Board(Base):
     lists = relationship("List", back_populates="board", cascade="all, delete-orphan", passive_deletes=True)
     cards = relationship("Card", back_populates="board", cascade="all, delete-orphan", passive_deletes=True)
     members = relationship("BoardMember", back_populates="board", cascade="all, delete-orphan", passive_deletes=True)
-    labels = relationship("Label", back_populates="board", cascade="all, delete-orphan")
+    # NOTA: Labels removidos - ahora están relacionados directamente con Cards (Semana 6)
 
 
 class List(Base):
@@ -183,7 +183,8 @@ class Card(Base):
     responsible = relationship("User", foreign_keys=[responsible_id], back_populates="responsible_cards")
     created_by = relationship("User", foreign_keys=[created_by_id], back_populates="created_cards")
     time_entries = relationship("TimeEntry", back_populates="card", cascade="all, delete-orphan", passive_deletes=True)
-    labels = relationship("Label", secondary="card_labels", back_populates="cards", passive_deletes=True)
+    # SEMANA 6: Labels y Subtasks con relación directa (más simple que many-to-many)
+    labels = relationship("Label", back_populates="card", cascade="all, delete-orphan", passive_deletes=True)
     subtasks = relationship("Subtask", back_populates="card", cascade="all, delete-orphan", passive_deletes=True)
 
 
@@ -226,39 +227,43 @@ class BoardMember(Base):
 
 class Label(Base):
     """
-    Etiquetas personalizables para categorizar tarjetas dentro de un tablero.
+    🏷️ SEMANA 6 - Etiquetas para categorizar y priorizar tarjetas
+    
+    Relación: Una tarjeta puede tener múltiples etiquetas (one-to-many)
+    Casos de uso:
+    - Prioridad: "Urgente" (rojo), "Media" (amarillo), "Baja" (verde)
+    - Categorías: "Bug", "Feature", "QA"
+    - Estado: "Bloqueado", "En revisión"
+    
+    Compatible con SQLite y PostgreSQL
     """
     __tablename__ = "labels"
 
     id = Column(Integer, primary_key=True, index=True)
-    board_id = Column(Integer, ForeignKey("boards.id", ondelete="CASCADE"), nullable=False)
+    card_id = Column(Integer, ForeignKey("cards.id", ondelete="CASCADE"), nullable=False)
     name = Column(String(50), nullable=False)
-    color = Column(String(20), nullable=False, default="#3b82f6")
+    color = Column(String(20), nullable=True)  # Hex code: #ef4444
 
-    board = relationship("Board", back_populates="labels")
-    cards = relationship("Card", secondary="card_labels", back_populates="labels")
-
-
-class CardLabel(Base):
-    """
-    Tabla de asociación (muchos a muchos) entre tarjetas y etiquetas.
-    """
-    __tablename__ = "card_labels"
-
-    card_id = Column(Integer, ForeignKey("cards.id", ondelete="CASCADE"), primary_key=True)
-    label_id = Column(Integer, ForeignKey("labels.id", ondelete="CASCADE"), primary_key=True)
+    # Relación: Label pertenece a una Card
+    card = relationship("Card", back_populates="labels")
 
 
 class Subtask(Base):
     """
-    Subtareas (checklists) dentro de una tarjeta.
+    ✅ SEMANA 6 - Subtareas (checklist) dentro de una tarjeta
+    
+    Permite dividir una tarjeta grande en tareas más pequeñas
+    El frontend puede mostrar progreso: "3/7 completadas (43%)"
+    
+    Compatible con SQLite y PostgreSQL
     """
     __tablename__ = "subtasks"
 
     id = Column(Integer, primary_key=True, index=True)
     card_id = Column(Integer, ForeignKey("cards.id", ondelete="CASCADE"), nullable=False)
     title = Column(String(200), nullable=False)
-    is_completed = Column(Boolean, default=False, nullable=False)
+    completed = Column(Boolean, default=False, nullable=False)  # NOTA: 'completed' no 'is_completed'
     position = Column(Integer, default=0)
 
+    # Relación: Subtask pertenece a una Card
     card = relationship("Card", back_populates="subtasks")
