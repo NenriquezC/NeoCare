@@ -39,3 +39,13 @@ def root():
     Permite verificar si el backend de NeoCare está operativo.
     """
     return {"status": "NeoCare Backend Running"}
+
+@app.get("/debug/database-info")
+def database_info():
+    """Endpoint temporal para verificar qué base de datos se está usando"""
+    from .database import DATABASE_URL, IS_TESTING
+    return {
+        "database_url": DATABASE_URL,
+        "is_testing": IS_TESTING,
+        "database_type": "SQLite" if IS_TESTING else "PostgreSQL"
+    }

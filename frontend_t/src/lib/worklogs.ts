@@ -89,18 +89,9 @@ export async function createWorklog(payload: WorklogCreatePayload): Promise<Work
     return res.json();
 }
 
-//export async function updateWorklog(id: number, payload: WorklogUpdatePayload): Promise<Worklog> {
-//    const res = await apiFetch(ENDPOINTS.update(id), {
-//        method: "PATCH",
-//        body: JSON.stringify(payload),
-//    });
-//    await readJsonOrTextError(res);
-//    return res.json();
-//}
-
 export async function updateWorklog(id: number, payload: WorklogUpdatePayload): Promise<Worklog> {
   const res = await apiFetch(ENDPOINTS.update(id), {
-    method: "PUT", // ✅ antes estaba PATCH
+    method: "PUT",
     body: JSON.stringify(payload),
   });
   await readJsonOrTextError(res);
@@ -125,6 +116,7 @@ export async function listMyWorklogsByWeek(week: string): Promise<MyHoursWeekSum
   const data = await res.json().catch(() => null);
   return (data ?? { week, total_hours: 0, by_day: [], entries: [] }) as MyHoursWeekSummary;
 }
+
 /**
  * Utilidad: convertir hours a number aunque venga como string/Decimal.
  */

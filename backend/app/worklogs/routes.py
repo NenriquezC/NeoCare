@@ -16,7 +16,6 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from sqlalchemy import func
 
-from ..auth.utils import get_current_user
 from ..auth.utils import get_db, get_current_user
 from ..boards.models import TimeEntry, Card, BoardMember
 from .schemas import (
@@ -61,6 +60,13 @@ def create_worklog(
         raise HTTPException(
             status_code=403,
             detail="No tienes acceso a esta tarjeta",
+        )
+
+    # Validación: Fecha no futura
+    if data.date > date.today():
+        raise HTTPException(
+            status_code=400,
+            detail="No se pueden registrar horas en fechas futuras",
         )
 
     worklog = TimeEntry(
@@ -137,6 +143,12 @@ def update_worklog(
         raise HTTPException(status_code=403, detail="No autorizado")
 
     if data.date is not None:
+        # Validación: Fecha no futura
+        if data.date > date.today():
+            raise HTTPException(
+                status_code=400,
+                detail="No se pueden registrar horas en fechas futuras",
+            )
         worklog.date = data.date
     if data.hours is not None:
         worklog.hours = data.hours
