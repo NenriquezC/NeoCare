@@ -110,3 +110,14 @@ class CardOut(BaseModel):
     archived: bool
 
     model_config = ConfigDict(from_attributes=True)
+
+
+class LabelCreate(BaseModel):
+    name: str
+    color: str = "#3b82f6"
+
+
+class SubtaskCreate(BaseModel):
+    title: str
+    is_completed: bool = False
+

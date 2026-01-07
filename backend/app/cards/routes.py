@@ -5,7 +5,7 @@ from datetime import datetime, timezone
 from .schemas import CardCreate, CardUpdate, CardOut, CardMove  # modificacion semana 3
 from ..auth.utils import get_current_user, get_db
 # ✅ CAMBIO 1: Importamos List para poder validar "lista destino" correctamente
-from ..boards.models import Card, Board, List, User
+from ..boards.models import Card, Board, List, User, TimeEntry, CardLabel
 
 router = APIRouter(prefix="/cards", tags=["cards"])
 
@@ -291,6 +291,7 @@ def delete_card(
 
     verify_board_permission(card.board_id, current_user.id, db)
 
+    # Eliminar la tarjeta - SQLAlchemy manejará las relaciones con cascade
     db.delete(card)
     db.commit()
     return None

@@ -10,7 +10,7 @@ from datetime import date as date_type, datetime
 from decimal import Decimal
 from typing import Annotated, Optional
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 
 
 # ---------------------------
@@ -31,8 +31,7 @@ class WorklogOut(BaseModel):
     created_at: datetime
     updated_at: datetime
 
-    class Config:
-        from_attributes = True  # Semana 4: permite convertir desde ORM (SQLAlchemy)
+    model_config = ConfigDict(from_attributes=True)
 
 
 # ---------------------------

@@ -466,6 +466,29 @@ const Boards: React.FC = () => {
               Mis horas
             </button>
 
+            {/* 🔹 SEMANA 5 — NUEVO BOTÓN */}
+          <button
+            onClick={() => {
+              if (!selectedBoardId) return;
+              navigate(`/report/${selectedBoardId}`);
+            }}
+            style={{
+              padding: "0.5rem 1rem",
+              background: "linear-gradient(135deg, #0c4a6e 0%, #1e40af 100%)",
+              border: "none",
+              borderRadius: "0.5rem",
+              color: "white",
+              cursor: "pointer",
+              textShadow: "1px 1px 2px rgba(0, 0, 0, 0.5)",
+              fontWeight: "600",
+              boxShadow: "0 4px 6px rgba(0, 0, 0, 0.2)",
+            }}
+          >
+            📊 Reporte semanal
+          </button>
+
+
+
             <button
               onClick={handleLogout}
               style={{

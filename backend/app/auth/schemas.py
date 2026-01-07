@@ -4,7 +4,7 @@ Esquemas Pydantic para la gestión de autenticación en NeoCare.
 Define los modelos de datos que se usan en las rutas de registro, login y respuestas 
 de token JWT.
 """
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, ConfigDict
 from typing import Optional
 
 
@@ -44,3 +44,12 @@ class Token(BaseModel):
     """
     access_token: str
     token_type: str = "bearer"
+
+
+class UserOut(BaseModel):
+    """Esquema para devolver datos básicos del usuario."""
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    email: EmailStr
+    name: Optional[str] = None
