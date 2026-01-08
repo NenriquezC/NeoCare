@@ -6,9 +6,10 @@ class ApiConfig {
   // Cambia esto según tu entorno:
   // - Emulador Android: http://10.0.2.2:8000
   // - Dispositivo físico: http://192.168.1.X:8000 (tu IP local)
+  // - Web (Chrome): http://localhost:8000
   // - Producción: https://tu-dominio.com
   
-  static const String baseUrl = 'http://10.0.2.2:8000';
+  static const String baseUrl = 'http://192.168.1.39:8000';
   
   // Endpoints
   static const String authRegister = '/auth/register';

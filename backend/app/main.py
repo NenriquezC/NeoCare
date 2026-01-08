@@ -50,3 +50,15 @@ def database_info():
         "is_testing": IS_TESTING,
         "database_type": "SQLite" if IS_TESTING else "PostgreSQL"
     }
+
+@app.get("/debug/test-connection")
+def test_connection():
+    """Endpoint para verificar conectividad desde la app móvil"""
+    from datetime import datetime
+    return {
+        "status": "OK",
+        "message": "Backend accesible desde la red",
+        "timestamp": datetime.now().isoformat(),
+        "ip_visible": "192.168.1.39",
+        "port": 8000
+    }
