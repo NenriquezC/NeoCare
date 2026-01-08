@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field, ConfigDict
+from pydantic import BaseModel, Field, ConfigDict, field_validator
 from datetime import date, datetime
 from typing import Optional
 
@@ -36,6 +36,16 @@ class CardCreate(BaseModel):
     board_id: int
     list_id: int
 
+    @field_validator('board_id', 'list_id', mode='before')
+    @classmethod
+    def coerce_to_int(cls, v):
+        """Convierte strings a int para compatibilidad con Postman/Newman"""
+        if v is None:
+            return v
+        if isinstance(v, str):
+            return int(v)
+        return v
+
 
 
 class CardUpdate(BaseModel):
@@ -58,6 +68,16 @@ class CardUpdate(BaseModel):
     list_id: Optional[int] = None
     archived: Optional[bool] = None
 
+    @field_validator('list_id', mode='before')
+    @classmethod
+    def coerce_to_int(cls, v):
+        """Convierte strings a int para compatibilidad con Postman/Newman"""
+        if v is None:
+            return v
+        if isinstance(v, str):
+            return int(v)
+        return v
+
 
 #Codigo de las Semana 3
 class CardMove(BaseModel):
@@ -70,6 +90,16 @@ class CardMove(BaseModel):
     """
     list_id:int
     order: int = Field(..., ge=0, description="Posición destino (>= 0)")
+
+    @field_validator('list_id', 'order', mode='before')
+    @classmethod
+    def coerce_to_int(cls, v):
+        """Convierte strings a int para compatibilidad con Postman/Newman"""
+        if v is None:
+            return v
+        if isinstance(v, str):
+            return int(v)
+        return v
 
 
 # =====================================================================================

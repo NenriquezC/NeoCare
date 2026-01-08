@@ -10,7 +10,7 @@ from datetime import date as date_type, datetime
 from decimal import Decimal
 from typing import Annotated, Optional
 
-from pydantic import BaseModel, Field, ConfigDict
+from pydantic import BaseModel, Field, ConfigDict, field_validator
 
 
 # ---------------------------
@@ -55,6 +55,16 @@ class WorklogCreate(BaseModel):
         Optional[str],
         Field(default=None, max_length=200, description="Nota opcional (<= 200)")
     ]
+
+    @field_validator('card_id', mode='before')
+    @classmethod
+    def coerce_to_int(cls, v):
+        """Convierte strings a int para compatibilidad con Postman/Newman"""
+        if v is None:
+            return v
+        if isinstance(v, str):
+            return int(v)
+        return v
 
 
 # ---------------------------

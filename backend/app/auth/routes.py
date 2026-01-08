@@ -121,3 +121,40 @@ def login(user: UserLogin, db: Session = Depends(get_db)):
     # Genera el JWT para el usuario autenticado
     token = create_token({"user_id": db_user.id, "email": db_user.email})
     return {"access_token": token, "token_type": "bearer"}
+
+
+@router.delete("/me", status_code=status.HTTP_204_NO_CONTENT)
+def delete_current_user(
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """
+    Elimina el usuario autenticado y todos sus datos relacionados.
+    
+    Por CASCADE, también elimina:
+    - Todos los boards del usuario
+    - Todas las listas de esos boards
+    - Todas las cards de esos boards
+    - Todos los time_entries del usuario
+    - Todos los labels y subtasks de las cards
+    - Todas las board_memberships del usuario
+    
+    Este endpoint es útil para:
+    - Tests automatizados (Postman, pytest)
+    - Cleanup de usuarios de prueba
+    - Cumplimiento de GDPR (derecho al olvido)
+    
+    Retorna:
+        204 No Content si la eliminación fue exitosa
+    """
+    try:
+        db.delete(current_user)
+        db.commit()
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Error al eliminar usuario: {str(e)}"
+        )
+    
+    return None  # 204 No Content

@@ -1,8 +1,8 @@
 {
   "info": {
     "_postman_id": "neocare-api-complete-2026",
-    "name": "NeoCare API - Flujo Completo Automatizado 2026",
-    "description": "Colección 100% automatizada: Register → Login → Boards → Lists → Cards → Worklogs → Reports. Sin necesidad de editar nada, ¡todo se genera dinámicamente! Ejecuta con Collection Runner.",
+    "name": "NeoCare API - Flujo Completo Automatizado 2026 + Auto-cleanup",
+    "description": "Colección 100% automatizada con LIMPIEZA AUTOMÁTICA: Register → Login → Boards → Lists → Cards → Worklogs → Reports → CLEANUP. Los datos de test se eliminan automáticamente al final, incluso si fallan tests.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
@@ -20,9 +20,9 @@
                   "const timestamp = Date.now();",
                   "const randomId = Math.random().toString(36).substring(2, 8);",
                   "const uniqueEmail = `user_${timestamp}_${randomId}@test.com`;",
-                  "pm.environment.set('user_email', uniqueEmail);",
-                  "pm.environment.set('user_password', 'Password123!');",
-                  "pm.environment.set('user_name', 'Usuario Test ' + timestamp);"
+                  "pm.collectionVariables.set('user_email', uniqueEmail);",
+                  "pm.collectionVariables.set('user_password', 'Password123!');",
+                  "pm.collectionVariables.set('user_name', 'Usuario Test ' + timestamp);"
                 ],
                 "type": "text/javascript"
               }
@@ -31,20 +31,17 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "const responseCode = pm.response.code;",
-                  "const responseData = pm.response.json();",
-                  "",
-                  "if (responseCode === 200 || responseCode === 201) {",
-                  "    pm.environment.set('access_token', responseData.access_token);",
+                  "if (pm.response.code === 200 || pm.response.code === 201) {",
+                  "    pm.collectionVariables.set('access_token', pm.response.json().access_token);",
                   "    pm.test('✅ USUARIO REGISTRADO', function () {",
-                  "        pm.expect(responseCode).to.be.oneOf([200, 201]);",
-                  "        pm.expect(responseData).to.have.property('access_token');",
+                  "        pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                  "        pm.expect(pm.response.json()).to.have.property('access_token');",
                   "    });",
-                  "    console.log('📧 Email: ' + pm.environment.get('user_email'));",
+                  "    console.log('📧 Email: ' + pm.collectionVariables.get('user_email'));",
                   "    console.log('🔑 Token obtenido y guardado');",
                   "} else {",
                   "    pm.test('❌ Error en registro', function () {",
-                  "        pm.expect(responseCode).to.be.oneOf([200, 201]);",
+                  "        pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
                   "    });",
                   "}"
                 ],
@@ -67,9 +64,14 @@
             "url": {
               "raw": "http://localhost:8000/auth/register",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8000",
-              "path": ["auth", "register"]
+              "path": [
+                "auth",
+                "register"
+              ]
             }
           }
         },
@@ -80,18 +82,15 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "const responseCode = pm.response.code;",
-                  "const responseData = pm.response.json();",
-                  "",
-                  "if (responseCode === 200) {",
-                  "    pm.environment.set('access_token', responseData.access_token);",
+                  "if (pm.response.code === 200) {",
+                  "    pm.collectionVariables.set('access_token', pm.response.json().access_token);",
                   "    pm.test('✅ LOGIN EXITOSO', function () {",
-                  "        pm.expect(responseCode).to.equal(200);",
+                  "        pm.expect(pm.response.code).to.equal(200);",
                   "    });",
-                  "    console.log('✅ Autenticado como: ' + pm.environment.get('user_email'));",
+                  "    console.log('✅ Autenticado como: ' + pm.collectionVariables.get('user_email'));",
                   "} else {",
                   "    pm.test('❌ Error en login', function () {",
-                  "        pm.expect(responseCode).to.equal(200);",
+                  "        pm.expect(pm.response.code).to.equal(200);",
                   "    });",
                   "}"
                 ],
@@ -114,9 +113,14 @@
             "url": {
               "raw": "http://localhost:8000/auth/login",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8000",
-              "path": ["auth", "login"]
+              "path": [
+                "auth",
+                "login"
+              ]
             }
           }
         },
@@ -127,21 +131,18 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "const responseCode = pm.response.code;",
-                  "const responseData = pm.response.json();",
-                  "",
-                  "if (responseCode === 200 && responseData.length > 0) {",
-                  "    const boardId = responseData[0].id;",
-                  "    pm.environment.set('board_id', boardId);",
+                  "if (pm.response.code === 200 && pm.response.json().length > 0) {",
+                  "    const boardId = pm.response.json()[0].id;",
+                  "    pm.collectionVariables.set('board_id', boardId);",
                   "    pm.test('✅ TABLEROS OBTENIDOS', function () {",
-                  "        pm.expect(responseCode).to.equal(200);",
-                  "        pm.expect(responseData[0]).to.have.property('id');",
+                  "        pm.expect(pm.response.code).to.equal(200);",
+                  "        pm.expect(pm.response.json()[0]).to.have.property('id');",
                   "    });",
                   "    console.log('📋 Tablero ID: ' + boardId);",
-                  "    console.log('📝 Nombre: ' + responseData[0].name);",
+                  "    console.log('📝 Nombre: ' + pm.response.json()[0].name);",
                   "} else {",
                   "    pm.test('⚠️ No hay tableros', function () {",
-                  "        pm.expect(responseCode).to.equal(200);",
+                  "        pm.expect(pm.response.code).to.equal(200);",
                   "    });",
                   "}"
                 ],
@@ -160,9 +161,14 @@
             "url": {
               "raw": "http://localhost:8000/boards/",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8000",
-              "path": ["boards", ""]
+              "path": [
+                "boards",
+                ""
+              ]
             }
           }
         },
@@ -173,21 +179,18 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "const responseCode = pm.response.code;",
-                  "const responseData = pm.response.json();",
-                  "",
-                  "if (responseCode === 200 && responseData.length > 0) {",
-                  "    const listId = responseData[0].id;",
-                  "    pm.environment.set('list_id', listId);",
+                  "if (pm.response.code === 200 && pm.response.json().length > 0) {",
+                  "    const listId = pm.response.json()[0].id;",
+                  "    pm.collectionVariables.set('list_id', listId);",
                   "    pm.test('✅ LISTAS OBTENIDAS', function () {",
-                  "        pm.expect(responseCode).to.equal(200);",
-                  "        pm.expect(responseData[0]).to.have.property('id');",
+                  "        pm.expect(pm.response.code).to.equal(200);",
+                  "        pm.expect(pm.response.json()[0]).to.have.property('id');",
                   "    });",
                   "    console.log('📋 Lista ID: ' + listId);",
-                  "    console.log('Nombre: ' + responseData[0].name);",
+                  "    console.log('Nombre: ' + pm.response.json()[0].name);",
                   "} else {",
                   "    pm.test('⚠️ Sin listas', function () {",
-                  "        pm.expect(responseCode).to.equal(200);",
+                  "        pm.expect(pm.response.code).to.equal(200);",
                   "    });",
                   "}"
                 ],
@@ -206,9 +209,15 @@
             "url": {
               "raw": "http://localhost:8000/boards/{{board_id}}/lists",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8000",
-              "path": ["boards", "{{board_id}}", "lists"]
+              "path": [
+                "boards",
+                "{{board_id}}",
+                "lists"
+              ]
             }
           }
         },
@@ -221,7 +230,7 @@
                 "exec": [
                   "// Generar título único para la tarjeta",
                   "const timestamp = Date.now();",
-                  "pm.environment.set('card_title', 'Tarjeta Test ' + timestamp);"
+                  "pm.collectionVariables.set('card_title', 'Tarjeta Test ' + timestamp);"
                 ],
                 "type": "text/javascript"
               }
@@ -230,21 +239,18 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "const responseCode = pm.response.code;",
-                  "const responseData = pm.response.json();",
-                  "",
-                  "if (responseCode === 200) {",
-                  "    const cardId = responseData.id;",
-                  "    pm.environment.set('card_id', cardId);",
+                  "if (pm.response.code === 200) {",
+                  "    const cardId = pm.response.json().id;",
+                  "    pm.collectionVariables.set('card_id', cardId);",
                   "    pm.test('✅ TARJETA CREADA', function () {",
-                  "        pm.expect(responseCode).to.equal(200);",
-                  "        pm.expect(responseData).to.have.property('id');",
+                  "        pm.expect(pm.response.code).to.equal(200);",
+                  "        pm.expect(pm.response.json()).to.have.property('id');",
                   "    });",
                   "    console.log('🃏 Card ID: ' + cardId);",
-                  "    console.log('Título: ' + responseData.title);",
+                  "    console.log('Título: ' + pm.response.json().title);",
                   "} else {",
                   "    pm.test('❌ Error al crear tarjeta', function () {",
-                  "        pm.expect(responseCode).to.equal(200);",
+                  "        pm.expect(pm.response.code).to.equal(200);",
                   "    });",
                   "}"
                 ],
@@ -271,9 +277,14 @@
             "url": {
               "raw": "http://localhost:8000/cards/",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8000",
-              "path": ["cards", ""]
+              "path": [
+                "cards",
+                ""
+              ]
             }
           }
         },
@@ -284,18 +295,15 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "const responseCode = pm.response.code;",
-                  "const responseData = pm.response.json();",
-                  "",
-                  "if (responseCode === 200) {",
+                  "if (pm.response.code === 200) {",
                   "    pm.test('✅ TARJETAS LISTADAS', function () {",
-                  "        pm.expect(responseCode).to.equal(200);",
-                  "        pm.expect(responseData).to.be.an('array');",
+                  "        pm.expect(pm.response.code).to.equal(200);",
+                  "        pm.expect(pm.response.json()).to.be.an('array');",
                   "    });",
-                  "    console.log('📊 Total de tarjetas: ' + responseData.length);",
+                  "    console.log('📊 Total de tarjetas: ' + pm.response.json().length);",
                   "} else {",
                   "    pm.test('❌ Error al listar tarjetas', function () {",
-                  "        pm.expect(responseCode).to.equal(200);",
+                  "        pm.expect(pm.response.code).to.equal(200);",
                   "    });",
                   "}"
                 ],
@@ -314,9 +322,14 @@
             "url": {
               "raw": "http://localhost:8000/cards/?board_id={{board_id}}",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8000",
-              "path": ["cards", ""],
+              "path": [
+                "cards",
+                ""
+              ],
               "query": [
                 {
                   "key": "board_id",
@@ -333,19 +346,16 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "const responseCode = pm.response.code;",
-                  "const responseData = pm.response.json();",
-                  "",
-                  "if (responseCode === 200) {",
+                  "if (pm.response.code === 200) {",
                   "    pm.test('✅ DETALLE DE TARJETA OBTENIDO', function () {",
-                  "        pm.expect(responseCode).to.equal(200);",
-                  "        pm.expect(responseData).to.have.property('id');",
-                  "        pm.expect(responseData).to.have.property('title');",
+                  "        pm.expect(pm.response.code).to.equal(200);",
+                  "        pm.expect(pm.response.json()).to.have.property('id');",
+                  "        pm.expect(pm.response.json()).to.have.property('title');",
                   "    });",
-                  "    console.log('🃏 Tarjeta: ' + responseData.title);",
+                  "    console.log('🃏 Tarjeta: ' + pm.response.json().title);",
                   "} else {",
                   "    pm.test('❌ Error al obtener tarjeta', function () {",
-                  "        pm.expect(responseCode).to.equal(200);",
+                  "        pm.expect(pm.response.code).to.equal(200);",
                   "    });",
                   "}"
                 ],
@@ -364,9 +374,14 @@
             "url": {
               "raw": "http://localhost:8000/cards/{{card_id}}",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8000",
-              "path": ["cards", "{{card_id}}"]
+              "path": [
+                "cards",
+                "{{card_id}}"
+              ]
             }
           }
         },
@@ -377,18 +392,15 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "const responseCode = pm.response.code;",
-                  "const responseData = pm.response.json();",
-                  "",
-                  "if (responseCode === 200) {",
+                  "if (pm.response.code === 200) {",
                   "    pm.test('✅ TARJETA ACTUALIZADA', function () {",
-                  "        pm.expect(responseCode).to.equal(200);",
-                  "        pm.expect(responseData.title).to.include('ACTUALIZADA');",
+                  "        pm.expect(pm.response.code).to.equal(200);",
+                  "        pm.expect(pm.response.json().title).to.include('ACTUALIZADA');",
                   "    });",
-                  "    console.log('✏️ Tarjeta actualizada: ' + responseData.title);",
+                  "    console.log('✏️ Tarjeta actualizada: ' + pm.response.json().title);",
                   "} else {",
                   "    pm.test('❌ Error al actualizar tarjeta', function () {",
-                  "        pm.expect(responseCode).to.equal(200);",
+                  "        pm.expect(pm.response.code).to.equal(200);",
                   "    });",
                   "}"
                 ],
@@ -415,9 +427,14 @@
             "url": {
               "raw": "http://localhost:8000/cards/{{card_id}}",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8000",
-              "path": ["cards", "{{card_id}}"]
+              "path": [
+                "cards",
+                "{{card_id}}"
+              ]
             }
           }
         },
@@ -430,7 +447,7 @@
                 "exec": [
                   "// Generar fecha actual",
                   "const today = new Date().toISOString().split('T')[0];",
-                  "pm.environment.set('worklog_date', today);"
+                  "pm.collectionVariables.set('worklog_date', today);"
                 ],
                 "type": "text/javascript"
               }
@@ -439,21 +456,18 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "const responseCode = pm.response.code;",
-                  "const responseData = pm.response.json();",
-                  "",
-                  "if (responseCode === 201) {",
-                  "    const worklogId = responseData.id;",
-                  "    pm.environment.set('worklog_id', worklogId);",
+                  "if (pm.response.code === 201) {",
+                  "    const worklogId = pm.response.json().id;",
+                  "    pm.collectionVariables.set('worklog_id', worklogId);",
                   "    pm.test('✅ WORKLOG CREADO', function () {",
-                  "        pm.expect(responseCode).to.equal(201);",
-                  "        pm.expect(responseData).to.have.property('id');",
+                  "        pm.expect(pm.response.code).to.equal(201);",
+                  "        pm.expect(pm.response.json()).to.have.property('id');",
                   "    });",
                   "    console.log('⏱️ Worklog ID: ' + worklogId);",
-                  "    console.log('Horas: ' + responseData.hours);",
+                  "    console.log('Horas: ' + pm.response.json().hours);",
                   "} else {",
                   "    pm.test('❌ Error al crear worklog', function () {",
-                  "        pm.expect(responseCode).to.equal(201);",
+                  "        pm.expect(pm.response.code).to.equal(201);",
                   "    });",
                   "}"
                 ],
@@ -480,9 +494,14 @@
             "url": {
               "raw": "http://localhost:8000/worklogs/",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8000",
-              "path": ["worklogs", ""]
+              "path": [
+                "worklogs",
+                ""
+              ]
             }
           }
         },
@@ -493,18 +512,15 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "const responseCode = pm.response.code;",
-                  "const responseData = pm.response.json();",
-                  "",
-                  "if (responseCode === 200) {",
+                  "if (pm.response.code === 200) {",
                   "    pm.test('✅ WORKLOGS LISTADOS', function () {",
-                  "        pm.expect(responseCode).to.equal(200);",
-                  "        pm.expect(responseData).to.be.an('array');",
+                  "        pm.expect(pm.response.code).to.equal(200);",
+                  "        pm.expect(pm.response.json()).to.be.an('array');",
                   "    });",
-                  "    console.log('📊 Total worklogs: ' + responseData.length);",
+                  "    console.log('📊 Total worklogs: ' + pm.response.json().length);",
                   "} else {",
                   "    pm.test('❌ Error al listar worklogs', function () {",
-                  "        pm.expect(responseCode).to.equal(200);",
+                  "        pm.expect(pm.response.code).to.equal(200);",
                   "    });",
                   "}"
                 ],
@@ -523,9 +539,15 @@
             "url": {
               "raw": "http://localhost:8000/worklogs/card/{{card_id}}",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8000",
-              "path": ["worklogs", "card", "{{card_id}}"]
+              "path": [
+                "worklogs",
+                "card",
+                "{{card_id}}"
+              ]
             }
           }
         },
@@ -536,20 +558,17 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "const responseCode = pm.response.code;",
-                  "",
-                  "if (responseCode === 200) {",
-                  "    const responseData = pm.response.json();",
+                  "if (pm.response.code === 200) {",
                   "    pm.test('✅ RESUMEN SEMANAL OBTENIDO', function () {",
-                  "        pm.expect(responseCode).to.equal(200);",
-                  "        pm.expect(responseData).to.have.property('total_hours');",
-                  "        pm.expect(responseData).to.have.property('week');",
+                  "        pm.expect(pm.response.code).to.equal(200);",
+                  "        pm.expect(pm.response.json()).to.have.property('total_hours');",
+                  "        pm.expect(pm.response.json()).to.have.property('week');",
                   "    });",
-                  "    console.log('⏱️ Semana: ' + responseData.week);",
-                  "    console.log('⏱️ Total horas: ' + responseData.total_hours);",
+                  "    console.log('⏱️ Semana: ' + pm.response.json().week);",
+                  "    console.log('⏱️ Total horas: ' + pm.response.json().total_hours);",
                   "} else {",
                   "    pm.test('❌ Error al obtener resumen', function () {",
-                  "        pm.expect(responseCode).to.equal(200);",
+                  "        pm.expect(pm.response.code).to.equal(200);",
                   "    });",
                   "}"
                 ],
@@ -568,9 +587,15 @@
             "url": {
               "raw": "http://localhost:8000/worklogs/me/week",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8000",
-              "path": ["worklogs", "me", "week"]
+              "path": [
+                "worklogs",
+                "me",
+                "week"
+              ]
             }
           }
         },
@@ -587,7 +612,7 @@
                   "const days = Math.floor((now - startOfYear) / (24 * 60 * 60 * 1000));",
                   "const weekNumber = Math.ceil((days + 1) / 7);",
                   "const weekISO = now.getFullYear() + '-W' + String(weekNumber).padStart(2, '0');",
-                  "pm.environment.set('current_week', weekISO);",
+                  "pm.collectionVariables.set('current_week', weekISO);",
                   "console.log('📅 Semana ISO: ' + weekISO);"
                 ],
                 "type": "text/javascript"
@@ -597,24 +622,21 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "const responseCode = pm.response.code;",
-                  "const responseData = pm.response.json();",
-                  "",
-                  "if (responseCode === 200) {",
+                  "if (pm.response.code === 200) {",
                   "    pm.test('✅ REPORTE SEMANAL OBTENIDO', function () {",
-                  "        pm.expect(responseCode).to.equal(200);",
-                  "        pm.expect(responseData).to.have.property('week');",
-                  "        pm.expect(responseData).to.have.property('completed');",
-                  "        pm.expect(responseData).to.have.property('new');",
-                  "        pm.expect(responseData).to.have.property('overdue');",
+                  "        pm.expect(pm.response.code).to.equal(200);",
+                  "        pm.expect(pm.response.json()).to.have.property('week');",
+                  "        pm.expect(pm.response.json()).to.have.property('completed');",
+                  "        pm.expect(pm.response.json()).to.have.property('new');",
+                  "        pm.expect(pm.response.json()).to.have.property('overdue');",
                   "    });",
-                  "    console.log('📊 Semana: ' + responseData.week);",
-                  "    console.log('Completadas: ' + responseData.completed.count);",
-                  "    console.log('Nuevas: ' + responseData.new.count);",
-                  "    console.log('Vencidas: ' + responseData.overdue.count);",
+                  "    console.log('📊 Semana: ' + pm.response.json().week);",
+                  "    console.log('Completadas: ' + pm.response.json().completed.count);",
+                  "    console.log('Nuevas: ' + pm.response.json().new.count);",
+                  "    console.log('Vencidas: ' + pm.response.json().overdue.count);",
                   "} else {",
                   "    pm.test('❌ Error al obtener reporte', function () {",
-                  "        pm.expect(responseCode).to.equal(200);",
+                  "        pm.expect(pm.response.code).to.equal(200);",
                   "    });",
                   "}"
                 ],
@@ -633,9 +655,15 @@
             "url": {
               "raw": "http://localhost:8000/report/{{board_id}}/summary?week={{current_week}}",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8000",
-              "path": ["report", "{{board_id}}", "summary"],
+              "path": [
+                "report",
+                "{{board_id}}",
+                "summary"
+              ],
               "query": [
                 {
                   "key": "week",
@@ -652,18 +680,15 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "const responseCode = pm.response.code;",
-                  "const responseData = pm.response.json();",
-                  "",
-                  "if (responseCode === 200) {",
+                  "if (pm.response.code === 200) {",
                   "    pm.test('✅ HORAS POR USUARIO OBTENIDAS', function () {",
-                  "        pm.expect(responseCode).to.equal(200);",
-                  "        pm.expect(responseData).to.be.an('array');",
+                  "        pm.expect(pm.response.code).to.equal(200);",
+                  "        pm.expect(pm.response.json()).to.be.an('array');",
                   "    });",
-                  "    console.log('👥 Total usuarios: ' + responseData.length);",
+                  "    console.log('👥 Total usuarios: ' + pm.response.json().length);",
                   "} else {",
                   "    pm.test('❌ Error al obtener horas por usuario', function () {",
-                  "        pm.expect(responseCode).to.equal(200);",
+                  "        pm.expect(pm.response.code).to.equal(200);",
                   "    });",
                   "}"
                 ],
@@ -682,9 +707,15 @@
             "url": {
               "raw": "http://localhost:8000/report/{{board_id}}/hours-by-user?week={{current_week}}",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8000",
-              "path": ["report", "{{board_id}}", "hours-by-user"],
+              "path": [
+                "report",
+                "{{board_id}}",
+                "hours-by-user"
+              ],
               "query": [
                 {
                   "key": "week",
@@ -701,18 +732,15 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "const responseCode = pm.response.code;",
-                  "const responseData = pm.response.json();",
-                  "",
-                  "if (responseCode === 200) {",
+                  "if (pm.response.code === 200) {",
                   "    pm.test('✅ HORAS POR TARJETA OBTENIDAS', function () {",
-                  "        pm.expect(responseCode).to.equal(200);",
-                  "        pm.expect(responseData).to.be.an('array');",
+                  "        pm.expect(pm.response.code).to.equal(200);",
+                  "        pm.expect(pm.response.json()).to.be.an('array');",
                   "    });",
-                  "    console.log('🃏 Total tarjetas con horas: ' + responseData.length);",
+                  "    console.log('🃏 Total tarjetas con horas: ' + pm.response.json().length);",
                   "} else {",
                   "    pm.test('❌ Error al obtener horas por tarjeta', function () {",
-                  "        pm.expect(responseCode).to.equal(200);",
+                  "        pm.expect(pm.response.code).to.equal(200);",
                   "    });",
                   "}"
                 ],
@@ -731,9 +759,15 @@
             "url": {
               "raw": "http://localhost:8000/report/{{board_id}}/hours-by-card?week={{current_week}}",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8000",
-              "path": ["report", "{{board_id}}", "hours-by-card"],
+              "path": [
+                "report",
+                "{{board_id}}",
+                "hours-by-card"
+              ],
               "query": [
                 {
                   "key": "week",
@@ -750,16 +784,14 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "const responseCode = pm.response.code;",
-                  "",
-                  "if (responseCode === 204) {",
+                  "if (pm.response.code === 204) {",
                   "    pm.test('✅ TARJETA ELIMINADA', function () {",
-                  "        pm.expect(responseCode).to.equal(204);",
+                  "        pm.expect(pm.response.code).to.equal(204);",
                   "    });",
                   "    console.log('🗑️ Tarjeta eliminada correctamente');",
                   "} else {",
                   "    pm.test('❌ Error al eliminar tarjeta', function () {",
-                  "        pm.expect(responseCode).to.equal(204);",
+                  "        pm.expect(pm.response.code).to.equal(204);",
                   "    });",
                   "}"
                 ],
@@ -778,13 +810,143 @@
             "url": {
               "raw": "http://localhost:8000/cards/{{card_id}}",
               "protocol": "http",
-              "host": ["localhost"],
+              "host": [
+                "localhost"
+              ],
               "port": "8000",
-              "path": ["cards", "{{card_id}}"]
+              "path": [
+                "cards",
+                "{{card_id}}"
+              ]
             }
           }
         }
       ]
+    },
+    {
+      "name": "🧹 CLEANUP - Eliminar usuario de test",
+      "item": [
+        {
+          "name": "🗑️ DELETE /auth/me - Eliminar usuario y todos sus datos",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// Este test se ejecuta SIEMPRE, incluso si tests anteriores fallan",
+                  "// Acepta tanto 204 (eliminado OK) como 401 (token inválido, ya eliminado)",
+                  "pm.test(\"Cleanup ejecutado (204 = OK, 401 = ya limpio)\", function () {",
+                  "    pm.expect([204, 401]).to.include(pm.response.code);",
+                  "});",
+                  "",
+                  "// Limpiar variables de entorno al finalizar",
+                  "pm.collectionVariables.unset('access_token');",
+                  "pm.collectionVariables.unset('user_id');",
+                  "pm.collectionVariables.unset('user_email');",
+                  "pm.collectionVariables.unset('board_id');",
+                  "pm.collectionVariables.unset('list_id');",
+                  "pm.collectionVariables.unset('card_id');",
+                  "pm.collectionVariables.unset('card2_id');",
+                  "pm.collectionVariables.unset('time_entry_id');",
+                  "",
+                  "console.log('✅ CLEANUP COMPLETADO - Usuario y todos sus datos eliminados (CASCADE)');"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/auth/me",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "auth",
+                "me"
+              ]
+            },
+            "description": "Elimina el usuario autenticado y TODOS sus datos relacionados:\n- Boards\n- Lists\n- Cards\n- Time Entries\n- Labels\n- Subtasks\n- Board Memberships\n\nTodo se elimina automáticamente por CASCADE en la base de datos."
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "access_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "user_email",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "user_password",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "user_name",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "user_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "board_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "list_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "card_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "card2_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "card_title",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "time_entry_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "worklog_date",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "current_week",
+      "value": "",
+      "type": "string"
     }
   ]
 }
