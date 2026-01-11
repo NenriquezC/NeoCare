@@ -37,6 +37,13 @@ const Boards: React.FC = () => {
   const [editingCard, setEditingCard] = useState<any | null>(null);
   const [activeCard, setActiveCard] = useState<any | null>(null);
 
+  // =======================
+  // Semana 6 — Filtros UI
+  // =======================
+  const [searchQuery, setSearchQuery] = useState("");
+  const [responsibleId, setResponsibleId] = useState<number | null>(null);
+
+
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
@@ -97,6 +104,39 @@ const Boards: React.FC = () => {
     return { text: dueDateStr, style: badgeStyle("#334155") };
   }
 
+  // =======================
+  // Semana 6 — Carga de tarjetas
+  // =======================
+  async function loadCards(
+    boardId: number,
+    opts?: { query?: string; responsibleId?: number | null }
+  ) {
+    let url = `/cards?board_id=${boardId}`;
+
+    if (opts?.responsibleId != null) {
+      url += `&responsible_id=${opts.responsibleId}`;
+    }
+
+    if (opts?.query && opts.query.trim()) {
+      url = `/cards/search?board_id=${boardId}&query=${encodeURIComponent(
+        opts.query
+      )}`;
+    }
+
+    const res = await apiFetch(url, { method: "GET" });
+    if (!res.ok) {
+      const txt = await res.text().catch(() => "");
+      throw new Error(txt || "Error cargando tarjetas");
+    }
+
+    const data = await res.json();
+    setCards(Array.isArray(data) ? data : []);  
+  }
+
+
+
+
+
   useEffect(() => {
     (async () => {
       try {
@@ -135,13 +175,7 @@ const Boards: React.FC = () => {
         }
         setListIdByColumn(map);
 
-        const resCards = await apiFetch(`/cards/?board_id=${boardId}`, { method: "GET" });
-        if (!resCards.ok) {
-          const txt = await resCards.text().catch(() => "");
-          throw new Error(txt || `No se pudieron cargar cards (status ${resCards.status})`);
-        }
-        const cardsData = await resCards.json();
-        setCards(Array.isArray(cardsData) ? cardsData : []);
+        await loadCards(boardId);
       } catch (err) {
         setSelectedBoardId(null);
         setListIdByColumn({});
@@ -150,6 +184,17 @@ const Boards: React.FC = () => {
       }
     })();
   }, []);
+
+// =======================
+// Semana 6 — Auto refresh búsqueda
+// =======================
+useEffect(() => {
+  if (!selectedBoardId) return;
+
+  if (!searchQuery.trim()) {
+    loadCards(selectedBoardId);
+  }
+}, [searchQuery, selectedBoardId]);
 
   function openCreate(targetColumn: string = "Por hacer") {
     setEditingCard(null);
@@ -432,20 +477,68 @@ const Boards: React.FC = () => {
         >
           <h1 style={{ color: "white", textShadow: "2px 2px 4px rgba(0, 0, 0, 0.6)" }}>NeoCare</h1>
           <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-            <button
-              onClick={() => openCreate("Por hacer")}
-              style={{
-                padding: "0.5rem 1rem",
-                background: "linear-gradient(135deg, #0c4a6e 0%, #1e40af 100%)",
-                border: "none",
-                borderRadius: "0.5rem",
-                color: "white",
-                cursor: "pointer",
-                textShadow: "1px 1px 2px rgba(0, 0, 0, 0.5)",
-                fontWeight: "600",
-                boxShadow: "0 4px 6px rgba(0, 0, 0, 0.2)",
-              }}
-            >
+        {/* =======================
+          Semana 6 — Buscador
+        ======================= */}
+        <input
+          type="text"
+          placeholder="Buscar tarjetas..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          style={{
+          padding: "0.45rem 0.6rem",
+          borderRadius: "0.4rem",
+          border: "1px solid #93c5fd",
+          minWidth: 180,
+        }}
+      />
+
+  <button
+  onClick={async () => {
+    if (!selectedBoardId) return;
+
+    try {
+      await loadCards(selectedBoardId, {
+        query: searchQuery,
+        responsibleId,
+      });
+    } catch (e) {
+      // IMPORTANTE: limpiar resultados si no hay coincidencias o hay error
+      setCards([]);
+    }
+  }}
+  style={{
+    padding: "0.45rem 0.7rem",
+    background: "#2563eb",
+    border: "none",
+    borderRadius: "0.4rem",
+    color: "white",
+    fontWeight: 600,
+    cursor: "pointer",
+  }}
+>
+  🔍 Buscar
+</button>
+
+  {/* =======================
+      Acciones existentes
+  ======================= */}
+  <button
+    onClick={() => openCreate("Por hacer")}
+    style={{
+      padding: "0.5rem 1rem",
+      background: "linear-gradient(135deg, #0c4a6e 0%, #1e40af 100%)",
+      border: "none",
+      borderRadius: "0.5rem",
+      color: "white",
+      cursor: "pointer",
+      textShadow: "1px 1px 2px rgba(0, 0, 0, 0.5)",
+      fontWeight: "600",
+      boxShadow: "0 4px 6px rgba(0, 0, 0, 0.2)",
+    }}
+  >
+  
+
               + Nueva tarjeta
             </button>
 
@@ -509,6 +602,29 @@ const Boards: React.FC = () => {
         </header>
 
         {formError && <div style={{ padding: "10px 24px", color: "#fecaca" }}>{formError}</div>}
+
+        {/* =======================
+  Semana 6 — Estado búsqueda
+======================= */}
+{searchQuery.trim() && (
+  <div
+    style={{
+      padding: "6px 24px",
+      fontSize: 14,
+      fontWeight: 600,
+      color: cards.length === 0 ? "#7f1d1d" : "#1e3a8a",
+    }}
+  >
+    {cards.length === 0 ? (
+      <>❌ No se encontraron tarjetas para: <b>{searchQuery}</b></>
+    ) : (
+      <>🔎 Mostrando resultados para: <b>{searchQuery}</b> ({cards.length})</>
+    )}
+  </div>
+)}
+
+
+
 
         {/* Contenido */}
         <main

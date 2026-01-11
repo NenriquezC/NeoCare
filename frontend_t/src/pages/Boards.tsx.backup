@@ -132,15 +132,9 @@ const Boards: React.FC = () => {
             if (l?.name && typeof l?.id === "number") map[l.name] = l.id;
           }
         }
-        setListIdByColumn(map);
-
-        const resCards = await apiFetch(`/cards/?board_id=${boardId}`, { method: "GET" });
-        if (!resCards.ok) {
-          const txt = await resCards.text().catch(() => "");
-          throw new Error(txt || `No se pudieron cargar cards (status ${resCards.status})`);
-        }
-        const cardsData = await resCards.json();
-        setCards(Array.isArray(cardsData) ? cardsData : []);
+        setListIdByColumn(map); # semana 6
+ 
+        await loadCards(boardId);
       } catch (err) {
         setSelectedBoardId(null);
         setListIdByColumn({});

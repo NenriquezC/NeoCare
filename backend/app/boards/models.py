@@ -190,6 +190,13 @@ class Card(Base):
     created_by = relationship("User",foreign_keys=[created_by_id],back_populates="created_cards")
     time_entries = relationship("TimeEntry",back_populates="card",cascade="all, delete-orphan",passive_deletes=True,)
 
+    # Semana 6 — Extras: labels y subtasks
+    labels = relationship("Label",back_populates="card",cascade="all, delete-orphan",passive_deletes=True,)
+    subtasks = relationship("Subtask",back_populates="card",cascade="all, delete-orphan",passive_deletes=True,)
+
+
+
+
 
 class TimeEntry(Base):
     """
@@ -256,3 +263,43 @@ class BoardMember(Base):
     # Relaciones
     board = relationship("Board", back_populates="members")
     user = relationship("User", back_populates="board_memberships")
+
+
+
+#SEMANA 6 SE MODIFICA LA BASE DE DATOS=======================================================
+class Label(Base):
+    """
+    Semana 6 — Etiquetas (Labels) para priorización y clasificación visual.
+
+    Una etiqueta pertenece a una tarjeta (Card).
+    Ej: "Urgente" (rojo), "QA" (verde), "Dependencia" (amarillo)
+    """
+    __tablename__ = "labels"
+
+    id = Column(Integer, primary_key=True, index=True)
+    card_id = Column(Integer,ForeignKey("cards.id", ondelete="CASCADE"),nullable=False,index=True,)
+    name = Column(String(30), nullable=False)
+    color = Column(String(20), nullable=False, default="blue")
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), nullable=False)
+
+    # Relaciones
+    card = relationship("Card", back_populates="labels")
+
+
+class Subtask(Base):
+    """
+    Semana 6 — Checklist (Subtasks) dentro de una tarjeta.
+
+    Permite convertir una Card en mini-proyecto con subtareas.
+    """
+    __tablename__ = "subtasks"
+
+    id = Column(Integer, primary_key=True, index=True)
+    card_id = Column(Integer,ForeignKey("cards.id", ondelete="CASCADE"),nullable=False,index=True,)
+    title = Column(String(100), nullable=False)
+    completed = Column(Boolean, nullable=False, default=False)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), nullable=False)
+    updated_at = Column(DateTime,default=lambda: datetime.now(timezone.utc),onupdate=lambda: datetime.now(timezone.utc),nullable=False,)
+
+    # Relaciones
+    card = relationship("Card", back_populates="subtasks")
