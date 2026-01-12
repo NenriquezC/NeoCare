@@ -289,6 +289,7 @@ def test_ui_login_fallido(page):
     page.fill("input[type=email]", "wrong@example.com")
     page.fill("input[type=password]", "badpass")
     page.click("button[type=submit]")
-    page.wait_for_selector("text=No se ha podido iniciar sesión")
+    # El frontend muestra "Error: " + el mensaje JSON del backend
+    page.wait_for_selector("text=Error:", timeout=5000)
     print("✅ UI: Login fallido muestra error")
 

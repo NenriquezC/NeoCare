@@ -1,35 +1,52 @@
-# Frontend Vite
-frontend_t/node_modules/
-frontend_t/.vite/
-
-# Cache de Vite (frontend)
-frontend_t/.vite/
-
-# IDE settings
-.vscode
-
-# backend
-.env
-*.pyc
-backend/__pycache__/
-backend/.venv/
-venv/
 # Python
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+.Python
 .venv/
 venv/
+env/
 .env
+*.db
+*.sqlite3
 
-# Node/React
+# Pytest
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Backend
+backend/__pycache__/
+backend/.venv/
+backend/test.db
+backend/test_report.db
+
+# Node/React/Frontend
 node_modules/
 dist/
 build/
+.vite/
+frontend_t/node_modules/
+frontend_t/.vite/
 
 # IDE
 .vscode/
 .idea/
+*.swp
+*.swo
 
 # OS
 .DS_Store
 Thumbs.db
+
+# Archivos temporales y respaldos
+*_OLD*.tsx
+*_OLD*.py
+*_BACKUP*.py
+*_BACKUP*.tsx
+*_NEW*.tsx
+*_NEW*.py
+token.txt
+test_api.ps1
+build_log.txt

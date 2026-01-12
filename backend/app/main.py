@@ -14,7 +14,7 @@ from .cards.routes import router as cards_router  # ✅ agrega cards aquí, arri
 from .worklogs.routes import router as worklogs_router  # ✅ Semana 4: worklogs
 from app.report.routes import router as report_router
 # Inicializa la aplicación FastAPI con título personalizado
-app = FastAPI(title="NeoCare API")
+app = FastAPI(title="NeoCare API", redirect_slashes=False)
 
 # CORS (para que el frontend pueda llamar al backend)
 app.add_middleware(

@@ -259,7 +259,7 @@ export default function CardsBoard({ boardId }: CardsBoardProps) {
     setTokenMissing(false);
 
     try {
-      const res = await fetch(`${BASE_URL}/cards?board_id=${encodeURIComponent(boardId)}`, {
+      const res = await fetch(`${BASE_URL}/cards/?board_id=${encodeURIComponent(boardId)}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (!res.ok) throw new Error("Error al obtener tarjetas");

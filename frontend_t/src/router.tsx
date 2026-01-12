@@ -15,6 +15,7 @@ import Boards from "./pages/Boards.tsx";
 import ProtectedRoute from "./components/ProtectedRoute";
 import MyHours from "./pages/MyHours";
 import KanbanBoard from "./pages/KanbanBoard";
+import ReportPage from "./pages/ReportPage";
 
 /**
  * AppRouter
@@ -60,6 +61,24 @@ export const AppRouter: React.FC = () => {
         element={
           <ProtectedRoute>
             <MyHours />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/reporte"
+        element={
+          <ProtectedRoute>
+            <ReportPage />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/report/:boardId"
+        element={
+          <ProtectedRoute>
+            <ReportPage />
           </ProtectedRoute>
         }
       />
