@@ -3,6 +3,14 @@ import { useNavigate } from "react-router-dom";
 
 export type CardListID = 1 | 2 | 3;
 
+export type LabelColor = "red" | "blue" | "green" | "yellow" | "purple" | "pink" | "orange" | "indigo";
+
+export type Label = {
+  id: string;
+  name: string;
+  color: LabelColor;
+};
+
 export interface Card {
   id: number;
   title: string;
@@ -10,18 +18,11 @@ export interface Card {
   due_date?: string | null;
   list_id: CardListID;
   board_id: number;
-  labels?: Array<{ id: string; name: string; color: string }>;
+  labels?: Label[];
   checklist?: Array<{ id: string; title: string; done: boolean }>;
   assignee_id?: string | null;
 }
 
-export type Label = {
-  id: string;
-  name: string;
-  color: "red" | "blue" | "green" | "yellow" | "purple" | "pink" | "orange" | "indigo";
-};
-
-export type LabelColor = Label["color"];
 export type ChecklistItem = { id: string; title: string; done: boolean };
 
 interface CardsBoardProps {
