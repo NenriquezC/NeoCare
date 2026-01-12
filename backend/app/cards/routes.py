@@ -8,16 +8,6 @@ from .schemas import (
 )
 from ..auth.utils import get_current_user, get_db
 from ..boards.models import Card, Board, List, User, Label, Subtask
-
-from ..boards.models import Label, Subtask 
-#semana 6
-from ..boards.schemas import (
-    LabelCreate,
-    LabelOut,
-    SubtaskCreate,
-    SubtaskUpdate,
-    SubtaskOut,
-)
 from sqlalchemy import or_
 
 router = APIRouter(prefix="/cards", tags=["cards"])
@@ -697,12 +687,9 @@ def update_subtask(
     verify_board_permission(card.board_id, current_user.id, db)
 
     # Actualizar solo los campos que vienen en el body
-    if data.title is not None:
-        subtask.title = data.title
-    if data.completed is not None:
-        subtask.completed = data.completed
-    if data.position is not None:
-        subtask.position = data.position
+    update_data = data.model_dump(exclude_unset=True)
+    for field, value in update_data.items():
+        setattr(subtask, field, value)
 
     db.commit()
     db.refresh(subtask)

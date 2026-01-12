@@ -439,6 +439,224 @@
           }
         },
         {
+          "name": "8️⃣🏷️ CREAR LABEL (Etiqueta)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const labelId = pm.response.json().id;",
+                  "    pm.collectionVariables.set('label_id', labelId);",
+                  "    pm.test('✅ LABEL CREADA', function () {",
+                  "        pm.expect(pm.response.code).to.equal(200);",
+                  "        pm.expect(pm.response.json()).to.have.property('id');",
+                  "        pm.expect(pm.response.json().name).to.equal('Urgente');",
+                  "    });",
+                  "    console.log('🏷️  Label ID: ' + labelId);",
+                  "} else {",
+                  "    pm.test('❌ Error al crear label', function () {",
+                  "        pm.expect(pm.response.code).to.equal(200);",
+                  "    });",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Urgente\",\n  \"color\": \"#ef4444\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/cards/{{card_id}}/labels",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "cards",
+                "{{card_id}}",
+                "labels"
+              ]
+            }
+          }
+        },
+        {
+          "name": "8️⃣✅ CREAR SUBTASK (Checklist)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const subtaskId = pm.response.json().id;",
+                  "    pm.collectionVariables.set('subtask_id', subtaskId);",
+                  "    pm.test('✅ SUBTASK CREADA', function () {",
+                  "        pm.expect(pm.response.code).to.equal(200);",
+                  "        pm.expect(pm.response.json()).to.have.property('id');",
+                  "        pm.expect(pm.response.json().completed).to.equal(false);",
+                  "        pm.expect(pm.response.json().position).to.equal(0);",
+                  "    });",
+                  "    console.log('✅ Subtask ID: ' + subtaskId);",
+                  "} else {",
+                  "    pm.test('❌ Error al crear subtask', function () {",
+                  "        pm.expect(pm.response.code).to.equal(200);",
+                  "    });",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Escribir documentación\",\n  \"completed\": false\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/cards/{{card_id}}/subtasks",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "cards",
+                "{{card_id}}",
+                "subtasks"
+              ]
+            }
+          }
+        },
+        {
+          "name": "8️⃣📋 LISTAR LABELS Y SUBTASKS",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const labels = pm.response.json().labels || [];",
+                  "    const subtasks = pm.response.json().subtasks || [];",
+                  "    pm.test('✅ LABELS Y SUBTASKS LISTADOS', function () {",
+                  "        pm.expect(pm.response.code).to.equal(200);",
+                  "        pm.expect(labels.length).to.be.at.least(1);",
+                  "        pm.expect(subtasks.length).to.be.at.least(1);",
+                  "    });",
+                  "    console.log('🏷️  Labels: ' + labels.length);",
+                  "    console.log('✅ Subtasks: ' + subtasks.length);",
+                  "} else {",
+                  "    pm.test('❌ Error al listar', function () {",
+                  "        pm.expect(pm.response.code).to.equal(200);",
+                  "    });",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/cards/{{card_id}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "cards",
+                "{{card_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "8️⃣✏️ ACTUALIZAR SUBTASK (Completar)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    pm.test('✅ SUBTASK COMPLETADA', function () {",
+                  "        pm.expect(pm.response.code).to.equal(200);",
+                  "        pm.expect(pm.response.json().completed).to.equal(true);",
+                  "    });",
+                  "    console.log('✅ Subtask marcada como completada');",
+                  "} else {",
+                  "    pm.test('❌ Error al actualizar subtask', function () {",
+                  "        pm.expect(pm.response.code).to.equal(200);",
+                  "    });",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"completed\": true\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8000/cards/subtasks/{{subtask_id}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "cards",
+                "subtasks",
+                "{{subtask_id}}"
+              ]
+            }
+          }
+        },
+        {
           "name": "9️⃣ CREAR WORKLOG",
           "event": [
             {
@@ -847,6 +1065,8 @@
                   "pm.collectionVariables.unset('list_id');",
                   "pm.collectionVariables.unset('card_id');",
                   "pm.collectionVariables.unset('card2_id');",
+                  "pm.collectionVariables.unset('label_id');",
+                  "pm.collectionVariables.unset('subtask_id');",
                   "pm.collectionVariables.unset('time_entry_id');",
                   "",
                   "console.log('✅ CLEANUP COMPLETADO - Usuario y todos sus datos eliminados (CASCADE)');"
@@ -930,6 +1150,16 @@
     },
     {
       "key": "card_title",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "label_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "subtask_id",
       "value": "",
       "type": "string"
     },

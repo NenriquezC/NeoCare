@@ -1,4 +1,4 @@
-// src/pages/Login.tsx
+﻿// src/pages/Login.tsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginRequest } from "../lib/auth";
@@ -15,26 +15,30 @@ const Login: React.FC = () => {
     e.preventDefault();
     setError(null);
 
-    if (!email || !password) {
+    if (! email || !password) {
       setError("Introduce email y contraseña");
       return;
     }
 
     setLoading(true);
     try {
-      // 🔹 Llamada REAL a FastAPI
+      console.log("🔄 Intentando login con:", { email, password: "***" });
+      console.log("🔄 URL backend:", "http://127.0.0.1:8000/auth/login");
+      
       const data = await loginRequest({ email, password });
-
-      // Guardamos el token devuelto por el backend
-      localStorage.setItem("token", data.access_token);
-
-      // Navegamos al tablero
+      
+      console.log("✅ Login exitoso:", data);
+      localStorage.setItem("token", data. access_token);
       navigate("/boards");
     } catch (err) {
-      console.error(err);
-      setError(
-        "No se ha podido iniciar sesión (API no disponible o credenciales incorrectas)"
-      );
+      console.error("❌ Error completo:", err);
+      
+      if (err instanceof Error) {
+        console.error("❌ Mensaje:", err.message);
+        setError(`Error: ${err.message}`);
+      } else {
+        setError("No se ha podido iniciar sesión (API no disponible o credenciales incorrectas)");
+      }
     } finally {
       setLoading(false);
     }
@@ -44,13 +48,16 @@ const Login: React.FC = () => {
     <div
       style={{
         minHeight: "100vh",
+        width: "100%",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        background: "linear-gradient(135deg, #e0f2fe 0%, #bfdbfe 50%, #93c5fd 100%)",
+        background:
+          "linear-gradient(135deg, #020617 0%, #0b2a5a 45%, #1e3a8a 100%)",
         color: "white",
       }}
-    >
+      >
+
       <div
         style={{
           background: "linear-gradient(135deg, #e0f2fe 0%, #bfdbfe 50%, #93c5fd 100%)",
@@ -92,7 +99,7 @@ const Login: React.FC = () => {
             }}
           />
 
-          <label style={{ display: "block", marginBottom: "0.5rem", color: "#1e40af", fontWeight: "600", textShadow: "1px 1px 2px rgba(0, 0, 0, 0.3)" }}>
+          <label style={{ display: "block", marginBottom: "0.5rem", color: "#1e40af", fontWeight:  "600", textShadow:  "1px 1px 2px rgba(0, 0, 0, 0.3)" }}>
             Contraseña
           </label>
           <input
@@ -143,7 +150,7 @@ const Login: React.FC = () => {
               boxShadow: "0 4px 6px rgba(0, 0, 0, 0.2)",
             }}
           >
-            {loading ? "Iniciando sesión..." : "Iniciar sesión"}
+            {loading ?  "Iniciando sesión..." :  "Iniciar sesión"}
           </button>
         </form>
       </div>
@@ -151,5 +158,4 @@ const Login: React.FC = () => {
   );
 };
 
-// 👇 Esto es lo que faltaba
 export default Login;

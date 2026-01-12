@@ -183,16 +183,9 @@ class Card(Base):
     responsible = relationship("User", foreign_keys=[responsible_id], back_populates="responsible_cards")
     created_by = relationship("User", foreign_keys=[created_by_id], back_populates="created_cards")
     time_entries = relationship("TimeEntry", back_populates="card", cascade="all, delete-orphan", passive_deletes=True)
-    # SEMANA 6: Labels y Subtasks con relación directa (más simple que many-to-many)
+    # SEMANA 6: Labels y Subtasks
     labels = relationship("Label", back_populates="card", cascade="all, delete-orphan", passive_deletes=True)
     subtasks = relationship("Subtask", back_populates="card", cascade="all, delete-orphan", passive_deletes=True)
-
-    # Semana 6 — Extras: labels y subtasks
-    labels = relationship("Label",back_populates="card",cascade="all, delete-orphan",passive_deletes=True,)
-    subtasks = relationship("Subtask",back_populates="card",cascade="all, delete-orphan",passive_deletes=True,)
-
-
-
 
 
 class TimeEntry(Base):
@@ -250,6 +243,7 @@ class Label(Base):
     card_id = Column(Integer, ForeignKey("cards.id", ondelete="CASCADE"), nullable=False)
     name = Column(String(50), nullable=False)
     color = Column(String(20), nullable=True)  # Hex code: #ef4444
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), nullable=False)
 
     # Relación: Label pertenece a una Card
     card = relationship("Card", back_populates="labels")
@@ -270,7 +264,9 @@ class Subtask(Base):
     card_id = Column(Integer, ForeignKey("cards.id", ondelete="CASCADE"), nullable=False)
     title = Column(String(200), nullable=False)
     completed = Column(Boolean, default=False, nullable=False)  # NOTA: 'completed' no 'is_completed'
-    position = Column(Integer, default=0)
+    position = Column(Integer, default=0, nullable=False)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), nullable=False)
+    updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc), nullable=False)
 
     # Relación: Subtask pertenece a una Card
     card = relationship("Card", back_populates="subtasks")

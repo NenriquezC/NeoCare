@@ -1,79 +1,71 @@
 /**
  * @file router.tsx
  * Define las rutas principales de la aplicación React, asociando cada ruta a su componente.
- * Integra protección de rutas para evitar acceso no autenticado y redirecciona rutas desconocidas al login.
+ * Integra protección de rutas para evitar acceso no autenticado y redirecciona rutas desconocidas a la home.
  */
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 
+import Home from "./pages/Home";
 import Login from "./pages/Login";
-import Boards from "./pages/Boards";
-import MyHours from "./pages/MyHours"; // SEMANA 4
+
+// ✅ IMPORT EXPLÍCITO AL ARCHIVO EXACTO (evita que tome otro Boards por error)
+import Boards from "./pages/Boards.tsx";
 
 import ProtectedRoute from "./components/ProtectedRoute";
-import AppLayout from "./components/layout/AppLayout";
-import ReportPage from "./pages/ReportPage"; //semana 5
+import MyHours from "./pages/MyHours";
+import KanbanBoard from "./pages/KanbanBoard";
 
 /**
  * AppRouter
  *
- * Componente que gestiona el enrutamiento de la aplicación:
- * - Todas las rutas se renderizan dentro del layout central tipo Django
- * - "/login": Vista de autentificación.
- * - "/boards": Vista principal protegida; requiere autenticación.
- * - "/my-hours": Vista protegida de horas por semana.
- * - "*": Redirección de cualquier ruta desconocida al login.
- *
- * @returns {JSX.Element} Árbol de rutas de la aplicación.
+ * Rutas:
+ * - "/": Landing (Home)
+ * - "/login": Login
+ * - "/boards": Vista protegida
+ * - "/my-hours": Vista protegida
+ * - "*": Redirección a Home
  */
 export const AppRouter: React.FC = () => {
+  console.log("✅ ROUTER CARGADO (AppRouter)");
   return (
     <Routes>
-      <Route
-        path="/login"
-        element={
-          <AppLayout>
-            <Login />
-          </AppLayout>
-        }
-      />
+      {/* Página inicial */}
+      <Route path="/" element={<Home />} />
 
+      {/* Login */}
+      <Route path="/login" element={<Login />} />
+
+      {/* Protegidas */}
       <Route
         path="/boards"
         element={
           <ProtectedRoute>
-            <AppLayout>
-              <Boards />
-            </AppLayout>
+            <Boards />
           </ProtectedRoute>
         }
       />
 
-      {/* NUEVA RUTA SEMANA 4 */}
+      <Route
+        path="/kanban/:boardId"
+        element={
+          <ProtectedRoute>
+            <KanbanBoard />
+          </ProtectedRoute>
+        }
+      />
+
       <Route
         path="/my-hours"
         element={
           <ProtectedRoute>
-            <AppLayout>
-              <MyHours />
-            </AppLayout>
+            <MyHours />
           </ProtectedRoute>
         }
       />
 
-      {/* NUEVA RUTA SEMANA 5 */}
-      <Route
-        path="/report/:boardId"
-        element={
-          <ProtectedRoute>
-            <AppLayout>
-              <ReportPage />
-            </AppLayout>
-          </ProtectedRoute>
-        }
-      />
-
-      <Route path="*" element={<Navigate to="/login" replace />} />
+      {/* Cualquier otra ruta -> Home */}
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 };

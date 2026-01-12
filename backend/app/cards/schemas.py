@@ -157,6 +157,7 @@ class LabelOut(LabelBase):
     """
     id: int
     card_id: int
+    created_at: Optional[datetime] = Field(default=None)
     model_config = ConfigDict(from_attributes=True)
 
 
@@ -263,6 +264,8 @@ class SubtaskOut(SubtaskBase):
     id: int
     card_id: int
     position: int
+    created_at: Optional[datetime] = Field(default=None)
+    updated_at: Optional[datetime] = Field(default=None)
     model_config = ConfigDict(from_attributes=True)
 
 
