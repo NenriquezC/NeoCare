@@ -244,6 +244,33 @@ export default function Boards() {
     }
   }
 
+  async function handleDeleteCard(cardId: number) {
+    if (!confirm("¿Seguro que quieres eliminar esta tarjeta?")) return;
+    
+    try {
+      const res = await apiFetch(`/cards/${cardId}`, {
+        method: "DELETE",
+      });
+      
+      if (!res.ok) throw new Error("Error al eliminar tarjeta");
+      
+      // Eliminar extras del localStorage
+      setExtrasByCardId((prev) => {
+        const next = { ...prev };
+        delete next[cardId];
+        saveExtrasMap(next);
+        return next;
+      });
+      
+      // Recargar tarjetas
+      if (selectedBoardId) {
+        await loadBoardData(selectedBoardId);
+      }
+    } catch (err) {
+      alert(err instanceof Error ? err.message : "Error al eliminar tarjeta");
+    }
+  }
+
   function openEdit(card: Card) {
     setEditingCard(card);
     setNewCard({
@@ -603,7 +630,6 @@ export default function Boards() {
                     return (
                       <div
                         key={card.id}
-                        onClick={() => openEdit(card)}
                         style={{
                           background: "rgba(255,255,255,0.96)",
                           borderRadius: 12,
@@ -612,6 +638,7 @@ export default function Boards() {
                           boxShadow: "0 2px 8px rgba(0,0,0,0.12)",
                           cursor: "pointer",
                           transition: "all 0.2s",
+                          position: "relative",
                         }}
                         onMouseEnter={(e) => {
                           e.currentTarget.style.boxShadow = "0 4px 16px rgba(0,0,0,0.18)";
@@ -622,9 +649,46 @@ export default function Boards() {
                           e.currentTarget.style.transform = "translateY(0)";
                         }}
                       >
-                        <h4 style={{ margin: 0, fontWeight: 900, fontSize: 15, color: "#0f172a", marginBottom: 8 }}>
-                          {card.title}
-                        </h4>
+                        {/* Botón eliminar */}
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDeleteCard(card.id);
+                          }}
+                          style={{
+                            position: "absolute",
+                            top: 8,
+                            right: 8,
+                            width: 24,
+                            height: 24,
+                            borderRadius: 6,
+                            border: "none",
+                            background: "rgba(220, 38, 38, 0.1)",
+                            color: "#dc2626",
+                            cursor: "pointer",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            fontSize: 14,
+                            transition: "all 0.2s",
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.background = "#dc2626";
+                            e.currentTarget.style.color = "white";
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.background = "rgba(220, 38, 38, 0.1)";
+                            e.currentTarget.style.color = "#dc2626";
+                          }}
+                          title="Eliminar tarjeta"
+                        >
+                          ✕
+                        </button>
+
+                        <div onClick={() => openEdit(card)} style={{ cursor: "pointer" }}>
+                          <h4 style={{ margin: 0, fontWeight: 900, fontSize: 15, color: "#0f172a", marginBottom: 8, paddingRight: 24 }}>
+                            {card.title}
+                          </h4>
                         
                         {card.description && (
                           <p style={{
@@ -724,6 +788,7 @@ export default function Boards() {
                               <span>📅 {new Date(card.due_date).toLocaleDateString()}</span>
                             </>
                           )}
+                        </div>
                         </div>
                       </div>
                     );
@@ -1098,21 +1163,49 @@ export default function Boards() {
             <div style={{
               marginTop: 24,
               display: "flex",
-              justifyContent: "flex-end",
+              justifyContent: editingCard ? "space-between" : "flex-end",
               gap: 10,
             }}>
-              <button
-                onClick={() => {
-                  setShowModal(false);
-                  setEditingCard(null);
-                  setNewCard({ title: "", description: "", list_id: 1, due_date: "" });
-                  setModalLabels([]);
-                  setModalAssignee("Sin asignar");
-                  setModalChecklist([]);
-                }}
-                style={{
-                  height: 40,
-                  padding: "0 20px",
+              {editingCard && (
+                <button
+                  onClick={() => {
+                    handleDeleteCard(editingCard.id);
+                    setShowModal(false);
+                    setEditingCard(null);
+                    setNewCard({ title: "", description: "", list_id: 1, due_date: "" });
+                    setModalLabels([]);
+                    setModalAssignee("Sin asignar");
+                    setModalChecklist([]);
+                  }}
+                  style={{
+                    height: 40,
+                    padding: "0 20px",
+                    borderRadius: 10,
+                    border: "none",
+                    background: "#dc2626",
+                    color: "white",
+                    fontWeight: 900,
+                    cursor: "pointer",
+                    fontSize: 14,
+                    boxShadow: "0 4px 12px rgba(220, 38, 38, 0.35)",
+                  }}
+                >
+                  🗑️ Eliminar
+                </button>
+              )}
+              <div style={{ display: "flex", gap: 10 }}>
+                <button
+                  onClick={() => {
+                    setShowModal(false);
+                    setEditingCard(null);
+                    setNewCard({ title: "", description: "", list_id: 1, due_date: "" });
+                    setModalLabels([]);
+                    setModalAssignee("Sin asignar");
+                    setModalChecklist([]);
+                  }}
+                  style={{
+                    height: 40,
+                    padding: "0 20px",
                   borderRadius: 10,
                   border: "1px solid rgba(15,23,42,0.14)",
                   background: "white",
@@ -1141,6 +1234,7 @@ export default function Boards() {
               >
                 {editingCard ? "Guardar cambios" : "Crear tarjeta"}
               </button>
+              </div>
             </div>
           </div>
         </div>
