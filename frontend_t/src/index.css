@@ -26,6 +26,33 @@ body {
 
 /* ==================== ANIMACIONES MEJORADAS ==================== */
 
+/* Spinner animation */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Slide in from right (for toasts) */
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.3s ease-out;
+}
+
 /* Fade in entrance */
 @keyframes fadeIn {
   from {
