@@ -9,6 +9,17 @@ from .schemas import (
 from ..auth.utils import get_current_user, get_db
 from ..boards.models import Card, Board, List, User, Label, Subtask
 
+from ..boards.models import Label, Subtask 
+#semana 6
+from ..boards.schemas import (
+    LabelCreate,
+    LabelOut,
+    SubtaskCreate,
+    SubtaskUpdate,
+    SubtaskOut,
+)
+from sqlalchemy import or_
+
 router = APIRouter(prefix="/cards", tags=["cards"])
 
 """Módulo de endpoints para la gestión de 'cards' (tarjetas).
@@ -28,7 +39,8 @@ def verify_board_permission(board_id: int, user_id: int, db: Session):
         raise HTTPException(status_code=404, detail="Tablero no encontrado")
 
     if board.user_id != user_id:
-        raise HTTPException(status_code=403, detail="No tienes permiso para este tablero")
+        #raise HTTPException(status_code=403, detail="No tienes permiso para este tablero")
+        raise HTTPException(status_code=403)
 
     return board
 
@@ -118,6 +130,10 @@ def get_cards(
     # Ordenar por lista y posición
     return query.order_by(Card.list_id, Card.position).all()
 
+    if responsible_id is not None:
+        query_db = query_db.filter(Card.responsible_id == responsible_id)
+
+    return query_db.order_by(Card.list_id, Card.position).all()
 
 # ============================ GET /cards/{card_id} ======================================
 # ✅ CAMBIO 2: Rehabilitamos el endpoint que tus tests esperan (antes estaba comentado)

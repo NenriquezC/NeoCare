@@ -187,6 +187,13 @@ class Card(Base):
     labels = relationship("Label", back_populates="card", cascade="all, delete-orphan", passive_deletes=True)
     subtasks = relationship("Subtask", back_populates="card", cascade="all, delete-orphan", passive_deletes=True)
 
+    # Semana 6 — Extras: labels y subtasks
+    labels = relationship("Label",back_populates="card",cascade="all, delete-orphan",passive_deletes=True,)
+    subtasks = relationship("Subtask",back_populates="card",cascade="all, delete-orphan",passive_deletes=True,)
+
+
+
+
 
 class TimeEntry(Base):
     """
