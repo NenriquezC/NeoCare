@@ -28,7 +28,7 @@ interface CardsBoardProps {
   boardId: number;
 }
 
-const BASE_URL = "http://localhost:8000";
+const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 const LISTS: CardListID[] = [1, 2, 3];
 
 const LIST_LABEL: Record<CardListID, string> = {

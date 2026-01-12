@@ -19,7 +19,12 @@ app = FastAPI(title="NeoCare API")
 # CORS (para que el frontend pueda llamar al backend)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # ¡En producción, define los dominios permitidos!
+    allow_origins=[
+        "http://localhost:5173",
+        "http://localhost:3000",
+        "https://*.vercel.app",
+        "https://neocare-frontend.vercel.app"  # Actualizar con tu URL de Vercel
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

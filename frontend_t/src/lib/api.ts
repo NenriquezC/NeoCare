@@ -6,11 +6,9 @@
 
 /**
  * URL base donde se encuentra desplegado el backend FastAPI.
- * Cambia a "http://localhost:8000" si es necesario.
+ * Se toma de la variable de entorno VITE_API_URL
  */
-// URL donde tienes arrancado FastAPI
-export const BACKEND_URL = "http://127.0.0.1:8000";
-// (si prefieres, puedes usar "http://localhost:8000")
+export const BACKEND_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
 /**
  * Hace una petición HTTP al backend, agregando automáticamente el token JWT del usuario (si existe).
