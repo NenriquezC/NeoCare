@@ -44,7 +44,7 @@ const ENDPOINTS = {
   //  remove: (id: number) => `/time-entries/${id}`,
   // Semana 4 — Worklogs reales (backend prefix="/worklogs")
   listByCard: (cardId: number) => `/worklogs/card/${cardId}`,
-  create: () => `/worklogs`,
+  create: () => `/worklogs/`,
   update: (id: number) => `/worklogs/${id}`,
   remove: (id: number) => `/worklogs/${id}`,
 

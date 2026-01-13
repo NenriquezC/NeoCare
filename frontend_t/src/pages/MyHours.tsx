@@ -1,5 +1,6 @@
 // src/pages/MyHours.tsx
 import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { createWorklog, hoursToNumber, listMyWorklogsByWeek, type Worklog } from "../lib/worklogs";
 import { apiFetch } from "../lib/api";
 
@@ -15,6 +16,7 @@ function getISOWeekString(d = new Date()): string {
 }
 
 export default function MyHours() {
+  const navigate = useNavigate();
   const [week, setWeek] = useState(getISOWeekString());
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
