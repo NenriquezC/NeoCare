@@ -4,7 +4,7 @@ Rutas principales para gestión de tableros (Board) en la API.
 Provee endpoints para consultar los tableros de cada usuario autenticado.
 """
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from typing import List as ListType
 
@@ -101,3 +101,48 @@ def get_board_lists(
         lists = default_lists
 
     return lists
+
+
+from pydantic import BaseModel
+
+class BoardUserOut(BaseModel):
+    id: int
+    name: str | None = None
+    email: str
+    role: str | None = None
+
+    class Config:
+        orm_mode = True
+
+
+@router.get("/{board_id}/users", response_model=ListType[BoardUserOut], status_code=status.HTTP_200_OK)
+def get_board_users(
+    board_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    """
+    Devuelve los usuarios miembros del board (incluyendo owner).
+    Solo si el usuario autenticado tiene acceso al board.
+    """
+    board = get_board_or_404(db, board_id)
+    # Permitir solo si es owner o miembro
+    is_member = (
+        db.query(BoardMember)
+        .filter(BoardMember.board_id == board_id, BoardMember.user_id == current_user.id)
+        .first()
+    )
+    if not (board.user_id == current_user.id or is_member):
+        raise HTTPException(status_code=403, detail="No tienes permiso para este tablero")
+    # Owner + miembros (sin duplicados)
+    users = [board.owner]
+    member_users = (
+        db.query(User)
+        .join(BoardMember, BoardMember.user_id == User.id)
+        .filter(BoardMember.board_id == board_id)
+        .all()
+    )
+    for u in member_users:
+        if u.id != board.owner.id:
+            users.append(u)
+    return users

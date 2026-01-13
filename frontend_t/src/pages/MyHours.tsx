@@ -1,7 +1,7 @@
 // src/pages/MyHours.tsx
 import { useEffect, useMemo, useState } from "react";
-import { hoursToNumber, listMyWorklogsByWeek, type Worklog } from "../lib/worklogs";
-import { parseApiError } from "../lib/apiError";
+import { createWorklog, hoursToNumber, listMyWorklogsByWeek, type Worklog } from "../lib/worklogs";
+import { apiFetch } from "../lib/api";
 
 function getISOWeekString(d = new Date()): string {
   const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
@@ -10,7 +10,8 @@ function getISOWeekString(d = new Date()): string {
   const yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
   const weekNo = Math.ceil((((date.getTime() - yearStart.getTime()) / 86400000) + 1) / 7);
   const year = date.getUTCFullYear();
-  return `${year}-W${String(weekNo).padStart(2, "0")}`;
+  // Formato YYYY-WW (sin la letra W en el medio)
+  return `${year}-${String(weekNo).padStart(2, "0")}`;
 }
 
 export default function MyHours() {
@@ -18,6 +19,20 @@ export default function MyHours() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [items, setItems] = useState<Worklog[]>([]);
+
+  // Estado para el formulario de registro de horas
+  const [formDate, setFormDate] = useState(new Date().toISOString().split("T")[0]);
+  const [formHours, setFormHours] = useState(0.25);
+  const [formNote, setFormNote] = useState("");
+  const [formLoading, setFormLoading] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
+  const [formSuccess, setFormSuccess] = useState<string | null>(null);
+
+  // Boards y cards para selección
+  const [boards, setBoards] = useState<{ id: number; name: string }[]>([]);
+  const [cards, setCards] = useState<{ id: number; title: string; board_id: number }[]>([]);
+  const [selectedBoardId, setSelectedBoardId] = useState<number | null>(null);
+  const [selectedCardId, setSelectedCardId] = useState<number | null>(null);
 
   async function load() {
     setLoading(true);
@@ -55,25 +70,198 @@ export default function MyHours() {
     [totalsByDay]
   );
 
+  // Cargar boards al montar
+  useEffect(() => {
+    async function loadBoards() {
+      try {
+        const res = await apiFetch("/boards/", { method: "GET" });
+        const data = await res.json();
+        setBoards(Array.isArray(data) ? data : []);
+        if (data.length > 0) setSelectedBoardId(data[0].id);
+      } catch {}
+    }
+    loadBoards();
+  }, []);
+
+  // Cargar cards cuando cambia el board seleccionado
+  useEffect(() => {
+    async function loadCards() {
+      if (!selectedBoardId) return;
+      try {
+        const res = await apiFetch(`/cards/?board_id=${selectedBoardId}`, { method: "GET" });
+        const data = await res.json();
+        setCards(Array.isArray(data) ? data : []);
+        if (data.length > 0) setSelectedCardId(data[0].id);
+      } catch {}
+    }
+    loadCards();
+  }, [selectedBoardId]);
+
+  async function handleFormSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setFormError(null);
+    setFormSuccess(null);
+    if (!formDate || !formHours || !selectedCardId) {
+      setFormError("Debes indicar fecha, horas y tarjeta");
+      return;
+    }
+    setFormLoading(true);
+    try {
+      await createWorklog({ card_id: selectedCardId, date: formDate, hours: formHours, note: formNote });
+      setFormSuccess("Registro guardado");
+      setFormDate(new Date().toISOString().split("T")[0]);
+      setFormHours(0.25);
+      setFormNote("");
+      await load();
+    } catch (e: any) {
+      setFormError(e?.error || e?.detail || e?.message || "Error guardando registro");
+    } finally {
+      setFormLoading(false);
+    }
+  }
+
   return (
     <div
       style={{
         minHeight: "100vh",
-        padding: "1.5rem",
         background: "linear-gradient(135deg, #e0f2fe 0%, #bfdbfe 50%, #93c5fd 100%)",
         color: "#1e3a8a",
       }}
     >
-      <h2
+      {/* HEADER con botón Volver */}
+      <header
         style={{
-          marginTop: 0,
-          fontWeight: 800,
-          color: "white",
-          textShadow: "2px 2px 4px rgba(0,0,0,0.4)",
+          padding: "1rem 2rem",
+          background: "linear-gradient(135deg, #e0f2fe 0%, #bfdbfe 50%, #93c5fd 100%)",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
         }}
       >
-        Mis horas
-      </h2>
+        <h1
+          style={{
+            color: "white",
+            textShadow: "2px 2px 4px rgba(0, 0, 0, 0.6)",
+            margin: 0,
+            fontWeight: 800,
+          }}
+        >
+          Mis horas
+        </h1>
+
+        <button
+          onClick={() => navigate(-1)}
+          style={{
+            padding: "0.5rem 1rem",
+            background: "linear-gradient(135deg, #0c4a6e 0%, #1e40af 100%)",
+            border: "none",
+            borderRadius: "0.5rem",
+            color: "white",
+            cursor: "pointer",
+            fontWeight: 600,
+            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.2)",
+          }}
+        >
+          ← Volver
+        </button>
+      </header>
+
+      {/* CONTENIDO */}
+      <div style={{ padding: "1.5rem" }}>
+      {/* Formulario para registrar horas */}
+      <form
+        onSubmit={handleFormSubmit}
+        style={{
+          background: "rgba(255,255,255,0.95)",
+          border: "1px solid #38bdf8",
+          borderRadius: 12,
+          padding: 16,
+          marginBottom: 24,
+          boxShadow: "0 4px 8px rgba(0,0,0,0.08)",
+          display: "flex",
+          gap: 12,
+          alignItems: "end",
+          flexWrap: "wrap",
+        }}
+      >
+        <div>
+          <label style={{ fontWeight: 700, fontSize: 13 }}>Board</label>
+          <select
+            value={selectedBoardId ?? ""}
+            onChange={e => setSelectedBoardId(Number(e.target.value))}
+            required
+            style={{ padding: 8, borderRadius: 6, border: "1px solid #93c5fd" }}
+          >
+            {boards.map(b => (
+              <option key={b.id} value={b.id}>{b.name}</option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label style={{ fontWeight: 700, fontSize: 13 }}>Tarjeta</label>
+          <select
+            value={selectedCardId ?? ""}
+            onChange={e => setSelectedCardId(Number(e.target.value))}
+            required
+            style={{ padding: 8, borderRadius: 6, border: "1px solid #93c5fd", minWidth: 120 }}
+          >
+            {cards.map(c => (
+              <option key={c.id} value={c.id}>{c.title}</option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label style={{ fontWeight: 700, fontSize: 13 }}>Fecha</label>
+          <input
+            type="date"
+            value={formDate}
+            onChange={e => setFormDate(e.target.value)}
+            required
+            style={{ padding: 8, borderRadius: 6, border: "1px solid #93c5fd" }}
+          />
+        </div>
+        <div>
+          <label style={{ fontWeight: 700, fontSize: 13 }}>Horas</label>
+          <input
+            type="number"
+            min={0.1}
+            step={0.1}
+            value={formHours}
+            onChange={e => setFormHours(Number(e.target.value))}
+            required
+            style={{ padding: 8, borderRadius: 6, border: "1px solid #93c5fd", width: 80 }}
+          />
+        </div>
+        <div>
+          <label style={{ fontWeight: 700, fontSize: 13 }}>Nota</label>
+          <input
+            type="text"
+            value={formNote}
+            onChange={e => setFormNote(e.target.value)}
+            placeholder="(opcional)"
+            style={{ padding: 8, borderRadius: 6, border: "1px solid #93c5fd", minWidth: 180 }}
+          />
+        </div>
+        <button
+          type="submit"
+          disabled={formLoading}
+          style={{
+            padding: "8px 16px",
+            borderRadius: 6,
+            border: "none",
+            background: "linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%)",
+            color: "white",
+            fontWeight: 700,
+            boxShadow: "0 4px 6px rgba(0,0,0,0.13)",
+            cursor: "pointer",
+          }}
+        >
+          {formLoading ? "Guardando…" : "Registrar horas"}
+        </button>
+        {formError && <div style={{ color: "#b91c1c", fontWeight: 700 }}>{formError}</div>}
+        {formSuccess && <div style={{ color: "#15803d", fontWeight: 700 }}>{formSuccess}</div>}
+      </form>
 
       {/* Card: Filtro y total */}
       <div
@@ -96,7 +284,7 @@ export default function MyHours() {
           <input
             value={week}
             onChange={(e) => setWeek(e.target.value)}
-            placeholder="2025-W52"
+            placeholder="2026-03"
             style={{
               padding: 8,
               borderRadius: 6,
@@ -106,7 +294,7 @@ export default function MyHours() {
               minWidth: 140,
             }}
           />
-          <div style={{ fontSize: 12, opacity: 0.75 }}>Ej: 2025-W52</div>
+          <div style={{ fontSize: 12, opacity: 0.75 }}>Ej: 2026-03</div>
         </div>
 
         <button
@@ -192,6 +380,7 @@ export default function MyHours() {
           </div>
         )}
       </div>
+      </div> {/* Cierre del div de contenido */}
     </div>
   );
 }

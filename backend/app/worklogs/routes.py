@@ -182,12 +182,13 @@ def my_hours_week(
     if not week:
         today = date.today()
         iso_cal = today.isocalendar()
-        week = f"{iso_cal[0]}-W{iso_cal[1]:02d}"
+        week = f"{iso_cal[0]}-{iso_cal[1]:02d}"
 
     try:
-        year, week_num = map(int, week.split("-W"))
+        # Parsear formato YYYY-WW (sin la letra W)
+        year, week_num = map(int, week.split("-"))
     except ValueError:
-        raise HTTPException(status_code=400, detail="Formato de semana inválido (usa YYYY-WXX)")
+        raise HTTPException(status_code=400, detail="Formato de semana inválido (usa YYYY-WW, ejemplo: 2026-03)")
 
     first_day = date.fromisocalendar(year, week_num, 1)
     last_day = first_day + timedelta(days=6)

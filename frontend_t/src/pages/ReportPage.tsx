@@ -7,31 +7,77 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { getWeeklySummary, getHoursByCard } from "@/services/report.service";
-import { parseApiError } from "@/lib/apiError";
+import {
+  getWeeklySummary,
+  getHoursByCard,
+  getHoursByUser,
+} from "@/services/report.service";
 
 import type {
   WeeklySummaryResponse,
   HoursByCardItem,
+  HoursByUserItem,
 } from "@/types/report";
 
 import SummaryCards from "@/components/report/SummaryCards";
 import HoursByCardTable from "@/components/report/HoursByCardTable";
+import HoursByUserTable from "@/components/report/HoursByUserTable";
 
 /**
- * Devuelve la semana actual en formato ISO YYYY-WW.
+ * Devuelve la semana actual en formato ISO YYYY-WW según ISO 8601.
+ * La semana ISO comienza en lunes y la semana 1 es la primera con jueves del año.
  */
 function getCurrentWeek(): string {
   const now = new Date();
-  const firstDayOfYear = new Date(now.getFullYear(), 0, 1);
-  const pastDaysOfYear =
-    (now.getTime() - firstDayOfYear.getTime()) / 86400000;
 
-  const week = Math.ceil(
-    (pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7
-  );
+  // Copiar fecha para no mutar
+  const target = new Date(now.valueOf());
 
-  return `${now.getFullYear()}-W${String(week).padStart(2, "0")}`;
+  // Ajustar al jueves de la semana ISO (jueves = día 4)
+  const dayNum = (target.getDay() + 6) % 7; // Lunes=0, Domingo=6
+  target.setDate(target.getDate() - dayNum + 3);
+
+  // Primer jueves del año
+  const firstThursday = new Date(target.getFullYear(), 0, 4);
+  const dayOffset = (firstThursday.getDay() + 6) % 7;
+  firstThursday.setDate(firstThursday.getDate() - dayOffset + 3);
+
+  // Calcular diferencia en semanas
+  const weekNumber = Math.ceil((target.getTime() - firstThursday.getTime()) / (7 * 24 * 60 * 60 * 1000)) + 1;
+
+  // El año ISO puede diferir del año calendario
+  const isoYear = target.getFullYear();
+
+  // Formato YYYY-WW (sin la letra W en el medio)
+  return `${isoYear}-${String(weekNumber).padStart(2, "0")}`;
+}
+
+function exportToCsv(filename: string, rows: any[]) {
+  if (!rows.length) return;
+  const header = Object.keys(rows[0]);
+  const csv = [
+    header.join(","),
+    ...rows.map((row) =>
+      header
+        .map((field) => {
+          const value = (row as any)[field] ?? "";
+          // Escape commas and quotes in CSV
+          return typeof value === "string" && (value.includes(",") || value.includes('"'))
+            ? `"${value.replace(/"/g, '""')}"`
+            : JSON.stringify(value);
+        })
+        .join(",")
+    ),
+  ].join("\r\n");
+
+  // UTF-8 BOM para Excel
+  const blob = new Blob(["\ufeff" + csv], { type: "text/csv;charset=utf-8;" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.setAttribute("download", filename);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 }
 
 export default function ReportPage() {
@@ -53,6 +99,7 @@ export default function ReportPage() {
 
   const [summary, setSummary] = useState<WeeklySummaryResponse | null>(null);
   const [hoursByCard, setHoursByCard] = useState<HoursByCardItem[]>([]);
+  const [hoursByUser, setHoursByUser] = useState<HoursByUserItem[]>([]);
 
   /* =========================
      DATA LOADING
@@ -62,18 +109,29 @@ export default function ReportPage() {
     setError(null);
 
     try {
-      const [summaryData, byCardData] = await Promise.all([
+      const [summaryData, byCardData, byUserData] = await Promise.all([
         getWeeklySummary(numericBoardId, week),
         getHoursByCard(numericBoardId, week),
+        getHoursByUser(numericBoardId, week),
       ]);
 
       setSummary(summaryData);
       setHoursByCard(byCardData);
+      setHoursByUser(byUserData);
     } catch (err: any) {
       if (err && err.error) setError(err.error);
-      else if (err instanceof Error && (err.message.includes('{"detail":"Not Found"}') || err.message.includes('Not Found')))
-        setError("No hay datos para la semana seleccionada o el reporte no está disponible.");
-      else setError(err instanceof Error ? err.message : "Error inesperado al cargar el reporte");
+      else if (
+        err instanceof Error &&
+        (err.message.includes('{"detail":"Not Found"}') ||
+          err.message.includes("Not Found"))
+      )
+        setError(
+          "No hay datos para la semana seleccionada o el reporte no está disponible."
+        );
+      else
+        setError(
+          err instanceof Error ? err.message : "Error inesperado al cargar el reporte"
+        );
     } finally {
       setLoading(false);
     }
@@ -152,11 +210,12 @@ export default function ReportPage() {
         {/* Selector de semana */}
         <div>
           <label style={{ fontWeight: 600 }}>
-            Semana:&nbsp;
+            Semana (YYYY-WW):&nbsp;
             <input
-              type="week"
+              type="text"
               value={week}
               onChange={(e) => setWeek(e.target.value)}
+              placeholder="2026-03"
               style={{
                 marginLeft: 8,
                 padding: 6,
@@ -174,7 +233,46 @@ export default function ReportPage() {
           <>
             <SummaryCards summary={summary} />
 
+            <h2>Horas por usuario</h2>
+            <button
+              onClick={() =>
+                exportToCsv(`horas-por-usuario-${week}.csv`, hoursByUser)
+              }
+              style={{
+                marginBottom: 12,
+                padding: "0.5rem 1rem",
+                background: "#2563eb",
+                color: "white",
+                border: "none",
+                borderRadius: 6,
+                cursor: "pointer",
+                fontWeight: 600,
+              }}
+              disabled={!hoursByUser.length}
+            >
+              Exportar CSV
+            </button>
+            <HoursByUserTable data={hoursByUser} />
+
             <h2>Horas por tarjeta</h2>
+            <button
+              onClick={() =>
+                exportToCsv(`horas-por-tarjeta-${week}.csv`, hoursByCard)
+              }
+              style={{
+                marginBottom: 12,
+                padding: "0.5rem 1rem",
+                background: "#2563eb",
+                color: "white",
+                border: "none",
+                borderRadius: 6,
+                cursor: "pointer",
+                fontWeight: 600,
+              }}
+              disabled={!hoursByCard.length}
+            >
+              Exportar CSV
+            </button>
             <HoursByCardTable data={hoursByCard} />
           </>
         )}

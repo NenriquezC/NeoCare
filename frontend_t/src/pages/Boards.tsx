@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { apiFetch } from "../lib/api";
-import { parseApiError } from "../lib/apiError";
+import { getBoardUsers, type BoardUser } from "../services/users.service";
 
 // ==========================
 // Tipos y constantes
@@ -19,15 +19,6 @@ const LABEL_PRESETS: Label[] = [
   { id: "red", name: "Rojo", color: "#dc2626" },
   { id: "green", name: "Verde", color: "#16a34a" },
   { id: "yellow", name: "Amarillo", color: "#f59e0b" },
-];
-
-const TEAM_MEMBERS: string[] = [
-  "Sin asignar",
-  "Helen",
-  "Ana",
-  "Carlos",
-  "María",
-  "David",
 ];
 
 const EXTRAS_STORAGE_KEY = "neocare_card_extras_v1";
@@ -64,17 +55,10 @@ interface List {
   board_id: number;
 }
 
-interface Board {
-  id: number;
-  name: string;
-  description?: string;
-}
-
 export default function Boards() {
   const navigate = useNavigate();
-  const [boards, setBoards] = useState<Board[]>([]);
-  const [selectedBoardId, setSelectedBoardId] = useState<number | null>(null);
-  const [lists, setLists] = useState<List[]>([]);
+    const [selectedBoardId, setSelectedBoardId] = useState<number | null>(null);
+    const [lists, setLists] = useState<List[]>([]);
   const [cards, setCards] = useState<Card[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -98,17 +82,28 @@ export default function Boards() {
   const [modalChecklist, setModalChecklist] = useState<ChecklistItem[]>([]);
   const [newChecklistText, setNewChecklistText] = useState("");
 
+  // Estado para usuarios del board
+  const [boardUsers, setBoardUsers] = useState<BoardUser[]>([]);
+
   // Opciones para filtros
   const labelOptions = [
     { id: "all", name: "Todas las etiquetas" },
     ...LABEL_PRESETS.map((l) => ({ id: l.id, name: l.name })),
   ];
 
-  const assigneeOptions = ["all", ...TEAM_MEMBERS];
-
   useEffect(() => {
     loadBoards();
   }, []);
+
+  useEffect(() => {
+    if (selectedBoardId) {
+      getBoardUsers(selectedBoardId)
+        .then(setBoardUsers)
+        .catch(() => setBoardUsers([]));
+    } else {
+      setBoardUsers([]);
+    }
+  }, [selectedBoardId]);
 
   async function loadBoards() {
     try {
@@ -118,7 +113,6 @@ export default function Boards() {
       const data = await res.json();
       
       if (Array.isArray(data) && data.length > 0) {
-        setBoards(data);
         const firstBoard = data[0];
         setSelectedBoardId(firstBoard.id);
         await loadBoardData(firstBoard.id);
@@ -469,9 +463,10 @@ export default function Boards() {
               fontSize: 14,
             }}
           >
-            {assigneeOptions.map((name) => (
-              <option key={name} value={name} style={{ color: "#0f172a" }}>
-                {name === "all" ? "Todos" : name}
+            <option value="all">Todos</option>
+            {boardUsers.map((user) => (
+              <option key={user.id} value={user.id} style={{ color: "#0f172a" }}>
+                {user.name || user.email}
               </option>
             ))}
           </select>
@@ -1017,10 +1012,9 @@ export default function Boards() {
                     cursor: "pointer",
                   }}
                 >
-                  {TEAM_MEMBERS.map((m) => (
-                    <option key={m} value={m}>
-                      {m}
-                    </option>
+                  <option value="">Sin asignar</option>
+                  {boardUsers.map((u) => (
+                    <option key={u.id} value={u.id}>{u.name || u.email}</option>
                   ))}
                 </select>
               </div>
@@ -1078,7 +1072,7 @@ export default function Boards() {
                     type="text"
                     value={newChecklistText}
                     onChange={(e) => setNewChecklistText(e.target.value)}
-                    onKeyPress={(e) => e.key === "Enter" && addChecklistItem()}
+                    onKeyDown={(e) => e.key === "Enter" && addChecklistItem()}
                     placeholder="Nueva tarea..."
                     style={{
                       flex: 1,

@@ -1,6 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { parseApiError } from "../../lib/apiError";
 import { useNavigate } from "react-router-dom";
+import { getBoardUsers, type BoardUser } from "@/services/users.service";
+import WorklogsSection from "./WorklogsSection";
+import { getMe } from "@/lib/worklogs";
 
 export type CardListID = 1 | 2 | 3;
 
@@ -48,13 +50,6 @@ const PRESET_LABELS: Label[] = [
   { id: "bug", name: "Bug", color: "pink" },
   { id: "doc", name: "Documentación", color: "indigo" },
   { id: "review", name: "Review", color: "orange" },
-];
-
-const TEAM_MEMBERS = [
-  { id: "user1", name: "Juan Pérez", avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=user1" },
-  { id: "user2", name: "María García", avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=user2" },
-  { id: "user3", name: "Carlos López", avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=user3" },
-  { id: "user4", name: "Ana Martínez", avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=user4" },
 ];
 
 // ==================== COMPONENTE: SearchBar ====================
@@ -241,6 +236,9 @@ export default function CardsBoard({ boardId }: CardsBoardProps) {
   const [selectedLabels, setSelectedLabels] = useState<string[]>([]);
   const [selectedAssignee, setSelectedAssignee] = useState<string | null>(null);
 
+  const [teamMembers, setTeamMembers] = useState<BoardUser[]>([]);
+  const [currentUserId, setCurrentUserId] = useState<number | undefined>();
+
   function getToken() {
     return localStorage.getItem("token");
   }
@@ -248,6 +246,20 @@ export default function CardsBoard({ boardId }: CardsBoardProps) {
   useEffect(() => {
     fetchCards();
   }, [boardId]);
+
+  useEffect(() => {
+    getBoardUsers(boardId)
+      .then(setTeamMembers)
+      .catch(() => setError("No se pudo cargar la lista de usuarios"));
+  }, [boardId]);
+
+  useEffect(() => {
+    async function loadCurrentUser() {
+      const me = await getMe();
+      if (me) setCurrentUserId(me.id);
+    }
+    loadCurrentUser();
+  }, []);
 
   async function fetchCards() {
     setLoading(true);
@@ -444,7 +456,7 @@ export default function CardsBoard({ boardId }: CardsBoardProps) {
               availableLabels={PRESET_LABELS}
             />
 
-            <AssigneeFilter selectedAssignee={selectedAssignee} onAssigneeChange={setSelectedAssignee} teamMembers={TEAM_MEMBERS} />
+            <AssigneeFilter selectedAssignee={selectedAssignee} onAssigneeChange={setSelectedAssignee} teamMembers={teamMembers} />
 
             {(searchText || selectedLabels.length > 0 || selectedAssignee) && (
               <button
@@ -585,11 +597,19 @@ export default function CardsBoard({ boardId }: CardsBoardProps) {
                 <label className="block text-sm font-semibold text-gray-700 mb-2">Responsable</label>
                 <select value={form.assignee_id || ""} onChange={(e) => setForm((f) => ({ ...f, assignee_id: e.target.value || null }))} className="w-full px-4 py-2.5 rounded-lg border-2 border-gray-300 focus:border-blue-500 focus:bg-blue-50 focus:outline-none transition-colors">
                   <option value="">Sin asignar</option>
-                  {TEAM_MEMBERS.map((member) => (
-                    <option key={member.id} value={member.id}>{member.name}</option>
+                  {teamMembers.map((member) => (
+                    <option key={member.id} value={member.id}>{member.name || member.email}</option>
                   ))}
                 </select>
               </div>
+
+              {/* Sección de Worklogs - Solo se muestra al editar una tarjeta existente */}
+              {editingCard && (
+                <>
+                  <div className="border-t border-gray-200" />
+                  <WorklogsSection cardId={editingCard.id} currentUserId={currentUserId} />
+                </>
+              )}
 
               <div className="flex gap-3 pt-4 border-t">
                 <button type="submit" disabled={saving} className="flex-1 px-4 py-2.5 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors disabled:bg-gray-400">

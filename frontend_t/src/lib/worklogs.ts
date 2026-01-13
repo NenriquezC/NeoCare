@@ -1,5 +1,5 @@
 import { apiFetch } from "./api";
-import { throwIfError, parseApiError } from "./apiError";
+import { throwIfError } from "./apiError";
 
 /**
  * TIPOS
@@ -51,13 +51,13 @@ const ENDPOINTS = {
 
 
 
-  // “Mis horas” por semana
+  // "Mis horas" por semana
   // Ej: /time-entries/me?week=2025-W52
   //myWeek: (week: string) => `/time-entries/me?week=${encodeURIComponent(week)}`,
     myWeek: (week: string) => `/worklogs/me/week?week=${encodeURIComponent(week)}`,
 
   // Obtener mi usuario (para saber si puedo editar/borrar)
-    me: () => `/users/me`,
+    me: () => `/auth/me`,
 };
 
 

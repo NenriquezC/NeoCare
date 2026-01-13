@@ -3,6 +3,7 @@ import { apiFetch } from "@/lib/api";
 import type {
   WeeklySummaryResponse,
   HoursByCardItem,
+  HoursByUserItem,
 } from "@/types/report";
 
 /**
@@ -34,6 +35,24 @@ export async function getHoursByCard(
 ): Promise<HoursByCardItem[]> {
   const response = await apiFetch(
     `/boards/report/${boardId}/hours-by-card?week=${week}`
+  );
+
+  if (!response.ok) {
+    throw new Error(await response.text());
+  }
+
+  return response.json();
+}
+
+/**
+ * GET /report/{board_id}/hours-by-user?week=YYYY-WW
+ */
+export async function getHoursByUser(
+  boardId: number,
+  week: string
+): Promise<HoursByUserItem[]> {
+  const response = await apiFetch(
+    `/report/${boardId}/hours-by-user?week=${week}`
   );
 
   if (!response.ok) {
