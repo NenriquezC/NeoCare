@@ -61,7 +61,7 @@ def get_week_date_range(week: str) -> tuple[date, date]:
     if not re.match(r"^\d{4}-W\d{2}$", week):
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Formato de semana inválido. Use 'YYYY-WW'."
+            detail="Formato de semana inválido. Usa 'AAAA-WW'."
         )
 
     try:
