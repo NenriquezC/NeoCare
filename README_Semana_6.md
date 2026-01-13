@@ -93,289 +93,150 @@ def downgrade():
 - `backend/app/worklogs/schemas.py`
 
 **Implementación:**
-```python
-from pydantic import BaseModel, field_validator
 
-class CardCreate(BaseModel):
-    title: str
-    board_id: int
-    list_id: int
-    
-    @field_validator('board_id', 'list_id', mode='before')
-    @classmethod
-    def coerce_to_int(cls, v):
-        """Convierte strings a int para compatibilidad"""
-        if v is None:
-            return v
-        if isinstance(v, str):
-            return int(v)
-        return v
-```
+# Semana 6 — Extras útiles y mejoras de productividad
 
-**Beneficios:**
-- ✅ Acepta IDs como números: `{"board_id": 123}`
-- ✅ Acepta IDs como strings: `{"board_id": "123"}`
-- ✅ Facilita integración con diferentes clientes (web, móvil, Postman)
-
-#### 4. Endpoint de Cleanup
-
-**Archivo:** `backend/app/auth/routes.py`
-
-```python
-@router.delete("/me", status_code=status.HTTP_204_NO_CONTENT)
-def delete_current_user(
-    current_user: User = Depends(get_current_user),
-    db: Session = Depends(get_db)
-):
-    """
-    Elimina el usuario autenticado y todos sus datos relacionados.
-    
-    Por CASCADE, también elimina:
-    - Todos los boards del usuario
-    - Todas las listas de esos boards
-    - Todas las cards de esos boards
-    - Todos los time_entries del usuario
-    - Todos los labels y subtasks de las cards
-    - Todas las board_memberships del usuario
-    """
-    try:
-        db.delete(current_user)
-        db.commit()
-    except Exception as e:
-        db.rollback()
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Error al eliminar usuario: {str(e)}"
-        )
-    return None
-```
-
-**Usos:**
-- Testing automatizado (cleanup de datos de test)
-- Cumplimiento GDPR (derecho al olvido)
-- Gestión de usuarios en desarrollo
+**NeoCare Health** — Kanban + Timesheets Lite · FastAPI + React  
+**Duración:** lunes–viernes  
+**Fecha de implementación:** 8 de Enero 2026
 
 ---
 
-### Endpoints Disponibles
+## Objetivo
 
-#### Labels (Etiquetas)
+Añadir funcionalidades opcionales que mejoren la productividad y experiencia de usuario, fortaleciendo el MVP antes de la demo final.
 
-**POST /cards/{card_id}/labels**
-```json
-// Request
-{
-    "name": "Urgente",
-    "color": "#ef4444"
-}
+---
 
-// Response
-{
-    "id": 1,
-    "card_id": 123,
-    "name": "Urgente",
-    "color": "#ef4444"
-}
+## Mejoras principales
+
+- **Etiquetas (Labels):** Clasificación y priorización visual de tarjetas mediante colores personalizables.
+- **Checklist (Subtasks):** Subtareas en tarjetas, con control de completado y orden.
+- **Búsqueda y filtrado avanzado:** Endpoint `/cards` permite buscar por texto, responsable y lista.
+- **Validadores Pydantic flexibles:** Aceptan IDs como string o número, facilitando la integración con distintos clientes.
+- **Endpoint de cleanup:** Permite eliminar el usuario autenticado y todos sus datos relacionados (cumplimiento GDPR y testing).
+
+---
+
+## Endpoints destacados
+
+**Labels:**
+- `POST /cards/{card_id}/labels` — Crear etiqueta
+- `GET /cards/{card_id}/labels` — Listar etiquetas
+- `DELETE /cards/labels/{label_id}` — Eliminar etiqueta
+
+**Subtasks:**
+- `POST /cards/{card_id}/subtasks` — Crear subtask
+- `GET /cards/{card_id}/subtasks` — Listar subtasks
+- `PATCH /cards/subtasks/{subtask_id}` — Actualizar subtask
+- `DELETE /cards/subtasks/{subtask_id}` — Eliminar subtask
+
+**Búsqueda y filtros:**
+- `GET /cards?board_id=...&search=...&responsible_id=...&list_id=...`
+
+**Cleanup:**
+- `DELETE /auth/me` — Eliminar usuario y datos asociados
+
+---
+
+## Testing
+
+- Colección de Postman con 16 requests automatizados, validando todo el flujo y cleanup.
+- Scripts de test y variables optimizados.
+- Ejecución exitosa y rápida.
+
+---
+
+## Roles y responsabilidades
+
+**Coordinador/a:**
+- Definir y priorizar extras, gestionar dependencias, asegurar calidad y documentación.
+
+**Frontend:**
+- Implementar UI de etiquetas, checklist, búsqueda y filtros.
+- Mejoras visuales y animaciones.
+
+**Backend:**
+- Modelos y endpoints de Labels y Subtasks.
+- Endpoint de búsqueda y filtrado avanzado.
+- Endpoint de cleanup.
+- Validadores flexibles y seguridad JWT.
+
+**Testing:**
+- Colección de Postman funcional y validación de permisos.
+- Pendiente: tests de integración UI-backend.
+
+**Documentador:**
+- README actualizado, guía de integración y migración documentada.
+
+---
+
+## Extras implementados
+
+- **Etiquetas (Labels):** Clasificación y priorización visual de tarjetas.
+- **Checklist (Subtasks):** Subtareas y control de progreso en tarjetas.
+- **Búsqueda global:** Encuentra tareas por texto.
+- **Filtro por responsable:** Filtra tarjetas por usuario asignado.
+
+Extras pendientes: mejoras UI/UX y más información en tarjetas.
+
+---
+
+## Definition of Done y estado
+
+- Mínimo 2–3 extras terminados (Labels, Subtasks, Búsqueda, Filtros)
+- Backend funcional y probado
+- Frontend pendiente de integración
+- QA y documentación al día
+
+---
+
+## Próximos pasos
+
+1. Integrar UI de labels y checklist en frontend
+2. Añadir barra de búsqueda y filtros visuales
+3. Tests de integración UI-backend
+4. Preparar demo final
+
+---
+
+## Archivos modificados/creados
+
 ```
-
-**GET /cards/{card_id}/labels**
-```json
-// Response: list[LabelOut]
-[
-    {
-        "id": 1,
-        "card_id": 123,
-        "name": "Urgente",
-        "color": "#ef4444"
-    }
-]
-```
-
-**DELETE /cards/labels/{label_id}**
-- Response: `204 No Content`
-
-#### Subtasks (Checklist)
-
-**POST /cards/{card_id}/subtasks**
-```json
-// Request
-{
-    "title": "Escribir documentación de API",
-    "completed": false
-}
-
-// Response
-{
-    "id": 1,
-    "card_id": 123,
-    "title": "Escribir documentación de API",
-    "completed": false,
-    "position": 0
-}
-```
-
-**GET /cards/{card_id}/subtasks**
-```json
-// Response: list[SubtaskOut] (ordenadas por position)
-```
-
-**PATCH /cards/subtasks/{subtask_id}**
-```json
-// Request (todos los campos opcionales)
-{
-    "completed": true,
-    "title": "Nuevo título",
-    "position": 2
-}
-```
-
-**DELETE /cards/subtasks/{subtask_id}**
-- Response: `204 No Content`
-
-#### Búsqueda y Filtrado
-
-**GET /cards**
-
-Query Parameters:
-- `board_id` (requerido): ID del tablero
-- `search` (opcional): Busca en título y descripción (case-insensitive)
-- `responsible_id` (opcional): Filtra por usuario responsable
-- `list_id` (opcional): Filtra por lista específica
-
-Ejemplos:
-```bash
-# Buscar "urgente"
-GET /cards?board_id=1&search=urgente
-
-# Filtrar por responsable
-GET /cards?board_id=1&responsible_id=5
-
-# Combinar filtros
-GET /cards?board_id=1&search=API&responsible_id=5&list_id=2
+NeoCare/
+├── backend/
+│   ├── app/
+│   │   ├── cards/schemas.py           ✏️
+│   │   ├── worklogs/schemas.py        ✏️
+│   │   ├── auth/routes.py             ✏️
+│   │   └── boards/models.py           (Label, Subtask ya existían)
+│   ├── alembic/versions/semana_6_add_labels_and_subtasks.py  ➕
+│   └── README_Semana_6.md             ➕ (este archivo)
+│
+├── NeoCare_Postman_Collection_Updated.json  ✏️
+└── INTEGRACION_FRONTEND_POSTMAN.md          ➕
 ```
 
 ---
 
-### Testing Automatizado
+## Estado actual
 
-#### Colección de Postman Actualizada
+| Funcionalidad | Backend | Frontend | Tests | Docs |
+|--------------|---------|----------|-------|------|
+| Labels       | ✅      | ⏳       | ✅    | ✅   |
+| Subtasks     | ✅      | ⏳       | ✅    | ✅   |
+| Búsqueda     | ✅      | ⏳       | ✅    | ✅   |
+| Filtros      | ✅      | ⏳       | ✅    | ✅   |
+| Cleanup      | ✅      | N/A      | ✅    | ✅   |
+| Validadores  | ✅      | N/A      | ✅    | ✅   |
 
-**Archivo:** `NeoCare_Postman_Collection_Updated.json`
-
-**Características:**
-- ✅ 16 requests automatizados (registro → reportes → cleanup)
-- ✅ Variables de colección definidas (13 variables)
-- ✅ Scripts de test optimizados (sin variables duplicadas)
-- ✅ Cleanup automático al finalizar
-
-**Estructura:**
-1. 🚀 FLUJO AUTOMÁTICO - Ejecuta en orden
-   - 1️⃣ REGISTRO - Crear usuario
-   - 2️⃣ LOGIN - Obtener token
-   - 3️⃣ OBTENER TABLEROS
-   - 4️⃣ OBTENER LISTAS
-   - 5️⃣ CREAR TARJETA
-   - 6️⃣ LISTAR TARJETAS
-   - 7️⃣ OBTENER DETALLE DE TARJETA
-   - 8️⃣ ACTUALIZAR TARJETA (PATCH)
-   - 9️⃣ CREAR WORKLOG
-   - 🔟 LISTAR WORKLOGS DE LA TARJETA
-   - 1️⃣1️⃣ MIS HORAS DE LA SEMANA
-   - 1️⃣2️⃣ REPORTE SEMANAL DEL TABLERO
-   - 1️⃣3️⃣ HORAS POR USUARIO
-   - 1️⃣4️⃣ HORAS POR TARJETA
-   - 1️⃣5️⃣ ELIMINAR TARJETA
-2. 🧹 CLEANUP - Eliminar usuario de test
-   - 🗑️ DELETE /auth/me - Eliminar usuario y todos sus datos
-
-**Request de Cleanup:**
-```javascript
-pm.test("Cleanup ejecutado (204 = OK, 401 = ya limpio)", function () {
-    pm.expect([204, 401]).to.include(pm.response.code);
-});
-
-// Limpiar variables de entorno
-pm.collectionVariables.unset('access_token');
-pm.collectionVariables.unset('user_id');
-pm.collectionVariables.unset('board_id');
-// ... más unset
-```
-
-**Resultados de Ejecución:**
-```
-✅ 16/16 requests ejecutados correctamente
-✅ 16/16 test scripts pasados
-✅ 16/16 assertions exitosas
-✅ 0 fallos
-✅ Tiempo de ejecución: ~2 segundos
-✅ Cleanup automático: usuario y datos eliminados
-```
-
-**Ejecución:**
-```bash
-# Desde Postman UI: Import → Run Collection
-# Desde línea de comandos:
-newman run NeoCare_Postman_Collection_Updated.json
-```
+**Leyenda:** ✅ Completado · ⏳ Pendiente · N/A No aplica
 
 ---
 
-## 📋 Roles y responsabilidades de la semana
-
-### Coordinador/a
-- ✓ Definir junto al equipo qué extras se implementarán (según capacidad)
-- ✓ Organizar las tareas y priorizarlas
-- ✓ Gestionar dependencias entre frontend y backend
-- ✓ Supervisar que no se rompa nada del core
-- ✓ Aprobar la calidad final antes de demo interna
-- ✓ Asegurar que todo extra queda documentado
-
-### Frontend
-Implementar los componentes visuales de los extras seleccionados.
-
-**Posibles tareas:**
-
-**1. Etiquetas (Labels)**
-- ✓ UI para añadir etiquetas a una tarjeta
-- ✓ Colores predefinidos (p. ej. azul, rojo, verde, amarillo)
-- ✓ Mostrar etiquetas en CardItem
-- ✓ Filtro por etiqueta (opcional)
-
-**Ejemplo de integración:**
-```tsx
-// Componente para mostrar labels
-function CardLabels({ labels }: { labels: Label[] }) {
-  return (
-    <div className="flex gap-1 flex-wrap">
-      {labels.map(label => (
-        <span
-          key={label.id}
-          className="px-2 py-1 rounded text-xs font-medium text-white"
-          style={{ backgroundColor: label.color }}
-        >
-          {label.name}
-        </span>
-      ))}
-    </div>
-  );
-}
-```
-
-**2. Checklist dentro de la tarjeta**
-- ✓ Lista de subtareas
-- ✓ Añadir ítems
-- ✓ Marcar como completado
-- ✓ Mostrar progreso (% completado)
-
-**Ejemplo de integración:**
-```tsx
-function SubtaskChecklist({ cardId, subtasks }: Props) {
-  const completed = subtasks.filter(s => s.completed).length;
-  const total = subtasks.length;
-  const percentage = Math.round((completed / total) * 100);
-  
-  return (
-    <div className="space-y-3">
+*Última actualización: 8 de Enero 2026*  
+*Backend: Completado y probado*  
+*Frontend: Pendiente de integración*
       {/* Barra de progreso */}
       <div className="w-full bg-gray-200 rounded-full h-2">
         <div 

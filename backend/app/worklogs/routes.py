@@ -16,7 +16,8 @@ from fastapi import APIRouter, Depends, HTTPException, status, Query
 from sqlalchemy.orm import Session
 from sqlalchemy import func
 
-from ..auth.utils import get_db, get_current_user
+from ..auth.utils import get_current_user
+from app.utils import get_db, get_card_or_404, get_board_or_404, require_owner
 from ..boards.models import TimeEntry, Card, BoardMember, Board
 from .schemas import (
     WorklogCreate,
@@ -42,28 +43,13 @@ def create_worklog(
     Crear un registro de horas para una tarjeta.
     """
 
-    card = db.query(Card).filter(Card.id == data.card_id).first()
-    if not card:
-        raise HTTPException(status_code=404, detail="Tarjeta no encontrada")
 
-    # Verificar que el usuario pertenece al board de la tarjeta o es el dueño
-    membership = (
-        db.query(BoardMember)
-        .filter(
-            BoardMember.board_id == card.board_id,
-            BoardMember.user_id == current_user.id,
-        )
-        .first()
-    )
-
-    # Si no hay membresía, verificamos si es el dueño del tablero
-    is_owner = card.board.user_id == current_user.id
-
-    if not membership and not is_owner:
-        raise HTTPException(
-            status_code=403,
-            detail="No tienes acceso a esta tarjeta",
-        )
+    card = get_card_or_404(db, data.card_id)
+    board = get_board_or_404(db, card.board_id)
+    is_owner = board.user_id == current_user.id
+    is_member = db.query(BoardMember).filter(BoardMember.board_id == card.board_id, BoardMember.user_id == current_user.id).first() is not None
+    if not is_owner and not is_member:
+        raise HTTPException(status_code=403, detail="No tienes acceso a esta tarjeta")
 
     # Validación: Fecha no futura
     if data.date > date.today():
@@ -100,25 +86,11 @@ def list_worklogs_by_card(
     Listar horas asociadas a una tarjeta.
     """
 
-    card = db.query(Card).filter(Card.id == card_id).first()
-    if not card:
-        raise HTTPException(status_code=404, detail="Tarjeta no encontrada")
 
-    # Verificar que el usuario es owner o miembro del board
-    board = db.query(Board).filter(Board.id == card.board_id).first()
-    if not board:
-        raise HTTPException(status_code=404, detail="Tablero no encontrado")
-    
+    card = get_card_or_404(db, card_id)
+    board = get_board_or_404(db, card.board_id)
     is_owner = board.user_id == current_user.id
-    is_member = (
-        db.query(BoardMember)
-        .filter(
-            BoardMember.board_id == card.board_id,
-            BoardMember.user_id == current_user.id,
-        )
-        .first()
-    ) is not None
-
+    is_member = db.query(BoardMember).filter(BoardMember.board_id == card.board_id, BoardMember.user_id == current_user.id).first() is not None
     if not is_owner and not is_member:
         raise HTTPException(status_code=403, detail="Acceso denegado")
 
@@ -144,12 +116,11 @@ def update_worklog(
     Editar un registro de horas (solo el autor).
     """
 
+
     worklog = db.query(TimeEntry).filter(TimeEntry.id == worklog_id).first()
     if not worklog:
         raise HTTPException(status_code=404, detail="Registro no encontrado")
-
-    if worklog.user_id != current_user.id:
-        raise HTTPException(status_code=403, detail="No autorizado")
+    require_owner(worklog.user_id, current_user.id)
 
     if data.date is not None:
         # Validación: Fecha no futura
@@ -183,12 +154,11 @@ def delete_worklog(
     Eliminar un registro de horas (solo el autor).
     """
 
+
     worklog = db.query(TimeEntry).filter(TimeEntry.id == worklog_id).first()
     if not worklog:
         raise HTTPException(status_code=404, detail="Registro no encontrado")
-
-    if worklog.user_id != current_user.id:
-        raise HTTPException(status_code=403, detail="No autorizado")
+    require_owner(worklog.user_id, current_user.id)
 
     db.delete(worklog)
     db.commit()

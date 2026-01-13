@@ -19,9 +19,10 @@ from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
 from sqlalchemy import func
 
-from ..auth.utils import get_current_user, get_db
+from ..auth.utils import get_current_user
+from app.utils import get_db, get_board_or_404
 from ..boards.models import Card, List, TimeEntry, User
-from .services import get_week_date_range, verify_board_access
+from .services import get_week_date_range
 from .schemas import WeeklySummaryResponse, SummaryBlock, CardSummaryItem
 
 router = APIRouter(
@@ -62,7 +63,13 @@ def get_weekly_summary(
         WeeklySummaryResponse: Resumen semanal estructurado y tipado.
     """
     # 1️⃣ Verificar acceso al tablero
-    verify_board_access(db, board_id, current_user.id)
+    board = get_board_or_404(db, board_id)
+    is_owner = board.user_id == current_user.id
+    # Si no es owner, verificar membresía
+    is_member = db.query(board.__class__.members).filter_by(user_id=current_user.id).first() is not None if hasattr(board, 'members') else False
+    if not is_owner and not is_member:
+        from fastapi import HTTPException
+        raise HTTPException(status_code=403, detail="No tienes acceso a este tablero")
 
     # 2️⃣ Calcular rango de fechas de la semana
     start_date, end_date = get_week_date_range(week)
@@ -176,7 +183,12 @@ def get_hours_by_user(
         list[dict]: Lista de usuarios con horas totales y número de tarjetas.
     """
     # 1️⃣ Verificar acceso al tablero
-    verify_board_access(db, board_id, current_user.id)
+    board = get_board_or_404(db, board_id)
+    is_owner = board.user_id == current_user.id
+    is_member = db.query(board.__class__.members).filter_by(user_id=current_user.id).first() is not None if hasattr(board, 'members') else False
+    if not is_owner and not is_member:
+        from fastapi import HTTPException
+        raise HTTPException(status_code=403, detail="No tienes acceso a este tablero")
 
     # 2️⃣ Calcular rango semanal
     start_date, end_date = get_week_date_range(week)
@@ -241,7 +253,12 @@ def get_hours_by_card(
                     ordenadas de mayor a menor.
     """
     # 1️⃣ Verificar acceso al tablero
-    verify_board_access(db, board_id, current_user.id)
+    board = get_board_or_404(db, board_id)
+    is_owner = board.user_id == current_user.id
+    is_member = db.query(board.__class__.members).filter_by(user_id=current_user.id).first() is not None if hasattr(board, 'members') else False
+    if not is_owner and not is_member:
+        from fastapi import HTTPException
+        raise HTTPException(status_code=403, detail="No tienes acceso a este tablero")
 
     # 2️⃣ Calcular rango semanal
     start_date, end_date = get_week_date_range(week)

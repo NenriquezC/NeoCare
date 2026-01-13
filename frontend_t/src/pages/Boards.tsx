@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { apiFetch } from "../lib/api";
+import { parseApiError } from "../lib/apiError";
 
 // ==========================
 // Tipos y constantes
@@ -124,8 +125,9 @@ export default function Boards() {
       } else {
         setError("No hay tableros disponibles");
       }
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Error desconocido");
+    } catch (err: any) {
+      if (err && err.error) setError(err.error);
+      else setError(err instanceof Error ? err.message : "Error desconocido");
     } finally {
       setLoading(false);
     }
@@ -157,9 +159,10 @@ export default function Boards() {
         }
         return next;
       });
-    } catch (err) {
+    } catch (err: any) {
       console.error("Error cargando datos del board:", err);
-      setError(err instanceof Error ? err.message : "Error cargando datos");
+      if (err && err.error) setError(err.error);
+      else setError(err instanceof Error ? err.message : "Error cargando datos");
     }
   }
 
@@ -239,8 +242,9 @@ export default function Boards() {
       setModalLabels([]);
       setModalAssignee("Sin asignar");
       setModalChecklist([]);
-    } catch (err) {
-      alert(err instanceof Error ? err.message : "Error al procesar tarjeta");
+    } catch (err: any) {
+      if (err && err.error) setError(err.error);
+      else setError(err instanceof Error ? err.message : "Error al procesar tarjeta");
     }
   }
 
@@ -266,8 +270,9 @@ export default function Boards() {
       if (selectedBoardId) {
         await loadBoardData(selectedBoardId);
       }
-    } catch (err) {
-      alert(err instanceof Error ? err.message : "Error al eliminar tarjeta");
+    } catch (err: any) {
+      if (err && err.error) setError(err.error);
+      else setError(err instanceof Error ? err.message : "Error al eliminar tarjeta");
     }
   }
 
@@ -931,7 +936,7 @@ export default function Boards() {
                   color: "#0f172a",
                   marginBottom: 6,
                 }}>
-                  Lista
+                  Tablero
                 </label>
                 <select
                   value={newCard.list_id}

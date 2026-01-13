@@ -1,14 +1,15 @@
 // src/components/worklogs/WorklogsSection.tsx
 import React, { useEffect, useMemo, useState } from "react";
 import {
-    createWorklog,
-    deleteWorklog,
-    getMe,
-    hoursToNumber,
-    listWorklogsByCard,
-    updateWorklog,
-    type Worklog,
+  createWorklog,
+  deleteWorklog,
+  getMe,
+  hoursToNumber,
+  listWorklogsByCard,
+  updateWorklog,
+  type Worklog,
 } from "../../lib/worklogs";
+import { parseApiError } from "../../lib/apiError";
 
 function todayYMD(): string {
 const d = new Date();
@@ -52,8 +53,9 @@ async function load() {
     const [me, logs] = await Promise.all([getMe(), listWorklogsByCard(cardId)]);
     setMeId(me?.id ?? null);
     setItems(logs);
-    } catch (e) {
-    setError(e instanceof Error ? e.message : "Error cargando horas");
+    } catch (e: any) {
+      if (e && e.error) setError(e.error);
+      else setError(e instanceof Error ? e.message : "Error cargando horas");
     } finally {
     setLoading(false);
     }
@@ -95,8 +97,9 @@ async function handleCreate(e: React.FormEvent) {
     setItems((prev) => [created, ...prev]);
     setNote("");
     setHours("1");
-    } catch (e) {
-    setError(e instanceof Error ? e.message : "Error creando registro");
+    } catch (e: any) {
+      if (e && e.error) setError(e.error);
+      else setError(e instanceof Error ? e.message : "Error creando registro");
     } finally {
     setSaving(false);
     }
@@ -141,8 +144,9 @@ async function saveEdit(w: Worklog) {
 
     setItems((prev) => prev.map((x) => (x.id === updated.id ? updated : x)));
     cancelEdit();
-    } catch (e) {
-    setError(e instanceof Error ? e.message : "Error editando registro");
+    } catch (e: any) {
+      if (e && e.error) setError(e.error);
+      else setError(e instanceof Error ? e.message : "Error editando registro");
     } finally {
     setSaving(false);
     }
@@ -157,8 +161,9 @@ async function remove(w: Worklog) {
     try {
     await deleteWorklog(w.id);
     setItems((prev) => prev.filter((x) => x.id !== w.id));
-    } catch (e) {
-    setError(e instanceof Error ? e.message : "Error eliminando registro");
+    } catch (e: any) {
+      if (e && e.error) setError(e.error);
+      else setError(e instanceof Error ? e.message : "Error eliminando registro");
     } finally {
     setSaving(false);
     }

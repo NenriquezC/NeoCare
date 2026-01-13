@@ -13,8 +13,17 @@ from .boards.routes import router as boards_router
 from .cards.routes import router as cards_router  # ✅ agrega cards aquí, arriba, como los demás
 from .worklogs.routes import router as worklogs_router  # ✅ Semana 4: worklogs
 from app.report.routes import router as report_router
+from app.error_utils import http_exception_handler, sqlalchemy_exception_handler, generic_exception_handler
+from fastapi import HTTPException
+from sqlalchemy.exc import SQLAlchemyError
+from app.logging_config import *
 # Inicializa la aplicación FastAPI con título personalizado
 app = FastAPI(title="NeoCare API", redirect_slashes=False)
+
+# --- Registro de manejadores globales de errores ---
+app.add_exception_handler(HTTPException, http_exception_handler)
+app.add_exception_handler(SQLAlchemyError, sqlalchemy_exception_handler)
+app.add_exception_handler(Exception, generic_exception_handler)
 
 # CORS (para que el frontend pueda llamar al backend)
 app.add_middleware(

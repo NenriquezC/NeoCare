@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { parseApiError } from "../../lib/apiError";
 import { useNavigate } from "react-router-dom";
 
 export type CardListID = 1 | 2 | 3;
@@ -266,8 +267,9 @@ export default function CardsBoard({ boardId }: CardsBoardProps) {
       if (!res.ok) throw new Error("Error al obtener tarjetas");
       const data = await res.json();
       setCards(data || []);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Error cargando tarjetas");
+    } catch (err: any) {
+      if (err && err.error) setError(err.error);
+      else setError(err instanceof Error ? err.message : "Error cargando tarjetas");
     } finally {
       setLoading(false);
     }
@@ -342,8 +344,9 @@ export default function CardsBoard({ boardId }: CardsBoardProps) {
       if (!res.ok) throw new Error("Error al guardar tarjeta");
       await fetchCards();
       closeModal();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Error guardando tarjeta");
+    } catch (err: any) {
+      if (err && err.error) setError(err.error);
+      else setError(err instanceof Error ? err.message : "Error guardando tarjeta");
     } finally {
       setSaving(false);
     }

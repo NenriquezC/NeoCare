@@ -11,39 +11,21 @@ La colección incluye los siguientes grupos de endpoints:
   - POST `/auth/register`
   - Body: `email`, `password`, `name`
   
-- **Login**: Inicia sesión y obtiene token JWT
-  - POST `/auth/login`
   - Body: `username` (email), `password`
 
-### 2. **Boards** (Tableros)
-- **Get All Boards**: Obtiene todos los tableros del usuario
   - GET `/boards/`
   - Requiere autenticación
-  
-- **Get Board Lists**: Obtiene las listas de un tablero
-  - GET `/boards/{board_id}/lists/`
-  - Requiere autenticación
-
 ### 3. **Cards** (Tarjetas)
 - **Create Card**: Crea una nueva tarjeta
-  - POST `/cards/`
-  - Body: `title`, `description`, `due_date`, `board_id`, `list_id`
-  
 - **Get Cards by Board**: Obtiene todas las tarjetas de un tablero
   - GET `/cards/?board_id={board_id}`
-  
-- **Get Card by ID**: Obtiene una tarjeta específica
-  - GET `/cards/{card_id}`
-  
 - **Update Card (PATCH)**: Actualiza parcialmente una tarjeta
-  - PATCH `/cards/{card_id}`
   - Body: solo los campos a actualizar
   
 - **Update Card (PUT)**: Actualiza completamente una tarjeta
   - PUT `/cards/{card_id}`
   
 - **Delete Card**: Elimina una tarjeta
-  - DELETE `/cards/{card_id}`
 
 ## Cómo importar en Postman
 
@@ -67,19 +49,11 @@ La colección incluye los siguientes grupos de endpoints:
 La colección incluye dos variables:
 - `{{access_token}}`: Tu token JWT (obtenido al hacer login)
 - `{{base_url}}`: URL base de la API (por defecto: `http://localhost:8000`)
-
 ### Cómo configurar las variables
 
-1. Abre la colección en Postman
-2. Haz clic en **Edit** (icono de lápiz)
-3. Ve a la pestaña **Variables**
-4. Actualiza los valores según sea necesario
 
-## Flujo de uso recomendado
 
 1. **Registrarse o Login**
-   - Ejecuta `Auth > Register` o `Auth > Login`
-   - Copia el `access_token` de la respuesta
    - Pégalo en la variable `{{access_token}}` en Postman
 
 2. **Obtener tableros**

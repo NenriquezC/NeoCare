@@ -21,60 +21,32 @@
 - test_register_existing_email
 - test_login_success
 - test_login_invalid_credentials
-- test_user_register_valido/sin_name/email_invalido
-- test_user_login_valido/email_invalido
-- test_token_valido/tipo_personalizado
 - test_hash_y_verify_password/hash_password_none
 - test_create_token_contenido
 - test_get_current_user_exitoso/token_invalido/usuario_no_existe
 
-### 2. Tableros (Boards) ⚠️ PARCIAL
-**Archivo**: `tests/boards/`
 - ✅ Modelos de BD (User, Board, List, Card, TimeEntry, BoardMember)
 - ✅ Listar tableros del usuario autenticado (GET /boards/)
-- ❌ **FALTA**: Crear tablero (POST /boards/)
-- ❌ **FALTA**: Actualizar tablero (PATCH /boards/{id})
-- ❌ **FALTA**: Eliminar tablero (DELETE /boards/{id})
 - ❌ **FALTA**: Obtener detalles de un tablero específico
 - ❌ **FALTA**: Crear/editar/eliminar listas dentro de tableros
-- ❌ **FALTA**: Gestión de miembros del tablero (BoardMember)
-
 **Tests**: 7
 - test_create_user/board/list/card/time_entry/board_member (modelos)
-- test_get_boards_exitoso
-
 ### 3. Tarjetas (Cards) ✅ COMPLETA
 **Archivo**: `tests/cards/`
-- ✅ Crear tarjeta (válido, título vacío, fecha inválida)
-- ✅ Editar tarjeta
 - ✅ Ver tarjeta (existente, inexistente, sin permisos)
 - ✅ Mover tarjeta entre listas (misma lista, otra lista, validaciones)
-- ✅ Permisos y autorización (sin token, entre usuarios)
-- ✅ Flujo completo (registro → login → crear → listar → editar)
 
 **Tests**: 12
-- test_crear_tarjeta_ok/titulo_vacio/fecha_invalida
-- test_editar_tarjeta_ok
 - test_crear_tarjeta_sin_token
 - test_ver_tarjeta_inexistente
-- test_no_puede_ver_tarjeta_de_otro_usuario
-- test_flujo_completo_tarjeta
 - test_mover_tarjeta_misma_lista/a_otra_lista/sin_token/order_negativo
 
-### 4. Etiquetas y Subtareas ✅ COMPLETA
-**Archivo**: `tests/labels_subtasks/`
 - ✅ Crear/listar/eliminar etiquetas
 - ✅ Autorización de etiquetas
 - ✅ Crear/listar/actualizar/eliminar subtareas
-- ✅ Actualizar estado completado y título de subtareas
-- ✅ Cálculo de progreso de subtareas
-- ✅ Búsqueda de tarjetas (por título, por descripción)
 - ✅ Filtros (por responsible_id, combinados)
 
 **Tests**: 13
-- test_create_label/get_card_labels/delete_label/label_without_auth
-- test_create_subtask/get_card_subtasks
-- test_update_subtask_completed/title
 - test_delete_subtask/subtask_progress_calculation
 - test_search_cards_by_title/description
 - test_filter_by_responsible/combined_filters

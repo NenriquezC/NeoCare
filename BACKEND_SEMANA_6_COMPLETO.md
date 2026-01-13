@@ -37,12 +37,7 @@ Añade una etiqueta a una tarjeta
 }
 ```
 
-**Response:** `LabelOut`
-```json
-{
-    "id": 1,
     "card_id": 123,
-    "name": "Urgente",
     "color": "#ef4444"
 }
 ```
@@ -58,9 +53,6 @@ Elimina una etiqueta
 **Response:** `204 No Content`
 
 ### Colores Sugeridos para Frontend
-```javascript
-const LABEL_COLORS = {
-  urgent: "#ef4444",     // Rojo - Urgente, bugs críticos
   medium: "#f59e0b",     // Amarillo - Prioridad media
   low: "#10b981",        // Verde - Baja prioridad
   feature: "#3b82f6",    // Azul - Features, info
@@ -74,7 +66,6 @@ const LABEL_COLORS = {
 // Componente para mostrar labels
 function CardLabels({ labels }: { labels: Label[] }) {
   return (
-    <div className="flex gap-1 flex-wrap">
       {labels.map(label => (
         <span
           key={label.id}
@@ -90,53 +81,28 @@ function CardLabels({ labels }: { labels: Label[] }) {
 
 // Función para añadir label
 async function addLabel(cardId: number, labelData: {name: string, color: string}) {
-  const response = await fetch(`/cards/${cardId}/labels`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
-    },
     body: JSON.stringify(labelData)
   });
   return response.json();
-}
 
-// Función para eliminar label
 async function deleteLabel(labelId: number) {
   await fetch(`/cards/labels/${labelId}`, {
     method: 'DELETE',
-    headers: { 'Authorization': `Bearer ${token}` }
-  });
-}
 ```
-
 ---
 
 ## ✅ SUBTASKS (Checklist)
-
-### Modelos
-```python
 # backend/app/boards/models.py
-class Subtask(Base):
     __tablename__ = "subtasks"
     
     id: int
-    card_id: int  # FK a cards.id
-    title: str  # Descripción de la subtarea (máx 200 caracteres)
-    completed: bool  # Estado de completado (default: False)
     position: int  # Posición en la lista (para ordenar)
-```
 
 ### Endpoints Disponibles
 
 #### 1. POST /cards/{card_id}/subtasks
-Añade una subtarea a una tarjeta
-
-**Request:**
-```json
-{
     "title": "Escribir documentación de API",
-    "completed": false  // Opcional, default false
 }
 ```
 

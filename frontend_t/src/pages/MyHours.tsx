@@ -1,6 +1,7 @@
 // src/pages/MyHours.tsx
 import { useEffect, useMemo, useState } from "react";
 import { hoursToNumber, listMyWorklogsByWeek, type Worklog } from "../lib/worklogs";
+import { parseApiError } from "../lib/apiError";
 
 function getISOWeekString(d = new Date()): string {
   const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
@@ -28,8 +29,9 @@ export default function MyHours() {
     // 👇 el backend devuelve un objeto con `entries`
         setItems(Array.isArray(data.entries) ? data.entries : []);
         
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Error cargando mis horas");
+    } catch (e: any) {
+      if (e && e.error) setError(e.error);
+      else setError(e instanceof Error ? e.message : "Error cargando mis horas");
     } finally {
       setLoading(false);
     }

@@ -293,11 +293,10 @@ npm run preview
 - `POST /auth/login` - Iniciar sesión (devuelve JWT)
 
 ### Tableros (requiere autenticación)
-- `GET /boards` - Listar tableros del usuario
-- `POST /boards` - Crear nuevo tablero
-- `GET /boards/{id}` - Obtener tablero específico
-- `PUT /boards/{id}` - Actualizar tablero
-- `DELETE /boards/{id}` - Eliminar tablero
+- `GET /boards` - Listar tableros fijos del usuario (no se pueden crear, editar ni eliminar tableros)
+- `GET /boards/{board_id}/lists` - Listar listas (columnas) de un tablero
+
+> Nota: No existen endpoints para crear, editar o eliminar tableros. Cada usuario tiene tres tableros fijos y las tarjetas pueden moverse entre ellos.
 
 ### Tarjetas
 - `GET /boards/{board_id}/cards` - Listar tarjetas de un tablero

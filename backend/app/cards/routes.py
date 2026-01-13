@@ -6,7 +6,8 @@ from .schemas import (
     CardCreate, CardUpdate, CardOut, CardMove,
     LabelCreate, LabelOut, SubtaskCreate, SubtaskUpdate, SubtaskOut
 )
-from ..auth.utils import get_current_user, get_db
+from ..auth.utils import get_current_user
+from app.utils import get_db, get_board_or_404
 from ..boards.models import Card, Board, List, User, Label, Subtask
 from sqlalchemy import or_
 
@@ -20,18 +21,11 @@ antes de realizar operaciones que afecten a los recursos.
 """
 
 
+
 def verify_board_permission(board_id: int, user_id: int, db: Session):
-    """
-    Verifica que el tablero existe y pertenece al usuario.
-    """
-    board = db.query(Board).filter(Board.id == board_id).first()
-    if not board:
-        raise HTTPException(status_code=404, detail="Tablero no encontrado")
-
+    board = get_board_or_404(db, board_id)
     if board.user_id != user_id:
-        #raise HTTPException(status_code=403, detail="No tienes permiso para este tablero")
-        raise HTTPException(status_code=403)
-
+        raise HTTPException(status_code=403, detail="No tienes permiso para este tablero")
     return board
 
 
@@ -139,7 +133,6 @@ def get_card(
     card = db.query(Card).filter(Card.id == card_id).first()
     if not card:
         raise HTTPException(status_code=404, detail="Tarjeta no encontrada")
-
     verify_board_permission(card.board_id, current_user.id, db)
     return card
 

@@ -8,7 +8,8 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List as ListType
 
-from ..auth.utils import get_current_user, get_db
+from ..auth.utils import get_current_user
+from app.utils import get_db, get_board_or_404
 from ..boards.models import User
 from .models import Board, List, BoardMember   # ✅ FIX: importar BoardMember
 from .schemas import BoardOut, ListOut
@@ -76,10 +77,8 @@ def get_board_lists(
         - El tablero debe existir.
         - El tablero debe pertenecer al usuario autenticado.
     """
-    board = db.query(Board).filter(Board.id == board_id).first()
-    if not board:
-        raise HTTPException(status_code=404, detail="Tablero no encontrado")
 
+    board = get_board_or_404(db, board_id)
     if board.user_id != current_user.id:
         raise HTTPException(status_code=403, detail="No tienes permiso para este tablero")
 

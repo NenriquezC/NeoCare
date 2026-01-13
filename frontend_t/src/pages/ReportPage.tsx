@@ -7,10 +7,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import {
-  getWeeklySummary,
-  getHoursByCard,
-} from "@/services/report.service";
+import { getWeeklySummary, getHoursByCard } from "@/services/report.service";
+import { parseApiError } from "@/lib/apiError";
 
 import type {
   WeeklySummaryResponse,
@@ -71,12 +69,11 @@ export default function ReportPage() {
 
       setSummary(summaryData);
       setHoursByCard(byCardData);
-    } catch (err) {
-      setError(
-        err instanceof Error
-          ? err.message
-          : "Error inesperado al cargar el reporte"
-      );
+    } catch (err: any) {
+      if (err && err.error) setError(err.error);
+      else if (err instanceof Error && (err.message.includes('{"detail":"Not Found"}') || err.message.includes('Not Found')))
+        setError("No hay datos para la semana seleccionada o el reporte no está disponible.");
+      else setError(err instanceof Error ? err.message : "Error inesperado al cargar el reporte");
     } finally {
       setLoading(false);
     }
