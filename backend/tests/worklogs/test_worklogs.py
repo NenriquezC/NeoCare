@@ -99,7 +99,7 @@ def test_update_worklog_own(client):
     resp_create = client.post("/worklogs/", json={"card_id": card_id, "date": str(date.today()), "hours": 1}, headers={"Authorization": f"Bearer {token}"})
     worklog_id = resp_create.json()["id"]
     
-    resp_update = client.put(f"/worklogs/{worklog_id}", json={"hours": 5, "note": "Updated"}, headers={"Authorization": f"Bearer {token}"})
+    resp_update = client.patch(f"/worklogs/{worklog_id}", json={"hours": 5, "note": "Updated"}, headers={"Authorization": f"Bearer {token}"})
     assert resp_update.status_code == 200
     assert resp_update.json()["hours"] == "5.00"
     assert resp_update.json()["note"] == "Updated"
@@ -111,7 +111,7 @@ def test_update_worklog_other_user(client):
     
     user2, token2 = crear_usuario_y_token(client)
     # User 2 is not even in the board, but even if they were, they shouldn't edit user 1's worklog
-    resp_update = client.put(f"/worklogs/{worklog_id}", json={"hours": 5}, headers={"Authorization": f"Bearer {token2}"})
+    resp_update = client.patch(f"/worklogs/{worklog_id}", json={"hours": 5}, headers={"Authorization": f"Bearer {token2}"})
     assert resp_update.status_code == 403
 
 def test_delete_worklog_own(client):
@@ -137,3 +137,50 @@ def test_my_hours_week(client):
     assert data["week"] == week_str
     assert float(data["total_hours"]) >= 3
     assert len(data["entries"]) >= 1
+
+def test_delete_worklog_other_user(client):
+    """Seguridad: No permitir eliminar worklogs ajenos"""
+    user1, token1, card_id = preparar_escenario(client)
+    resp_create = client.post("/worklogs/", json={"card_id": card_id, "date": str(date.today()), "hours": 1}, headers={"Authorization": f"Bearer {token1}"})
+    worklog_id = resp_create.json()["id"]
+
+    user2, token2 = crear_usuario_y_token(client)
+    resp_delete = client.delete(f"/worklogs/{worklog_id}", headers={"Authorization": f"Bearer {token2}"})
+    assert resp_delete.status_code == 403
+
+def test_create_worklog_without_token(client):
+    """Seguridad: No permitir crear worklogs sin autenticación"""
+    user, token, card_id = preparar_escenario(client)
+    payload = {
+        "card_id": card_id,
+        "date": str(date.today()),
+        "hours": 2.5,
+        "note": "Sin token"
+    }
+    resp = client.post("/worklogs/", json=payload)  # Sin header de autorización
+    assert resp.status_code in [401, 403]
+
+def test_list_worklogs_without_token(client):
+    """Seguridad: No permitir listar worklogs sin autenticación"""
+    user, token, card_id = preparar_escenario(client)
+    resp = client.get(f"/worklogs/card/{card_id}")  # Sin header de autorización
+    assert resp.status_code in [401, 403]
+
+def test_update_worklog_without_token(client):
+    """Seguridad: No permitir editar worklogs sin autenticación"""
+    user, token, card_id = preparar_escenario(client)
+    resp_create = client.post("/worklogs/", json={"card_id": card_id, "date": str(date.today()), "hours": 1}, headers={"Authorization": f"Bearer {token}"})
+    worklog_id = resp_create.json()["id"]
+
+    resp_update = client.patch(f"/worklogs/{worklog_id}", json={"hours": 5})  # Sin header
+    assert resp_update.status_code in [401, 403]
+
+def test_delete_worklog_without_token(client):
+    """Seguridad: No permitir eliminar worklogs sin autenticación"""
+    user, token, card_id = preparar_escenario(client)
+    resp_create = client.post("/worklogs/", json={"card_id": card_id, "date": str(date.today()), "hours": 1}, headers={"Authorization": f"Bearer {token}"})
+    worklog_id = resp_create.json()["id"]
+
+    resp_delete = client.delete(f"/worklogs/{worklog_id}")  # Sin header
+    assert resp_delete.status_code in [401, 403]
+

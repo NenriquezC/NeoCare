@@ -18,7 +18,12 @@ def test_get_week_date_range_valid():
 def test_get_week_date_range_invalid_format():
     """✓ Rechazar formato de semana inválido"""
     with pytest.raises(HTTPException) as exc:
-        get_week_date_range("2025-05")
+        get_week_date_range("2025/05")  # Formato inválido con /
+    assert exc.value.status_code == 400
+    assert "Formato de semana inválido" in exc.value.detail
+
+    with pytest.raises(HTTPException) as exc:
+        get_week_date_range("invalid")  # Texto inválido
     assert exc.value.status_code == 400
     assert "Formato de semana inválido" in exc.value.detail
 

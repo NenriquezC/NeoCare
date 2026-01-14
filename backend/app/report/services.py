@@ -57,15 +57,22 @@ def get_week_date_range(week: str) -> tuple[date, date]:
 
         Si esta lógica falla, TODO el informe falla.
     """
-    # Validación de formato: YYYY-WW (sin la letra W en el medio)
-    if not re.match(r"^\d{4}-\d{2}$", week):
+    # Validación de formato: YYYY-WW o YYYY-Wnn (acepta ambos formatos)
+    # Formato 1: 2026-03 (sin W)
+    # Formato 2: 2026-W03 (con W)
+    if re.match(r"^\d{4}-W\d{2}$", week):
+        # Formato con W: 2026-W03
+        year_str, week_str = week.split("-W")
+    elif re.match(r"^\d{4}-\d{2}$", week):
+        # Formato sin W: 2026-03
+        year_str, week_str = week.split("-")
+    else:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Formato de semana inválido. Use 'YYYY-WW' (ejemplo: 2026-03)."
+            detail="Formato de semana inválido. Use 'YYYY-WW' o 'YYYY-Wnn' (ejemplo: 2026-03 o 2026-W03)."
         )
 
     try:
-        year_str, week_str = week.split("-")
         year = int(year_str)
         week_number = int(week_str)
 

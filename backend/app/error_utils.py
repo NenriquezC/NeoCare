@@ -8,7 +8,7 @@ logger = logging.getLogger("neocare.errors")
 # Estructura de error uniforme
 
 def error_response(status_code: int, detail: str, extra: dict = None):
-    payload = {"error": detail}
+    payload = {"detail": detail}
     if extra:
         payload.update(extra)
     return JSONResponse(status_code=status_code, content=payload)

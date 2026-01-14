@@ -44,17 +44,19 @@ Implementar la UI de Timesheets:
 Crear toda la infraestructura del sistema de worklogs:
 - **Modelo SQLAlchemy (Tabla `worklogs` / `time_entries`):**
     - `id`, `card_id`, `user_id`, `date`, `hours`, `note`, `created_at`, `updated_at`.
-- **Endpoints necesarios:**
-    - `POST /cards/{card_id}/worklogs` → Crear registro.
-    - `GET /cards/{card_id}/worklogs` → Listar por tarjeta.
-    - `PATCH /worklogs/{id}` → Editar horas.
+- **Endpoints implementados:**
+    - `POST /worklogs/` → Crear registro (con `card_id` en body).
+    - `GET /worklogs/card/{card_id}` → Listar por tarjeta.
+    - `PATCH /worklogs/{id}` → Editar horas (actualización parcial).
     - `DELETE /worklogs/{id}` → Eliminar horas.
-    - `GET /users/me/worklogs?week=YYYY-WW` → Horas por semana del usuario actual.
+    - `GET /worklogs/me/week?week=YYYY-WW` → Horas por semana del usuario actual.
 - **Validaciones obligatorias:**
-    - Horas > 0 (mínimo 0.25).
+    - Horas > 0 (mínimo recomendado 0.25).
     - Fecha válida y no futura.
     - Nota ≤ 200 chars.
     - Solo el autor puede editar/borrar su registro.
+
+**📚 Documentación Completa:** Ver `WORKLOGS_API_GUIDE.md` para guía exhaustiva con ejemplos de cURL, Postman, validaciones, permisos y casos límite.
 
 ### 🧪 Testing
 - ✓ Validar creación de worklogs válidos e inválidos.
@@ -82,10 +84,14 @@ Crear toda la infraestructura del sistema de worklogs:
 ---
 
 ## 4. Definition of Done (Checklist)
-- [ ] **Backend:** Tabla creada, endpoints CRUD funcionando, seguridad por usuario aplicada.
-- [ ] **Frontend:** Formulario de horas, listado por tarjeta, vista "Mis horas" con totales.
-- [ ] **Testing:** Casos límite probados, seguridad validada.
-- [ ] **Documentación:** README completo, acta semanal y mini-demo lista.
+- [x] **Backend:** Tabla creada, endpoints CRUD funcionando, seguridad por usuario aplicada.
+- [x] **Frontend:** Formulario de horas, listado por tarjeta, vista "Mis horas" con totales.
+- [x] **Testing:** Casos límite probados, seguridad validada, tests E2E implementados.
+- [x] **Documentación:** README completo, `WORKLOGS_API_GUIDE.md` exhaustiva con ejemplos Postman/cURL.
+
+**Estado:** ✅ **COMPLETADO** (13 Enero 2026)  
+**Tests Adicionales:** 6 tests de seguridad agregados  
+**Mejoras:** Cambio de PUT a PATCH según estándar REST
 
 ---
 

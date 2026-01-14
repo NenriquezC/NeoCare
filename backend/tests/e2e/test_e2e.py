@@ -293,3 +293,135 @@ def test_ui_login_fallido(page):
     page.wait_for_selector("text=Error:", timeout=5000)
     print("✅ UI: Login fallido muestra error")
 
+
+# ========================
+# TEST E2E COMPLETO - WORKLOGS
+# ========================
+
+def test_e2e_worklogs_complete_flow(test_user):
+    """
+    Test E2E completo del flujo de worklogs:
+    1. Crear tarjeta
+    2. Añadir horas a la tarjeta
+    3. Listar horas de la tarjeta
+    4. Editar horas
+    5. Ver horas en "Mis Horas" (semana actual)
+    6. Eliminar horas
+    7. Verificar eliminación
+    """
+    headers = {"Authorization": f"Bearer {test_user['token']}"}
+    board_id = test_user.get("board_id", 1)
+    list_id = test_user.get("list_id", 1)
+
+    # 1. Crear tarjeta
+    print("\n📝 Paso 1: Crear tarjeta para worklog...")
+    card_payload = {
+        "title": f"Tarjeta E2E Worklogs {int(time.time())}",
+        "description": "Tarjeta para testing completo de worklogs",
+        "board_id": board_id,
+        "list_id": list_id
+    }
+    res_card = requests.post(f"{BACKEND_URL}/cards/", json=card_payload, headers=headers, timeout=10)
+    assert res_card.status_code == 200, f"Error creando tarjeta: {res_card.text}"
+    card = res_card.json()
+    card_id = card["id"]
+    print(f"✅ Tarjeta creada: ID={card_id}")
+
+    # 2. Añadir horas (worklog)
+    print("\n⏱️ Paso 2: Añadir registro de horas...")
+    today = date.today()
+    worklog_payload = {
+        "card_id": card_id,
+        "date": str(today),
+        "hours": 3.5,
+        "note": "Testing E2E worklogs"
+    }
+    res_create_worklog = requests.post(
+        f"{BACKEND_URL}/worklogs/",
+        json=worklog_payload,
+        headers=headers,
+        timeout=10
+    )
+    assert res_create_worklog.status_code == 201, f"Error creando worklog: {res_create_worklog.text}"
+    worklog = res_create_worklog.json()
+    worklog_id = worklog["id"]
+    assert worklog["hours"] == "3.50"
+    assert worklog["note"] == "Testing E2E worklogs"
+    print(f"✅ Worklog creado: ID={worklog_id}, Horas={worklog['hours']}")
+
+    # 3. Listar horas de la tarjeta
+    print("\n📋 Paso 3: Listar worklogs de la tarjeta...")
+    res_list = requests.get(
+        f"{BACKEND_URL}/worklogs/card/{card_id}",
+        headers=headers,
+        timeout=10
+    )
+    assert res_list.status_code == 200, f"Error listando worklogs: {res_list.text}"
+    worklogs = res_list.json()
+    assert isinstance(worklogs, list)
+    assert len(worklogs) >= 1
+    found_worklog = next((w for w in worklogs if w["id"] == worklog_id), None)
+    assert found_worklog is not None, "Worklog creado no encontrado en listado"
+    print(f"✅ Worklogs listados: {len(worklogs)} registro(s)")
+
+    # 4. Editar horas
+    print("\n✏️ Paso 4: Editar registro de horas...")
+    update_payload = {
+        "hours": 5.0,
+        "note": "Horas actualizadas en E2E"
+    }
+    res_update = requests.patch(
+        f"{BACKEND_URL}/worklogs/{worklog_id}",
+        json=update_payload,
+        headers=headers,
+        timeout=10
+    )
+    assert res_update.status_code == 200, f"Error actualizando worklog: {res_update.text}"
+    updated_worklog = res_update.json()
+    assert updated_worklog["hours"] == "5.00"
+    assert updated_worklog["note"] == "Horas actualizadas en E2E"
+    print(f"✅ Worklog actualizado: Horas={updated_worklog['hours']}")
+
+    # 5. Ver en "Mis Horas" (semana actual)
+    print("\n📊 Paso 5: Verificar en 'Mis Horas' (semana actual)...")
+    year, week_num, _ = today.isocalendar()
+    week_str = f"{year}-{week_num:02d}"
+    res_my_hours = requests.get(
+        f"{BACKEND_URL}/worklogs/me/week?week={week_str}",
+        headers=headers,
+        timeout=10
+    )
+    assert res_my_hours.status_code == 200, f"Error obteniendo mis horas: {res_my_hours.text}"
+    my_hours = res_my_hours.json()
+    assert my_hours["week"] == week_str
+    assert float(my_hours["total_hours"]) >= 5.0
+    assert len(my_hours["entries"]) >= 1
+    print(f"✅ Mis horas verificadas: Semana={week_str}, Total={my_hours['total_hours']}h")
+
+    # 6. Eliminar horas
+    print("\n🗑️ Paso 6: Eliminar registro de horas...")
+    res_delete = requests.delete(
+        f"{BACKEND_URL}/worklogs/{worklog_id}",
+        headers=headers,
+        timeout=10
+    )
+    assert res_delete.status_code == 204, f"Error eliminando worklog: {res_delete.text}"
+    print(f"✅ Worklog eliminado: ID={worklog_id}")
+
+    # 7. Verificar eliminación
+    print("\n🔍 Paso 7: Verificar eliminación...")
+    res_verify = requests.get(
+        f"{BACKEND_URL}/worklogs/card/{card_id}",
+        headers=headers,
+        timeout=10
+    )
+    assert res_verify.status_code == 200
+    remaining_worklogs = res_verify.json()
+    deleted_worklog = next((w for w in remaining_worklogs if w["id"] == worklog_id), None)
+    assert deleted_worklog is None, "Worklog no fue eliminado correctamente"
+    print("✅ Worklog eliminado correctamente")
+
+    print("\n🎉 Flujo E2E de Worklogs completado exitosamente!")
+
+
+

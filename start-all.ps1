@@ -5,7 +5,7 @@ Write-Host "=== Iniciando NeoCare ===" -ForegroundColor Cyan
 
 # Iniciar backend en una nueva ventana de PowerShell
 Write-Host "`n[1/2] Iniciando Backend..." -ForegroundColor Green
-Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd '$PSScriptRoot\backend'; & ..\\.venv\Scripts\Activate.ps1; uvicorn app.main:app --reload"
+Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd '$PSScriptRoot\backend'; & .\venv\Scripts\Activate.ps1; uvicorn app.main:app --reload"
 
 # Esperar un momento
 Start-Sleep -Seconds 2

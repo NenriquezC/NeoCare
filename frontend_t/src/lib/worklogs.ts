@@ -97,7 +97,7 @@ export async function createWorklog(payload: WorklogCreatePayload): Promise<Work
 
 export async function updateWorklog(id: number, payload: WorklogUpdatePayload): Promise<Worklog> {
   const res = await apiFetch(ENDPOINTS.update(id), {
-    method: "PUT",
+    method: "PATCH",
     body: JSON.stringify(payload),
   });
   await throwIfError(res);

@@ -22,6 +22,8 @@ import type {
 import SummaryCards from "@/components/report/SummaryCards";
 import HoursByCardTable from "@/components/report/HoursByCardTable";
 import HoursByUserTable from "@/components/report/HoursByUserTable";
+import EmptyState from "@/components/report/EmptyState";
+import UserDetailModal from "@/components/report/UserDetailModal";
 
 /**
  * Devuelve la semana actual en formato ISO YYYY-WW según ISO 8601.
@@ -100,6 +102,9 @@ export default function ReportPage() {
   const [summary, setSummary] = useState<WeeklySummaryResponse | null>(null);
   const [hoursByCard, setHoursByCard] = useState<HoursByCardItem[]>([]);
   const [hoursByUser, setHoursByUser] = useState<HoursByUserItem[]>([]);
+
+  // Estado para modal de detalle
+  const [selectedUser, setSelectedUser] = useState<{ id: number; name: string } | null>(null);
 
   /* =========================
      DATA LOADING
@@ -231,52 +236,91 @@ export default function ReportPage() {
 
         {!loading && !error && summary && (
           <>
-            <SummaryCards summary={summary} />
+            {/* Mostrar EmptyState si no hay actividad */}
+            {summary.completed.count === 0 &&
+             summary.new.count === 0 &&
+             summary.overdue.count === 0 &&
+             hoursByUser.length === 0 &&
+             hoursByCard.length === 0 ? (
+              <EmptyState message="No hubo actividad registrada en esta semana" />
+            ) : (
+              <>
+                <SummaryCards summary={summary} />
 
-            <h2>Horas por usuario</h2>
-            <button
-              onClick={() =>
-                exportToCsv(`horas-por-usuario-${week}.csv`, hoursByUser)
-              }
-              style={{
-                marginBottom: 12,
-                padding: "0.5rem 1rem",
-                background: "#2563eb",
-                color: "white",
-                border: "none",
-                borderRadius: 6,
-                cursor: "pointer",
-                fontWeight: 600,
-              }}
-              disabled={!hoursByUser.length}
-            >
-              Exportar CSV
-            </button>
-            <HoursByUserTable data={hoursByUser} />
+                <h2>Horas por usuario</h2>
+                {hoursByUser.length === 0 ? (
+                  <p style={{ color: "#64748b", fontStyle: "italic" }}>
+                    No hay registros de horas en esta semana.
+                  </p>
+                ) : (
+                  <>
+                    <button
+                      onClick={() =>
+                        exportToCsv(`horas-por-usuario-${week}.csv`, hoursByUser)
+                      }
+                      style={{
+                        marginBottom: 12,
+                        padding: "0.5rem 1rem",
+                        background: "#2563eb",
+                        color: "white",
+                        border: "none",
+                        borderRadius: 6,
+                        cursor: "pointer",
+                        fontWeight: 600,
+                      }}
+                    >
+                      Exportar CSV
+                    </button>
+                    <HoursByUserTable
+                      data={hoursByUser}
+                      onViewDetail={(userId, userName) => setSelectedUser({ id: userId, name: userName })}
+                    />
+                  </>
+                )}
 
-            <h2>Horas por tarjeta</h2>
-            <button
-              onClick={() =>
-                exportToCsv(`horas-por-tarjeta-${week}.csv`, hoursByCard)
-              }
-              style={{
-                marginBottom: 12,
-                padding: "0.5rem 1rem",
-                background: "#2563eb",
-                color: "white",
-                border: "none",
-                borderRadius: 6,
-                cursor: "pointer",
-                fontWeight: 600,
-              }}
-              disabled={!hoursByCard.length}
-            >
-              Exportar CSV
-            </button>
-            <HoursByCardTable data={hoursByCard} />
+                <h2>Horas por tarjeta</h2>
+                {hoursByCard.length === 0 ? (
+                  <p style={{ color: "#64748b", fontStyle: "italic" }}>
+                    No hay registros de horas en esta semana.
+                  </p>
+                ) : (
+                  <>
+                    <button
+                      onClick={() =>
+                        exportToCsv(`horas-por-tarjeta-${week}.csv`, hoursByCard)
+                      }
+                      style={{
+                        marginBottom: 12,
+                        padding: "0.5rem 1rem",
+                        background: "#2563eb",
+                        color: "white",
+                        border: "none",
+                        borderRadius: 6,
+                        cursor: "pointer",
+                        fontWeight: 600,
+                      }}
+                    >
+                      Exportar CSV
+                    </button>
+                    <HoursByCardTable data={hoursByCard} />
+                  </>
+                )}
+              </>
+            )}
           </>
         )}
       </main>
+
+      {/* Modal de detalle de usuario */}
+      {selectedUser && (
+        <UserDetailModal
+          userId={selectedUser.id}
+          userName={selectedUser.name}
+          week={week}
+          boardId={numericBoardId}
+          onClose={() => setSelectedUser(null)}
+        />
+      )}
     </div>
   );
 }

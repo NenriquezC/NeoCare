@@ -105,7 +105,7 @@ def list_worklogs_by_card(
 # ---------------------------------------------------------------------
 # EDITAR WORKLOG
 # ---------------------------------------------------------------------
-@router.put("/{worklog_id}", response_model=WorklogOut)
+@router.patch("/{worklog_id}", response_model=WorklogOut)
 def update_worklog(
     worklog_id: int,
     data: WorklogUpdate,
@@ -114,6 +114,7 @@ def update_worklog(
 ):
     """
     Editar un registro de horas (solo el autor).
+    Usa PATCH para actualizaciones parciales según estándar REST.
     """
 
 
@@ -185,10 +186,17 @@ def my_hours_week(
         week = f"{iso_cal[0]}-{iso_cal[1]:02d}"
 
     try:
-        # Parsear formato YYYY-WW (sin la letra W)
-        year, week_num = map(int, week.split("-"))
+        # Parsear formato: acepta YYYY-WW (2026-03) o YYYY-Wnn (2026-W03)
+        if "-W" in week:
+            # Formato con W: 2026-W03
+            year_str, week_str = week.split("-W")
+        else:
+            # Formato sin W: 2026-03
+            year_str, week_str = week.split("-")
+        year = int(year_str)
+        week_num = int(week_str)
     except ValueError:
-        raise HTTPException(status_code=400, detail="Formato de semana inválido (usa YYYY-WW, ejemplo: 2026-03)")
+        raise HTTPException(status_code=400, detail="Formato de semana inválido (usa YYYY-WW, ejemplo: 2026-03 o 2026-W03)")
 
     first_day = date.fromisocalendar(year, week_num, 1)
     last_day = first_day + timedelta(days=6)

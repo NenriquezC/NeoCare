@@ -14,9 +14,10 @@ import type { HoursByUserItem } from "@/types/report";
 
 interface HoursByUserTableProps {
   data: HoursByUserItem[];
+  onViewDetail?: (userId: number, userName: string) => void;
 }
 
-export default function HoursByUserTable({ data }: HoursByUserTableProps) {
+export default function HoursByUserTable({ data, onViewDetail }: HoursByUserTableProps) {
   if (data.length === 0) {
     return <p>No hay registros de horas por usuario para esta semana.</p>;
   }
@@ -40,6 +41,11 @@ export default function HoursByUserTable({ data }: HoursByUserTableProps) {
           <th style={{ padding: "0.5rem", textAlign: "right", border: "1px solid #ddd" }}>
             Tareas
           </th>
+          {onViewDetail && (
+            <th style={{ padding: "0.5rem", textAlign: "center", border: "1px solid #ddd" }}>
+              Acción
+            </th>
+          )}
         </tr>
       </thead>
       <tbody>
@@ -54,6 +60,24 @@ export default function HoursByUserTable({ data }: HoursByUserTableProps) {
             <td style={{ padding: "0.5rem", textAlign: "right", border: "1px solid #ddd" }}>
               {item.tasks_count}
             </td>
+            {onViewDetail && (
+              <td style={{ padding: "0.5rem", textAlign: "center", border: "1px solid #ddd" }}>
+                <button
+                  onClick={() => onViewDetail(item.user_id, item.user_name)}
+                  style={{
+                    padding: "0.25rem 0.75rem",
+                    background: "#2563eb",
+                    color: "white",
+                    border: "none",
+                    borderRadius: "4px",
+                    cursor: "pointer",
+                    fontSize: "0.875rem",
+                  }}
+                >
+                  Ver detalle
+                </button>
+              </td>
+            )}
           </tr>
         ))}
       </tbody>
