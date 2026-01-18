@@ -1,0 +1,1 @@
+ C:\\Users\\raque\\OneDrive\\Documentos\\github\\NeoCare\\frontend_mobile\\.dart_tool\\flutter_build\\de21d7d169ef3ee500103868dbcdba70\\native_assets.json: 
