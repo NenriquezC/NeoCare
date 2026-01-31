@@ -1,4 +1,5 @@
-🏥 NeoCare Health — Documentación del Proyecto
+🏥 NeoCare Health — Documentación del Proyecto 
+IMPORTANTE!!! EL PROYECTO SE PUEDE VER EN LA RAMA MAIN
 NeoCare Health — Documentación del Proyecto
 
 Este repositorio contiene el desarrollo del proyecto NeoCare Health, realizado por el equipo Alpha. El objetivo es construir una plataforma enfocada en la gestión de pacientes, datos médicos y acceso seguro mediante un backend robusto con FastAPI y autenticación JWT.
